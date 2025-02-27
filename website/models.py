@@ -1,3 +1,9 @@
+"""
+@File Name: models.py
+@Description: This file contains the database models for our application.
+@Referenced: https://www.youtube.com/watch?v=dam0GPOAvVI&ab_channel=TechWithTim
+"""
+
 from . import db # Importing from current package, the website folder, the db object from
 # our __init__.py!
 from flask_login import UserMixin # Custom class that gives our user object specific things

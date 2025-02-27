@@ -1,3 +1,14 @@
+<!--
+@File Name: base.html
+@Description: This file serves as the base template for all pages in the application. It contains the structure for the header, 
+navigation bar, and common scripts that will be used across the application. The title and content blocks are 
+intended to be overridden by child templates. It includes the Bootstrap CSS framework for styling and provides 
+responsive behavior for different screen sizes. Flash messages for success and error notifications are also handled here.
+@References
+    - https://www.youtube.com/watch?v=dam0GPOAvVI&ab_channel=TechWithTim
+    - ChatGPT for Detailed Description
+-->
+
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
@@ -19,7 +30,7 @@
 
     <title>{% block title %}Default Title{% endblock %}</title>
     <!-- this is Jinja, you can write if statement, for loops, expressions, or a block inside here. A base
-    template that can be overriden in a children template -->
+    template that can be overriden in children templates -->
   </head>
 
   <body>
@@ -53,7 +64,7 @@
       {{ message }}
       <button type="button" class="close" data-dismiss="alert">
         <span aria-hidden="true">×</span>
-        <!-- Fancy x button! -->
+        <!-- Fancy x button -->
       </button>
     </div>
     {% else %}
@@ -62,12 +73,12 @@
       {{ message }}
       <button type="button" class="close" data-dismiss="alert">
         <span aria-hidden="true">×</span>
-        <!-- Fancy x button! -->
       </button>
     </div>
     {% endif %} {% endfor %} {% endif %} {% endwith %}
 
     <div class="container">{% block content %}{% endblock %}</div>
+
     <!-- Part of bootstrap classes. Bootstrap website will show detailed examples -->
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -85,7 +96,7 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-
+    <!-- Static JavaScript-->
     <script
       type="text/javascript"
       src="{{ url_for('static', filename='index.js') }}"

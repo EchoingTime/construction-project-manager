@@ -1,3 +1,13 @@
+"""
+@File Name: views.py
+@Description: This file contains the authentication routes for user login, logout, and sign-up processes. 
+It includes functionality for logging in users, logging out, and creating new user accounts, 
+with password hashing for security.
+@References
+    - https://www.youtube.com/watch?v=dam0GPOAvVI&ab_channel=TechWithTim
+    - ChatGPT for Detailed Description
+"""
+
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash # For security
