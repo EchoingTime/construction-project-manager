@@ -29,12 +29,12 @@ responsive behavior for different screen sizes. Flash messages for success and e
     />
 
     <title>{% block title %}Default Title{% endblock %}</title>
-    <!-- this is Jinja, you can write if statement, for loops, expressions, or a block inside here. A base
+    <!-- Jinja, you can write if statement, for loops, expressions, or a block inside here. A base
     template that can be overriden in children templates -->
   </head>
 
   <body>
-    <!-- Contains the actual html -->
+    <!-- Contains the html -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <button
         class="navbar-toggler"
@@ -64,7 +64,6 @@ responsive behavior for different screen sizes. Flash messages for success and e
       {{ message }}
       <button type="button" class="close" data-dismiss="alert">
         <span aria-hidden="true">×</span>
-        <!-- Fancy x button -->
       </button>
     </div>
     {% else %}

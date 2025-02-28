@@ -31,7 +31,7 @@ This is a web application built using Flask, Bootstrap, and other modern technol
 
 ## Testing Account:
 
-- test@test.com | Test123
+- test@test.com | test123
 
 ## Running the Code:
 

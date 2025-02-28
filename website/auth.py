@@ -10,21 +10,20 @@ with password hashing for security.
 
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from .models import User
-from werkzeug.security import generate_password_hash, check_password_hash # For security
-from . import db # Means from __init__.py import db
-from flask_login import login_user, login_required, logout_user, current_user # Handles logining
+from werkzeug.security import generate_password_hash, check_password_hash # Security
+from . import db # Means from __init__.py import database
+from flask_login import login_user, login_required, logout_user, current_user # Handles logging in
 
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST': # Actually signing in and not just getting the page
+    if request.method == 'POST': # Signing in and not just getting the page
         email = request.form.get('email')
         password = request.form.get('password')
 
-        user = User.query.filter_by(email=email).first() # Looking for a specifc entry in the 
-        # database filter by email
-        if user: # Actually found the user
+        user = User.query.filter_by(email=email).first() # Looking for a specifc entry in the database filtered by email
+        if user: # Found the user
             if check_password_hash(user.password, password):
                 flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
@@ -65,7 +64,7 @@ def sign_up():
             new_user = User(email=email, first_name=first_name, password=generate_password_hash(password1, method='pbkdf2:sha256')) # pbkdf2:sha256 is a hashing algorithm
             db.session.add(new_user)
             db.session.commit()
-            login_user(user, remember=True)
+            login_user(new_user, remember=True)
             flash('Account created!.', category='success')
             return redirect(url_for('views.home')) # Redirect to home page
 

@@ -1,7 +1,7 @@
 <!--
 @File Name: home.html
-@Description: This file renders the home page of the web application. It displays a list of notes 
-belonging to the current logged-in user, allowing users to view, add, and delete their notes.
+@Description: This file renders the home page of the web application. It displays a list of projects 
+belonging to the current logged-in user, allowing users to view, add, and delete projects.
 It includes Bootstrap classes for styling and layout.
 @References
     - https://www.youtube.com/watch?v=dam0GPOAvVI&ab_channel=TechWithTim
@@ -10,23 +10,27 @@ It includes Bootstrap classes for styling and layout.
 
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
-<h1 align="center">Notes</h1>
-<ul class="list-group list-group-flush" id="notes">
+<h1 align="center">Projects</h1>
+<ul class="list-group list-group-flush" id="projects">
   <!-- Contains Bootstrap class -->
-  {% for note in user.notes %}
+  {% for project in user.projects %}
   <li class="list-group-item">
-    {{ note.data }}
-    <button type="button" class="close" onClick="deleteNote({{ note.id }})">
+    {{ project.data }}
+    <button
+      type="button"
+      class="close"
+      onClick="deleteProject({{ project.id }})"
+    >
       <span aria-hidden="true">x</span>
     </button>
   </li>
   {% endfor %}
 </ul>
 <form method="POST">
-  <textarea name="note" id="note" class="form-control"></textarea>
+  <textarea name="project" id="project" class="form-control"></textarea>
   <br />
   <div align="center">
-    <button type="submit" class="btn btn-primary">Add Note</button>
+    <button type="submit" class="btn btn-primary">Create New Project</button>
   </div>
 </form>
 {% endblock %}
