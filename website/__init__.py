@@ -8,7 +8,7 @@ and handles database creation for the application.
     - ChatGPT for Detailed Description
 """
 
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy # Getting our database ready
 from os import path
 from flask_login import LoginManager # Manages the login aspects
@@ -44,6 +44,10 @@ def create_app(): # Initialize Flask
     @login_manger.user_loader # Tells Flask how we load a user
     def load_user(id):
         return User.query.get(int(id)) # Knows it will look for primary key
+
+    @login_manger.unauthorized_handler
+    def unauthorized():
+        return redirect(url_for('auth.login'))
 
     return app # Secret key is done
 
