@@ -8,17 +8,10 @@
         - source venv/bin/activate (Mac/Linux)
         - venv\Scripts\activate (Windows)
         - pip install -r requirements.txt
-        - Optional: Set Flask environment variable:
-            - export FLASK_APP=main.py (Mac/Linux)  # Set the app to main.py
-            - set FLASK_APP=main.py (Windows)       # Set the app to main.py
-            - flask run                             # Run the Flask app
-        - Or you can run it directly:
-            - python main.py                        # Alternatively, run Flask directly with python
-    - Testing Account: test@test.com | Test1234
+        - python main.py
+    - Testing Account: test@test.com | Test123
     - Control + C to stop the server
-@References
-    - https://www.youtube.com/watch?v=dam0GPOAvVI&ab_channel=TechWithTim
-    - ChatGPT for formatted and detailed Running Steps
+@Referenced: https://www.youtube.com/watch?v=dam0GPOAvVI&ab_channel=TechWithTim
 """
 
 from website import create_app
