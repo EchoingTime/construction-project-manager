@@ -29,7 +29,11 @@ This is a web application built using Flask, Bootstrap, and other modern technol
 2. Install the dependencies using `pip install -r requirements.txt`.
 3. Run the app with `python app.py`.
 
-## Running Code:
+## Testing Account:
+
+- test@test.com | Test1234
+
+## Running the Code:
 
 - Open Visual Studio Code's terminal
   - Run the following commands:
@@ -37,14 +41,13 @@ This is a web application built using Flask, Bootstrap, and other modern technol
     2. source venv/bin/activate (Mac/Linux)
     3. venv\Scripts\activate (Windows)
     4. pip install -r requirements.txt
-    - Optional: Set Flask environment variable:
-      - export FLASK_APP=main.py (Mac/Linux) # Set the app to main.py
-      - set FLASK_APP=main.py (Windows) # Set the app to main.py
-      - flask run # Run the Flask app
-    4. Or you can run it directly:
+    5. Optional: Set Flask environment variable:
+    - export FLASK_APP=main.py (Mac/Linux) # Set the app to main.py
+    - set FLASK_APP=main.py (Windows) # Set the app to main.py
+    - flask run # Run the Flask app
+    5. Or you can run it directly:
        - python main.py
-  - Testing Account: test@test.com | Test1234
-  5. Control + C to stop the server
+    6. Control + C to stop the server
 
 ## References
 
