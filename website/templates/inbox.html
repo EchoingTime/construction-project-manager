@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Inbox</title>
+    </head>
+    <body>
+        <h1>Inbox</h1>
+        <h2>Send a message</h2>
+        <form method="POST" action="{{url_for('send_message')}}">
+            <label for="receiver_username">Receipient Username:</label>
+            <input type="text" name="receiver_username" required>
+            <label for="content">Message:</label>
+            <textarea name="content" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+        <div>
+        <h2>Messages</h2>
+        {% if messages %}
+            {% for message in messages %}
+            <div>
+                <p><strong>{{message.sender_name }}</strong>: {{message.message_text }}</p>
+                <p>{{message.time }}</p>
+            </div>
+            {% endfor %}
+        {% else %}
+        <p>No messages found.</p>
+        {% endif %}
+        </div>
+    </body>
+</html>
