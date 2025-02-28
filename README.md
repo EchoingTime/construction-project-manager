@@ -1,12 +1,14 @@
 # Construction Project Manager
 
 # Authors of Project
+
 - Dante Anzalone
 - Nicholas Pietruszka
 - Patrick Sawicki
 - Joe Wagner
 
 ## Description:
+
 This is a web application built using Flask, Bootstrap, and other modern technologies to manage construction projects.
 
 ## Dependencies and Versions:
@@ -27,6 +29,24 @@ This is a web application built using Flask, Bootstrap, and other modern technol
 2. Install the dependencies using `pip install -r requirements.txt`.
 3. Run the app with `python app.py`.
 
+## Running Code:
+
+- Open Visual Studio Code's terminal
+  - Run the following commands:
+    1. python -m venv venv
+    2. source venv/bin/activate (Mac/Linux)
+    3. venv\Scripts\activate (Windows)
+    4. pip install -r requirements.txt
+    - Optional: Set Flask environment variable:
+      - export FLASK_APP=main.py (Mac/Linux) # Set the app to main.py
+      - set FLASK_APP=main.py (Windows) # Set the app to main.py
+      - flask run # Run the Flask app
+    4. Or you can run it directly:
+       - python main.py
+  - Testing Account: test@test.com | Test1234
+  5. Control + C to stop the server
+
 ## References
+
 - [Tech With Tim YouTube Tutorial](https://www.youtube.com/watch?v=dam0GPOAvVI&ab_channel=TechWithTim)
 - ChatGPT for formatting header documentation
