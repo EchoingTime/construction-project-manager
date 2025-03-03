@@ -12,10 +12,10 @@ responsive behavior for different screen sizes. Flash messages for success and e
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-    <!-- Contains meta data for the website -->
+    <!--------------------- Meta Data --------------------->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Now importing bootstrap | CSS framework w/ builtin classes - helps with styling -->
+    <!--------------------- Bootstrap [Will Remove] --------------------->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -27,14 +27,17 @@ responsive behavior for different screen sizes. Flash messages for success and e
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       crossorigin="anonymous"
     />
+    <!--------------------- Stylesheet --------------------->
+    <link rel="stylesheet" href="./../static/style.css" />
 
     <title>{% block title %}Default Title{% endblock %}</title>
-    <!-- Jinja, you can write if statement, for loops, expressions, or a block inside here. A base
-    template that can be overriden in children templates -->
+    <!-- 
+    Jinja, you can write if statement, for loops, expressions, or a block inside here. A base
+    template that can be overriden in children templates 
+    -->
   </head>
-
   <body>
-    <!-- Contains the html -->
+    <!--------------------- Navbar --------------------->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <button
         class="navbar-toggler"
@@ -56,6 +59,7 @@ responsive behavior for different screen sizes. Flash messages for success and e
       </div>
     </nav>
 
+    <!--------------------- Message Flashing --------------------->
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
     messages %} {% for category, message in messages %} {% if category ==
     'error' %}
@@ -78,13 +82,12 @@ responsive behavior for different screen sizes. Flash messages for success and e
 
     <div class="container">{% block content %}{% endblock %}</div>
 
-    <!-- Part of bootstrap classes. Bootstrap website will show detailed examples -->
+    <!--------------------- Bootstrap [Will Remove] --------------------->
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
       crossorigin="anonymous"
     ></script>
-    <!-- Loads the JavaScript related to bootstrap (CSS framework) Fancy animations and what not -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -95,7 +98,7 @@ responsive behavior for different screen sizes. Flash messages for success and e
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-    <!-- Static JavaScript-->
+    <!--------------------- JavaScript --------------------->
     <script
       type="text/javascript"
       src="{{ url_for('static', filename='index.js') }}"

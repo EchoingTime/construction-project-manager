@@ -18,7 +18,7 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST': # Signing in and not just getting the page
+    if request.method == 'POST': # Signing in
         email = request.form.get('email')
         password = request.form.get('password')
 
@@ -35,7 +35,7 @@ def login():
     return render_template("login.html", user=current_user)
 
 @auth.route('/logout')
-@login_required # Decorator, ensures we can not access this page/root unless we are logged in 
+@login_required # Decorator, prohibits access to this page/root unless logged in 
 def logout():
     logout_user()
     return redirect(url_for('auth.login'))
