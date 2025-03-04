@@ -3,9 +3,6 @@
 @Description: This file contains the initialization of the Flask app, configuration of the database, 
 and user authentication setup. It imports the necessary routes, manages the blueprints, 
 and handles database creation for the application.
-@References
-    - https://www.youtube.com/watch?v=dam0GPOAvVI&ab_channel=TechWithTim
-    - ChatGPT for Detailed Description
 """
 
 from flask import Flask, redirect, url_for
