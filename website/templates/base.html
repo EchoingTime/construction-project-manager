@@ -17,7 +17,7 @@ responsive behavior for different screen sizes. Flash messages for success and e
 
     <title>{% block title %}Default Title{% endblock %}</title>
   </head>
-  <body>
+  <body class="{% block body_class %}{% endblock %}">
     <!--------------------- Navbar --------------------->
     <nav>
       <ul class="sidebar">
