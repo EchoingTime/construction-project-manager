@@ -28,7 +28,7 @@ responsive behavior for different screen sizes. Flash messages for success and e
               height="24px"
               viewBox="0 -960 960 960"
               width="24px"
-              fill="#333333"
+              fill="#ffffff"
             >
               <path
                 d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
@@ -36,16 +36,17 @@ responsive behavior for different screen sizes. Flash messages for success and e
             </svg>
           </a>
         </li>
-        <li><a href="#">Construction Project Manager</a></li>
+        <!--------------------- Sidebar of Navbar --------------------->
         {% if user.is_authenticated %}
-        <li class="hideOnMobile"><a href="/">Home</a></li>
-        <li class="hideOnMobile"><a href="/logout">Logout</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/logout">Logout</a></li>
         {% else %}
-        <li class="hideOnMobile"><a href="/login">Log In</a></li>
-        <li class="hideOnMobile"><a href="/sign-up">Sign Up</a></li>
+        <li><a href="/login">Log In</a></li>
+        <li><a href="/sign-up">Sign Up</a></li>
         {% endif %}
       </ul>
       <ul>
+        <!--------------------- Main Navbar --------------------->
         <li><a href="#">Construction Project Manager</a></li>
         {% if user.is_authenticated %}
         <li class="hideOnMobile"><a href="/">Home</a></li>
