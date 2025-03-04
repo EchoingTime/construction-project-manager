@@ -46,6 +46,6 @@ This is a web application built using Flask, Bootstrap, and other modern technol
 
 ## References
 
-- [Python Website Full Tutorial - Flask, Authentication, Databases & More](https://www.youtube.com/watch?v=dam0GPOAvVI&ab_channel=TechWithTim)
-- [How to create a Responsive Navigation Bar (for beginners)](https://www.youtube.com/watch?v=U8smiWQ8Seg&t=11s&ab_channel=Coding2GO)
+- “How to Create a Responsive Navigation Bar (for Beginners).” Www.youtube.com, www youtube.com/watch?v=U8smiWQ8Seg.
+- “Python Website Full Tutorial - Flask, Authentication, Databases & More.” Www.youtube.com, www.youtube.com/watch?v=dam0GPOAvVI.
 - ChatGPT for formatting header documentation
