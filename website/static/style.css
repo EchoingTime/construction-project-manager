@@ -36,8 +36,7 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  top: 5%;
+  padding-top: 1.25%;
   z-index: 999;
 }
 .alert {
@@ -46,8 +45,6 @@ html {
   justify-content: center; /* Center the text */
   padding: 1.25%; /* Adds spacing within the alert box */
   padding-right: 40px; /* Adds padding to move the x button over */
-  margin-top: 5%;
-  margin-bottom: 5%;
   border: 1px solid transparent;
   border-radius: 8px;
   position: relative; /* Allows child elements to be positioned absolutely within alert box */
@@ -151,15 +148,14 @@ nav li:first-child {
 
 /*--------------------- Login and Signup Pages ---------------------*/
 .content-wrapper {
-  margin-top: 80px;
   width: 100%;
-  padding: 100px;
   box-sizing: border-box;
   background-color: var(--base-color);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 5%;
 }
 h1 {
   font-size: 2.5rem;
