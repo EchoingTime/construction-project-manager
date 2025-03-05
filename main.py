@@ -10,6 +10,7 @@
         - pip install -r requirements.txt
         - python main.py
     - Testing Account: test@test.com | test123
+    - Test Message Account: test2@test.com | test123
     - Control + C to stop the server
 """
 

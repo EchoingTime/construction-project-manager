@@ -4,9 +4,9 @@
 including rendering the home page, handling project creation, and deleting projects.
 """
 
-from flask import Blueprint, render_template, request, flash, jsonify
+from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Project
+from .models import Project, Message, User
 from . import db
 import json
 
@@ -39,3 +39,29 @@ def delete_project():
             db.session.commit()
     
     return jsonify({}) # Return empty response
+
+@views.route('/inbox')
+def inbox():
+    user_id = current_user.id 
+    messages = Message.query.join(User, Message.sender_id == User.id).filter(Message.receiver_id == user_id).add_columns(Message.id, Message.message_text, Message.timestamp, User.email.label('sender_name')).order_by(Message.timestamp.desc()).all()
+    return render_template("inbox.html", messages=messages)
+
+@views.route('/send_message', methods=['POST'])
+def send_message():
+    sender_id = current_user.id
+    receiver_name = request.form['receiver_email']
+    content = request.form['content']
+    receiver = User.query.filter_by(email=receiver_name).first()
+
+    if receiver:
+        receiver_id = receiver.id
+        messages = Message(sender_id=sender_id, receiver_id=receiver_id, message_text=content)
+        db.session.add(messages)
+        db.session.commit()
+        flash("Message sent", category="seccess")
+        return redirect(url_for("views.inbox"))
+    else:
+        flash("Something went wrong!", category="error")
+    return render_template("inbox.html", messages=messages)
+
+

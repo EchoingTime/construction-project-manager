@@ -23,7 +23,7 @@ class User(db.Model, UserMixin): # Define schema, the columns
     # add to the user's project relationship, that project id
 
 class Message(db.Model): #Model to handle the messages
-    id = db.Column(db.Integer, primary_key=True, auto_increment=True)   #store all messages in a table 
+    id = db.Column(db.Integer, primary_key=True)   #store all messages in a table 
     sender_id = db.Column(db.Integer, db.ForeignKey('user.id')) #used to fetch the correct messages based on who received and who sent
     receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     message_text = db.Column(db.Text, nullable = False)

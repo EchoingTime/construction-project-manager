@@ -1,0 +1,76 @@
+/*--------------------- Inbox Page ---------------------*/
+body{
+    min-height: 100vh;
+    background-color: #ffffff;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 0px; /* Same height as navbar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--text-color);
+}
+
+h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+}
+
+form {
+    width: 50%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+form label {
+    font-weight: 600;
+}
+
+form input, form textarea {
+    padding: 1em;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 2px solid var(#0000);
+    background-color: var(--input-color);
+    transition: border-color 150ms ease;
+}
+
+form button {
+    border: #0000;
+    border-radius: 1000px;
+    padding: 0.85em 4em;
+    background-color: #00d9ff;
+    color: var(--base-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 150ms ease;
+    align-self: center;
+}
+
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .wrapper {
+        width: 100%;
+        margin: 0 10px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+}
