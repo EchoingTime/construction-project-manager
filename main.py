@@ -11,7 +11,6 @@
         - python main.py
     - Testing Account: test@test.com | test123
     - Control + C to stop the server
-@Referenced: https://www.youtube.com/watch?v=dam0GPOAvVI&ab_channel=TechWithTim
 """
 
 from website import create_app

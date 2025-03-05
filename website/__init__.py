@@ -3,13 +3,10 @@
 @Description: This file contains the initialization of the Flask app, configuration of the database, 
 and user authentication setup. It imports the necessary routes, manages the blueprints, 
 and handles database creation for the application.
-@References
-    - https://www.youtube.com/watch?v=dam0GPOAvVI&ab_channel=TechWithTim
-    - ChatGPT for Detailed Description
 """
 
 from flask import Flask, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy # Getting database ready
+from flask_sqlalchemy import SQLAlchemy # Readying Database
 from os import path
 from flask_login import LoginManager # Manages the login aspects
 
@@ -22,8 +19,7 @@ def create_app(): # Initialize Flask
     # Encrypt and secure session cookies
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{path.join(app.root_path, DB_NAME)}'
     # Need a file to store this in, SQL Light 3 will store this database in the website folder
-    db.init_app(app) # Initalizes the database. Takes the database and tells it which app we will
-    # use with the database
+    db.init_app(app) # Initalizes the database. Takes the database and tells it which app we will use with the database
 
     from .views import views # Got blueprints imported
     from .auth import auth

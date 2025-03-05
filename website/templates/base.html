@@ -1,61 +1,79 @@
 <!--
 @File Name: base.html
-@Description: This file serves as the base template for all pages in the application. It contains the structure for the header, 
-navigation bar, and common scripts that will be used across the application. The title and content blocks are 
+@Description: This file serves as the base template, provided via Jinja, for all pages in the application. It contains the structure 
+for the header, navigation bar, and common scripts that will be used across the application. The title and content blocks are 
 intended to be overridden by child templates. It includes the Bootstrap CSS framework for styling and provides 
 responsive behavior for different screen sizes. Flash messages for success and error notifications are also handled here.
-@References
-    - https://www.youtube.com/watch?v=dam0GPOAvVI&ab_channel=TechWithTim
-    - ChatGPT for Detailed Description
 -->
 
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-    <!-- Contains meta data for the website -->
+    <!--------------------- Meta Data --------------------->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Now importing bootstrap | CSS framework w/ builtin classes - helps with styling -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      crossorigin="anonymous"
-    />
+    <!--------------------- Stylesheet --------------------->
+    <link rel="stylesheet" href="./../static/style.css" />
 
     <title>{% block title %}Default Title{% endblock %}</title>
-    <!-- Jinja, you can write if statement, for loops, expressions, or a block inside here. A base
-    template that can be overriden in children templates -->
   </head>
-
-  <body>
-    <!-- Contains the html -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbar"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbar">
-        <div class="navbar-nav"></div>
+  <body class="{% block body_class %}{% endblock %}">
+    <!--------------------- Navbar --------------------->
+    <nav>
+      <ul class="sidebar">
+        <li onclick="hideSidebar()">
+          <a href="#"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#ffffff"
+            >
+              <path
+                d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
+              />
+            </svg>
+          </a>
+        </li>
+        <!--------------------- Sidebar of Navbar --------------------->
         {% if user.is_authenticated %}
-        <a class="nav-item nav-link" id="home" href="/">Home</a>
-        <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+        <li><a href="/">Home</a></li>
+        <li><a href="/logout">Logout</a></li>
         {% else %}
-        <a class="nav-item nav-link" id="login" href="/login">Login</a>
-        <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>
+        <li><a href="/login">Log In</a></li>
+        <li><a href="/sign-up">Sign Up</a></li>
         {% endif %}
-      </div>
+      </ul>
+      <ul>
+        <!--------------------- Main Navbar --------------------->
+        <li><a href="#">Construction Project Manager</a></li>
+        {% if user.is_authenticated %}
+        <li class="hideOnMobile"><a href="/">Home</a></li>
+        <li class="hideOnMobile"><a href="/logout">Logout</a></li>
+        {% else %}
+        <li class="hideOnMobile"><a href="/login">Log In</a></li>
+        <li class="hideOnMobile"><a href="/sign-up">Sign Up</a></li>
+        {% endif %}
+        <li class="menu-button" onclick="showSidebar()">
+          <a href="#">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#ffffff"
+            >
+              <path
+                d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"
+              />
+            </svg>
+          </a>
+        </li>
+      </ul>
     </nav>
 
+    <!--------------------- Message Flashing --------------------->
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
     messages %} {% for category, message in messages %} {% if category ==
     'error' %}
@@ -78,24 +96,7 @@ responsive behavior for different screen sizes. Flash messages for success and e
 
     <div class="container">{% block content %}{% endblock %}</div>
 
-    <!-- Part of bootstrap classes. Bootstrap website will show detailed examples -->
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <!-- Loads the JavaScript related to bootstrap (CSS framework) Fancy animations and what not -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
-    <!-- Static JavaScript-->
+    <!--------------------- JavaScript --------------------->
     <script
       type="text/javascript"
       src="{{ url_for('static', filename='index.js') }}"

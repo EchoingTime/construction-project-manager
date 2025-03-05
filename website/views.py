@@ -2,9 +2,6 @@
 @File Name: views.py
 @Description: This file contains the routes for handling the main application views, 
 including rendering the home page, handling project creation, and deleting projects.
-@References
-    - https://www.youtube.com/watch?v=dam0GPOAvVI&ab_channel=TechWithTim
-    - ChatGPT for Detailed Description
 """
 
 from flask import Blueprint, render_template, request, flash, jsonify

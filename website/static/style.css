@@ -1,0 +1,221 @@
+/*
+@File Name: style.css
+@Description: This file contains CSS for the front-end of the web application.
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+}
+/*--------------------- Navbar ---------------------*/
+body {
+  min-height: 100vh; /* Content occupies entire screen */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding-top: 60px; /* Same height as navbar */
+}
+nav {
+  background-color: #333333;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+nav ul {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+nav li {
+  height: 50px;
+}
+nav a {
+  height: 100%;
+  padding: 0 30px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+}
+nav a:hover {
+  background-color: #515151;
+  color: #ffffff;
+}
+nav li:first-child {
+  margin-right: auto;
+}
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 250px;
+  z-index: 999;
+  background-color: #33333333;
+  backdrop-filter: blur(10px);
+  box-shadow: -10px 0px 10px #0000001a;
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.sidebar li {
+  width: 100%;
+}
+.sidebar a {
+  width: 100%;
+  color: #515151;
+}
+.sidebar a:hover {
+  background-color: #515151;
+  color: #ffffff;
+}
+.menu-button {
+  display: none;
+}
+@media (max-width: 800px) {
+  .hideOnMobile {
+    display: none;
+  }
+  .menu-button {
+    display: block;
+  }
+}
+@media (max-width: 400px) {
+  .sidebar {
+    width: 100%;
+  }
+}
+/*--------------------- Login and Signup Pages ---------------------*/
+:root {
+  --accent-color: #333333;
+  --base-color: white;
+  --text-color: #2e2b41;
+  --input-color: #f3f0ff;
+}
+html {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12pt;
+  color: var(--text-color);
+  text-align: center;
+}
+body.login-signup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+  flex-direction: column; /* Stays below navbar */
+  margin-top: 60px;
+}
+.wrapper {
+  background-color: var(--base-color);
+  width: max(400px, 90%);
+  border-radius: 0 20px 20px 0;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+h1 {
+  font-size: 3rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+form {
+  width: min(400px, 100%);
+  margin-top: 20px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+form > div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+form label {
+  flex-shrink: 0;
+  height: 50px;
+  width: 50px;
+  background-color: var(--accent-color);
+  fill: var(--base-color);
+  color: var(--base-color);
+  border-radius: 10px 0 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+form input {
+  box-sizing: border-box;
+  flex-grow: 1;
+  min-width: 0;
+  height: 50px;
+  padding: 1em;
+  font: inherit;
+  border-radius: 0 10px 10px 0;
+  border: 2px solid var(--input-color);
+  border-left: none;
+  background-color: var(--input-color);
+  transition: 150ms ease;
+}
+form input:hover {
+  border-color: var(--accent-color);
+}
+form input:focus {
+  outline: none;
+  border-color: var(--text-color);
+}
+div:has(input:focus) > label {
+  background-color: var(--text-color);
+}
+form input::placeholder {
+  color: var(--text-color);
+}
+form button {
+  margin-top: 10px;
+  border: none;
+  border-radius: 1000px;
+  padding: 0.85em 4em;
+  background-color: var(--accent-color);
+  color: var(--base-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 150ms ease;
+}
+form button:hover {
+  background-color: var(--text-color);
+}
+form button:focus {
+  outline: none;
+  background-color: var(--text-color);
+}
+a {
+  text-decoration: none;
+  color: var(--accent-color);
+}
+a:hover {
+  text-decoration: underline;
+}
+@media (max-width: 1100px) {
+  .wrapper {
+    width: min(600px, 100%);
+    border-radius: 0;
+  }
+}
+form div.incorrect label {
+  background-color: #f06272;
+}
+form div.incorrect input {
+  border-color: #f06272;
+}
+#error-message {
+  color: #f06272;
+}
