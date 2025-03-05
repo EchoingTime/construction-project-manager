@@ -10,13 +10,16 @@ responsive behavior for different screen sizes. Flash messages for success and e
 <html lang="en-US">
   <head>
     <!--------------------- Meta Data --------------------->
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--------------------- Stylesheet --------------------->
+
     <link rel="stylesheet" href="./../static/style.css" />
 
     <title>{% block title %}Default Title{% endblock %}</title>
   </head>
+
   <body class="{% block body_class %}{% endblock %}">
     <!--------------------- Navbar --------------------->
     <nav>
@@ -39,6 +42,7 @@ responsive behavior for different screen sizes. Flash messages for success and e
         <!--------------------- Sidebar of Navbar --------------------->
         {% if user.is_authenticated %}
         <li><a href="/">Home</a></li>
+        <li><a href="/inbox">Inbox</a></li>
         <li><a href="/logout">Logout</a></li>
         {% else %}
         <li><a href="/login">Log In</a></li>
@@ -50,8 +54,8 @@ responsive behavior for different screen sizes. Flash messages for success and e
         <li><a href="#">Construction Project Manager</a></li>
         {% if user.is_authenticated %}
         <li class="hideOnMobile"><a href="/">Home</a></li>
-        <li class="hideOnMobile"><a href="/logout">Logout</a></li>
         <li class="hideOnMobile"><a href="/inbox">Inbox</a></li>
+        <li class="hideOnMobile"><a href="/logout">Logout</a></li>
         {% else %}
         <li class="hideOnMobile"><a href="/login">Log In</a></li>
         <li class="hideOnMobile"><a href="/sign-up">Sign Up</a></li>
@@ -73,7 +77,6 @@ responsive behavior for different screen sizes. Flash messages for success and e
         </li>
       </ul>
     </nav>
-
     <!--------------------- Message Flashing --------------------->
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
     messages %} {% for category, message in messages %} {% if category ==
@@ -94,6 +97,7 @@ responsive behavior for different screen sizes. Flash messages for success and e
       </button>
     </div>
     {% endif %} {% endfor %} {% endif %} {% endwith %}
+    <!--------------------- Content Area --------------------->
 
     <div class="container">{% block content %}{% endblock %}</div>
 
