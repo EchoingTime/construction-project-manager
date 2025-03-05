@@ -4,6 +4,17 @@
 the web application.
 */
 
+/*--------------------- Message Flashing ---------------------*/
+document.addEventListener("DOMContentLoaded", function () {
+  var closeButtons = document.querySelectorAll(".alert .close");
+  closeButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      var alert = this.parentElement;
+      alert.style.display = "none";
+    });
+  });
+});
+
 /*--------------------- Navbar ---------------------*/
 function showSidebar() {
   const sidebar = document.querySelector(".sidebar");

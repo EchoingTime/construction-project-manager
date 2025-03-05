@@ -77,30 +77,29 @@ responsive behavior for different screen sizes. Flash messages for success and e
         </li>
       </ul>
     </nav>
-    <!--------------------- Message Flashing --------------------->
-    {% with messages = get_flashed_messages(with_categories=true) %} {% if
-    messages %} {% for category, message in messages %} {% if category ==
-    'error' %}
-    <div class="alert alert-danger alert-dismissable fade show" role="alert">
-      <!-- Error alert -->
-      {{ message }}
-      <button type="button" class="close" data-dismiss="alert">
-        <span aria-hidden="true">×</span>
-      </button>
+    <!--------------------- Main Content --------------------->
+    <div class="main-content">
+      <!--------------------- Message Flashing --------------------->
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %} {% if category ==
+      'error' %}
+      <div class="alert-messages">
+        <div class="alert alert-error" role="alert">
+          <!-- Error alert -->
+          {{ message }}
+          <span class="close" aria-hidden="true">×</span>
+        </div>
+        {% else %}
+        <div class="alert alert-success" role="alert">
+          <!-- Success alert -->
+          {{ message }}
+          <span class="close" aria-hidden="true">×</span>
+        </div>
+      </div>
+      {% endif %} {% endfor %} {% endif %} {% endwith %}
+      <!--------------------- Content Area --------------------->
+      <div class="container">{% block content %}{% endblock %}</div>
     </div>
-    {% else %}
-    <div class="alert alert-success alert-dismissable fade show" role="alert">
-      <!-- Success alert -->
-      {{ message }}
-      <button type="button" class="close" data-dismiss="alert">
-        <span aria-hidden="true">×</span>
-      </button>
-    </div>
-    {% endif %} {% endfor %} {% endif %} {% endwith %}
-    <!--------------------- Content Area --------------------->
-
-    <div class="container">{% block content %}{% endblock %}</div>
-
     <!--------------------- JavaScript --------------------->
     <script
       type="text/javascript"

@@ -18,13 +18,13 @@ def home():
     if request.method == 'POST':
         project = request.form.get('project')
 
-        if len(project) < 1:
-            flash('Project title is too short!', category='error')
+        if len(project) < 1: # If project does not have a title, flash an error while preventing creation
+            flash('Project needs a descriptive title!', category='error')
         else:
             new_project = Project(data=project, user_id=current_user.id)
             db.session.add(new_project)
             db.session.commit()
-            flash('Project created!', category='success')
+            flash('Created New Project', category='success')
 
     return render_template("home.html", user=current_user)
 
@@ -36,6 +36,7 @@ def delete_project():
     if project: # If note exists
         if project.user_id == current_user.id: # If we own that project
             db.session.delete(project) # Delete it
+            flash('Deleted Project', category='success')
             db.session.commit()
     
     return jsonify({}) # Return empty response
@@ -63,5 +64,3 @@ def send_message():
     else:
         flash("Something went wrong!", category="error")
     return render_template("inbox.html", messages=messages)
-
-
