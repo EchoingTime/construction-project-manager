@@ -1,5 +1,5 @@
 """
-@File Name: views.py
+@File Name: __init__.py
 @Description: This file contains the initialization of the Flask app, configuration of the database, 
 and user authentication setup. It imports the necessary routes, manages the blueprints, 
 and handles database creation for the application.
