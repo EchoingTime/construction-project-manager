@@ -3,25 +3,33 @@
 @Description: This file contains CSS for the front-end of the web application.
 */
 
-/*--------------------- Main CSS ---------------------*/
-
+/*--------------------- Root Variables ---------------------*/
 :root {
   --accent-color: #333333;
   --base-color: white;
   --text-color: #2e2b41;
   --input-color: #f3f0ff;
+  --alert-error-bg: #f2dede;
+  --alert-success-bg: #dff0d8;
+  --alert-error-border: #ebccd1;
+  --alert-success-border: #d6e9c6;
 }
+
+/*--------------------- Global Styles ---------------------*/
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 html {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 12pt;
   color: var(--text-color);
   text-align: center;
 }
+
+/*--------------------- Page Layout ---------------------*/
 .page-container {
   display: flex;
   flex-direction: column;
@@ -32,7 +40,7 @@ html {
   box-sizing: border-box;
 }
 
-/*--------------------- Message Flashing ---------------------*/
+/*--------------------- Alert Box ---------------------*/
 .alert-container {
   width: 100%;
   display: flex;
@@ -41,43 +49,48 @@ html {
   padding-top: 1.25%;
   z-index: 999;
 }
+
 .alert {
   display: flex;
-  align-items: center; /* Vertically align items */
-  justify-content: center; /* Center the text */
-  padding: 1.25%; /* Adds spacing within the alert box */
-  padding-right: 40px; /* Adds padding to move the x button over */
+  align-items: center;
+  justify-content: center;
+  padding: 1.25%;
+  padding-right: 40px;
   border: 1px solid transparent;
   border-radius: 8px;
-  position: relative; /* Allows child elements to be positioned absolutely within alert box */
+  position: relative;
   max-width: 90%;
 }
+
 .alert-error {
   color: #a94442;
-  background-color: #f2dede;
-  border-color: #ebccd1;
+  background-color: var(--alert-error-bg);
+  border-color: var(--alert-error-border);
 }
+
 .alert-success {
   color: #3c763d;
-  background-color: #dff0d8;
-  border-color: #d6e9c6;
+  background-color: var(--alert-success-bg);
+  border-color: var(--alert-success-border);
 }
+
 .alert .close {
   font-size: 25px;
   cursor: pointer;
-  position: absolute; /* Position the close button absolutely */
-  right: 10px; /* Align the close button to the right */
+  position: absolute;
+  right: 10px;
 }
 
 /*--------------------- Navbar ---------------------*/
 nav {
-  background-color: #333333;
+  background-color: var(--accent-color);
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
 }
+
 nav ul {
   width: 100%;
   list-style: none;
@@ -85,10 +98,13 @@ nav ul {
   justify-content: flex-end;
   align-items: center;
 }
+
 nav li {
   height: 50px;
 }
-nav a {
+
+nav a,
+.nav-title {
   height: 100%;
   padding: 0 30px;
   text-decoration: none;
@@ -96,10 +112,12 @@ nav a {
   align-items: center;
   color: #ffffff;
 }
+
 nav a:hover {
   background-color: #515151;
   color: #ffffff;
 }
+
 nav li:first-child {
   margin-right: auto;
 }
@@ -112,43 +130,50 @@ nav li:first-child {
   height: 100vh;
   width: 250px;
   z-index: 999;
-  background-color: #33333333;
+  background-color: rgba(51, 51, 51, 0.2);
   backdrop-filter: blur(10px);
-  box-shadow: -10px 0px 10px #0000001a;
+  box-shadow: -10px 0px 10px rgba(0, 0, 0, 0.1);
   display: none;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
 }
+
 .sidebar li {
   width: 100%;
 }
+
 .sidebar a {
   width: 100%;
   color: #515151;
 }
+
 .sidebar a:hover {
   background-color: #515151;
   color: #ffffff;
 }
+
 .menu-button {
   display: none;
 }
+
 @media (max-width: 800px) {
   .hideOnMobile {
     display: none;
   }
+
   .menu-button {
     display: block;
   }
 }
+
 @media (max-width: 400px) {
   .sidebar {
     width: 100%;
   }
 }
 
-/*--------------------- Login and Signup Pages ---------------------*/
+/*--------------------- Forms (Login & Signup) ---------------------*/
 .content-wrapper {
   width: 100%;
   box-sizing: border-box;
@@ -159,11 +184,13 @@ nav li:first-child {
   justify-content: center;
   margin-top: 5%;
 }
+
 h1 {
   font-size: 2.5rem;
   font-weight: 900;
   text-transform: uppercase;
 }
+
 form {
   width: min(400px, 100%);
   margin-top: 20px;
@@ -173,26 +200,28 @@ form {
   align-items: center;
   gap: 10px;
 }
+
 form > div {
   width: 100%;
   display: flex;
   justify-content: center;
 }
+
 form label {
   flex-shrink: 0;
   height: 50px;
   width: 50px;
   background-color: var(--accent-color);
-  fill: var(--base-color);
   color: var(--base-color);
+  fill: var(--base-color);
   border-radius: 10px 0 0 10px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
   font-weight: 500;
 }
+
 form input {
   box-sizing: border-box;
   flex-grow: 1;
@@ -206,19 +235,24 @@ form input {
   background-color: var(--input-color);
   transition: 150ms ease;
 }
+
 form input:hover {
   border-color: var(--accent-color);
 }
+
 form input:focus {
   outline: none;
   border-color: var(--text-color);
 }
+
 div:has(input:focus) > label {
   background-color: var(--text-color);
 }
+
 form input::placeholder {
   color: var(--text-color);
 }
+
 form button {
   margin-top: 10px;
   border: none;
@@ -231,32 +265,40 @@ form button {
   cursor: pointer;
   transition: 150ms ease;
 }
+
 form button:hover {
   background-color: var(--text-color);
 }
+
 form button:focus {
   outline: none;
   background-color: var(--text-color);
 }
+
 a {
   text-decoration: none;
   color: var(--accent-color);
 }
+
 a:hover {
   text-decoration: underline;
 }
+
 @media (max-width: 1100px) {
   .wrapper {
     width: min(600px, 100%);
     border-radius: 0;
   }
 }
+
 form div.incorrect label {
   background-color: #f06272;
 }
+
 form div.incorrect input {
   border-color: #f06272;
 }
+
 #error-message {
   color: #f06272;
 }
