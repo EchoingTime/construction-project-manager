@@ -29,9 +29,10 @@ This is a web application built using Flask, Bootstrap, and other modern technol
 2. Install the dependencies using `pip install -r requirements.txt`.
 3. Run the app with `python app.py`.
 
-## Testing Account:
+## Testing Accounts:
 
 - test@test.com | test123
+- test2@test.com | test123
 
 ## Running the Code:
 
