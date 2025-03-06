@@ -3,6 +3,8 @@
 @Description: This file contains CSS for the front-end of the web application.
 */
 
+/*--------------------- Main CSS ---------------------*/
+
 :root {
   --accent-color: #333333;
   --base-color: white;
@@ -26,7 +28,7 @@ html {
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  padding-top: 60px;
+  margin-top: 55px;
   box-sizing: border-box;
 }
 
