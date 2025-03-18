@@ -9,7 +9,7 @@
 
 ## Description:
 
-This is a web application built using Flask, Bootstrap, and other modern technologies to manage construction projects.
+This is a web application built using Flask and other modern technologies to manage construction projects.
 
 ## Dependencies and Versions:
 
@@ -27,23 +27,15 @@ This is a web application built using Flask, Bootstrap, and other modern technol
 
 1. Clone the repository: https://github.com/EchoingTime/construction-project-manager.git
 2. Install the dependencies using `pip install -r requirements.txt`.
-3. Run the app with `python app.py`.
+
+## Running the Code:
+
+- Instructions for running the code can be found in main.py
 
 ## Testing Accounts:
 
 - test@test.com | test123
 - test2@test.com | test123
-
-## Running the Code:
-
-- Open Visual Studio Code's terminal
-  - Run the following commands:
-    1. python -m venv venv
-    2. source venv/bin/activate (Mac/Linux)
-    3. venv\Scripts\activate (Windows)
-    4. pip install -r requirements.txt
-    5. python main.py
-    6. Control + C to stop the server
 
 ## References
 

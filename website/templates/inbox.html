@@ -20,7 +20,7 @@ belonging to the current logged-in user, allowing users to view and send message
     <h1>Inbox</h1>
     <h2>Send a message</h2>
     <form method="POST" action="{{url_for('views.send_message')}}">
-      <label for="receiver_email">Receipient Email:</label>
+      <label for="receiver_email">Recipient Email:</label>
       <input type="text" name="receiver_email" required />
       <label for="content">Message:</label>
       <textarea name="content" required></textarea>
