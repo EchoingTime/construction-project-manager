@@ -8,10 +8,13 @@
         - source venv/bin/activate (Mac/Linux)
         - venv\Scripts\activate (Windows)
         - pip install -r requirements.txt
-        - python3 main.py
-    - Testing Account: test@test.com | test123
-    - Test Message Account: test2@test.com | test123
+        - python3 main.py 
+    - Testing Account: test@test.com | test123          
+    - Test Message Account: test2@test.com | test123        
+    - Test Subcontractor Account: subcon@test.com | subpass 
     - Control + C to stop the server
+
+    (test accounts 1 and 2 are *default* contractors because they were made before the user table had a "role" field)
 """
 
 from website import create_app

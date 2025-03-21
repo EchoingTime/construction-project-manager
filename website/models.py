@@ -19,6 +19,7 @@ class User(db.Model, UserMixin): # Define schema, the columns
     email = db.Column(db.String(150), unique=True) # No user can have the same email as another
     password = db.Column(db.String(150))
     first_name = db.Column(db.String(150))
+    role = db.Column(db.String(150))
     projects = db.relationship('Project') # Tells Flask and sqlAlchemy to do their magic, and when creating a project, 
     # add to the user's project relationship, that project id
 
