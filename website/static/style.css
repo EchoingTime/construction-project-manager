@@ -8,7 +8,9 @@
   --accent-color: #333333;
   --base-color: white;
   --text-color: #2e2b41;
-  --input-color: #f3f0ff;
+  --input-color: #f5f5f5;
+  --input-filled-color: #eef7ff;
+  --form-background-color: #3a7ca5;
   --alert-error-bg: #f2dede;
   --alert-success-bg: #dff0d8;
   --alert-error-border: #ebccd1;
@@ -222,7 +224,8 @@ form label {
   font-weight: 500;
 }
 
-form input {
+form input,
+select {
   box-sizing: border-box;
   flex-grow: 1;
   min-width: 0;
@@ -236,21 +239,43 @@ form input {
   transition: 150ms ease;
 }
 
-form input:hover {
+#role-select {
+  padding: 0.5em;
+  background-color: var(--input-color);
+}
+
+form input:hover,
+select:hover {
   border-color: var(--accent-color);
 }
 
-form input:focus {
+form input:focus,
+select:focus {
   outline: none;
-  border-color: var(--text-color);
+  border-color: var(--form-background-color);
 }
 
 div:has(input:focus) > label {
-  background-color: var(--text-color);
+  /* Changes the icon box's color when changing field */
+  background-color: var(--form-background-color);
+}
+div:has(select:focus) > label {
+  background-color: var(--form-background-color);
 }
 
 form input::placeholder {
   color: var(--text-color);
+}
+
+select option:disabled {
+  color: var(--text-color);
+  font-style: italic;
+}
+
+input:not(:placeholder-shown),
+#role-select:valid {
+  /* When information is filled */
+  background-color: var(--input-filled-color);
 }
 
 form button {
