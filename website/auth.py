@@ -11,8 +11,6 @@ from werkzeug.security import generate_password_hash, check_password_hash # Secu
 from . import db # Means from __init__.py import database
 from flask_login import login_user, login_required, logout_user, current_user # Handles logging in\
 
-
-
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -42,7 +40,7 @@ def logout():
     logout_user()
     return redirect(url_for('auth.login'))
 
-@auth.route('/sign-up', methods=['GET', 'POST'])
+@auth.route('/registry', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST': # Checking Request
         email = request.form.get('email')
@@ -71,4 +69,4 @@ def sign_up():
             flash('Account successfully created!', category='success')
             return redirect(url_for('views.home')) # Redirect to home page
 
-    return render_template("sign_up.html", user=current_user)
+    return render_template("registry.html", user=current_user)
