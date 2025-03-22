@@ -1,6 +1,6 @@
 <!--
-@File Name: login.html
-@Description: This file contains the HTML form for user login, including fields for email 
+@File Name: sign-in.html
+@Description: This file contains the HTML form for user sign in, including fields for email 
 and password. It is part of the user authentication process, allowing users 
 to access their accounts in the web application.
 -->
@@ -13,7 +13,7 @@ to access their accounts in the web application.
     <!--------------------- Stylesheet --------------------->
     <link rel="stylesheet" href="./../static/style.css" />
     <!--------------------- Page Title --------------------->
-    <title>Login</title>
+    <title>Sign In</title>
   </head>
   <body>
     <main class="page-container">
@@ -37,14 +37,24 @@ to access their accounts in the web application.
         </div>
         {% endif %} {% endfor %} {% endif %} {% endwith %}
       </div>
-      <!--------------------- Login Content --------------------->
+      <!--------------------- Sign In Content --------------------->
       <div class="content-wrapper">
-        <h1>Log In</h1>
+        <h1>Sign In</h1>
         <p id="error-message"></p>
         <form id="form" method="POST">
           <div>
             <label for="email-input">
-              <span>@</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="#e8eaed"
+              >
+                <path
+                  d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z"
+                />
+              </svg>
             </label>
             <input
               type="email"
@@ -57,12 +67,13 @@ to access their accounts in the web application.
             <label for="password-input">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                height="24"
+                height="24px"
                 viewBox="0 -960 960 960"
-                width="24"
+                width="24px"
+                fill="#e8eaed"
               >
                 <path
-                  d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm240-200q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80Z"
+                  d="M420-680q0-33 23.5-56.5T500-760q33 0 56.5 23.5T580-680q0 33-23.5 56.5T500-600q-33 0-56.5-23.5T420-680ZM500 0 320-180l60-80-60-80 60-85v-47q-54-32-87-86.5T260-680q0-100 70-170t170-70q100 0 170 70t70 170q0 67-33 121.5T620-472v352L500 0ZM340-680q0 56 34 98.5t86 56.5v125l-41 58 61 82-55 71 75 75 40-40v-371q52-14 86-56.5t34-98.5q0-66-47-113t-113-47q-66 0-113 47t-47 113Z"
                 />
               </svg>
             </label>
@@ -73,7 +84,7 @@ to access their accounts in the web application.
               placeholder="Enter Password"
             />
           </div>
-          <button type="submit">Log In</button>
+          <button type="submit">Sign In</button>
         </form>
         <p>Not registered? <a href="/registry">Create an Account</a></p>
       </div>
