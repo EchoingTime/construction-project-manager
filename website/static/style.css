@@ -4,6 +4,7 @@
 */
 
 /*--------------------- Root Variables ---------------------*/
+
 :root {
   --accent-color: #333333;
   --base-color: white;
@@ -18,20 +19,19 @@
 }
 
 /*--------------------- Global Styles ---------------------*/
+
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 html {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 12pt;
   color: var(--text-color);
-  text-align: center;
 }
 
 /*--------------------- Page Layout ---------------------*/
+
 .page-container {
   display: flex;
   flex-direction: column;
@@ -43,6 +43,7 @@ html {
 }
 
 /*--------------------- Alert Box ---------------------*/
+
 .alert-container {
   width: 100%;
   display: flex;
@@ -84,6 +85,7 @@ html {
 }
 
 /*--------------------- Navbar ---------------------*/
+
 nav {
   background-color: var(--accent-color);
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
@@ -125,6 +127,7 @@ nav li:first-child {
 }
 
 /*--------------------- Sidebar ---------------------*/
+
 .sidebar {
   position: fixed;
   top: 0;
@@ -176,6 +179,7 @@ nav li:first-child {
 }
 
 /*--------------------- Forms (Login & Signup) ---------------------*/
+
 .content-wrapper {
   width: 100%;
   box-sizing: border-box;
