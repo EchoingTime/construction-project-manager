@@ -20,7 +20,6 @@
   --icon-clr: #131313; /* Icons */
   --icon-form-clr: #e0e6ed;
   /* Background Variants */
-  --dark-bg-clr: #343a40; /* Contrasting sections */
   --transparent-bg-clr: #343a402d; /* Transparent background */
   --transparent-border-clr: #343a4012; /* Transparent border */
   --secondary-tp-bg-clr: #0066cc23; /* Secondary Transparent background */
@@ -344,6 +343,21 @@ main {
   padding-bottom: 5px;
 }
 
+/*--------------------- Project Page Specifics ---------------------*/
+#project-section h2 {
+  margin-bottom: 15px;
+}
+#project-section ul {
+  border: 1px solid var(--line-clr);
+  border-radius: 10px;
+  padding: 0 5px 5px 5px; /* | Top | Right | Bottom | Left */
+  list-style: none;
+}
+#project-section li {
+  background-color: var(--accent-clr);
+  color: var(--secondary-text-clr);
+  margin: 5px;
+}
 /*--------------------- Footer ---------------------*/
 
 footer {

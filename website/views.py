@@ -12,20 +12,31 @@ import json
 
 views = Blueprint('views', __name__)
 
+# ChatGPT Assistance with page refreshing project dublications
 @views.route('/', methods=['GET', 'POST']) # Main page of website
 @login_required
-def home():
+def create_project():
     if request.method == 'POST':
         project = request.form.get('project')
 
         if len(project) < 1: # If project does not have a title, flash an error while preventing creation
             flash('Project needs a descriptive title!', category='error')
         else:
-            new_project = Project(data=project, user_id=current_user.id)
-            db.session.add(new_project)
-            db.session.commit()
-            flash('Created New Project', category='success')
+            # Check if project already exists
+            existing_project = Project.query.filter_by(data=project, user_id=current_user.id).first()
+            if existing_project:
+                flash("This project already exists!", category='error')
+            else:
+                # Create and save it
+                new_project = Project(data=project, user_id=current_user.id)
+                db.session.add(new_project)
+                db.session.commit()
+                flash('Created New Project', category='success')
+            
+            # Redirect to the same page (prevents form re-submission via freshing page)
+            return redirect(url_for('views.create_project'))
 
+    # Renders the page consisting of the user's projects
     return render_template("home.html", user=current_user)
 
 @views.route('/delete-project', methods=['POST'])
