@@ -5,6 +5,7 @@ the web application.
 */
 
 /*--------------------- Message Flashing ---------------------*/
+
 document.addEventListener("DOMContentLoaded", function () {
   var closeButtons = document.querySelectorAll(".alert .close");
   closeButtons.forEach(function (button) {
@@ -16,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /*--------------------- Navbar ---------------------*/
+
 function showSidebar() {
   const sidebar = document.querySelector(".sidebar");
   sidebar.style.display = "flex";
@@ -24,6 +26,9 @@ function hideSidebar() {
   const sidebar = document.querySelector(".sidebar");
   sidebar.style.display = "none";
 }
+
+/*--------------------- Delete Projects ---------------------*/
+
 function deleteProject(projectId) {
   fetch("/delete-project", {
     method: "POST",
@@ -34,6 +39,7 @@ function deleteProject(projectId) {
 }
 
 /*--------------------- Login and Signup Pages ---------------------*/
+
 const form = document.getElementById("form");
 const firstname_input = document.getElementById("firstname-input");
 const email_input = document.getElementById("email-input");
