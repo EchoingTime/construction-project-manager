@@ -355,6 +355,7 @@ main {
 }
 #project-section li {
   background-color: var(--accent-clr);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   color: var(--secondary-text-clr);
   margin: 5px;
 }

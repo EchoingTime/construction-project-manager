@@ -37,8 +37,8 @@ def project():
                 db.session.commit()
                 flash('Created New Project', category='success')
             
-            # Redirect to the same page (prevents form re-submission via freshing page)
-            return redirect(url_for('views.create_project'))
+        # Redirect to the same page (prevents form re-submission via freshing page)
+        return redirect(url_for('views.project'))
 
     # Renders the page consisting of the user's projects
     return render_template("home.html", user=current_user)
