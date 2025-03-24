@@ -12,6 +12,10 @@ import json
 
 views = Blueprint('views', __name__)
 
+# --------------------- Project Page ---------------------
+
+# ----------- Project Creation -----------
+
 # ChatGPT Assistance with page refreshing project dublications
 @views.route('/', methods=['GET', 'POST']) # Main page of website
 @login_required
@@ -39,6 +43,8 @@ def create_project():
     # Renders the page consisting of the user's projects
     return render_template("home.html", user=current_user)
 
+# ----------- Project Deletion -----------
+
 @views.route('/delete-project', methods=['POST'])
 def delete_project():
     project = json.loads(request.data) # Takes in data from POST request and loads it as a Python dictonary of json object
@@ -52,11 +58,15 @@ def delete_project():
     
     return jsonify({}) # Return empty response
 
+# --------------------- Inbox Page ---------------------
+
 @views.route('/inbox')
 def inbox():
     user_id = current_user.id 
     messages = Message.query.join(User, Message.sender_id == User.id).filter(Message.receiver_id == user_id).add_columns(Message.id, Message.message_text, Message.timestamp, User.email.label('sender_name')).order_by(Message.timestamp.desc()).all()
     return render_template("inbox.html", messages=messages)
+
+# ----------- Sending Messages -----------
 
 @views.route('/send_message', methods=['POST'])
 def send_message():
