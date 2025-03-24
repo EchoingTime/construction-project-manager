@@ -27,7 +27,7 @@ def login():
                 if user.role == "subcontractor":    
                      return render_template("homeSub.html", user=current_user)
                 else:
-                    return redirect(url_for('views.home'))
+                    return redirect(url_for('views.project'))
             else:
                 flash('Incorrect password.', category='error')
         else:

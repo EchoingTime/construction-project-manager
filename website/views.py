@@ -19,7 +19,7 @@ views = Blueprint('views', __name__)
 # ChatGPT Assistance with page refreshing project dublications
 @views.route('/', methods=['GET', 'POST']) # Main page of website
 @login_required
-def create_project():
+def project():
     if request.method == 'POST':
         project = request.form.get('project')
 
