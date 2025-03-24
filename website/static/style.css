@@ -268,7 +268,11 @@ aside {
   fill: var(--icon-hover-clr);
 }
 #default-asidebar .active a:hover {
-  background-color: var(--base-clr);
+  background-color: var(--hover-clr);
+  color: var(--hover-text-clr);
+}
+#default-asidebar .active a:hover svg {
+  fill: var(--icon-hover-clr);
 }
 #default-asidebar .sub-menu {
   /* Transition only works on grid layouts */
