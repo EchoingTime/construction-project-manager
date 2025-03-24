@@ -14,14 +14,28 @@ This is a web application built using Flask and other modern technologies to man
 ## Dependencies and Versions:
 
 - **Python**: 3.13.2
-- **Jinja2**: 3.1.5
-- **Flask**: 2.3.2
-- **Flask-SQLAlchemy**: 3.1.2
-- **Flask-Login**: 0.6.2
 - **JavaScript**: (ES6+)
 - **HTML5**
-- **Bootstrap**: 5.3.3
 - **jQuery**: 3.6.0
+- **Flask**: 3.1.0
+- **Flask-Login**: 0.6.3
+- **Flask-Migrate**: 4.1.0
+- **Flask-SQLAlchemy**: 3.1.1
+- **Jinja2**: 3.1.5
+- **SQLAlchemy**: 2.0.38
+
+## Others:
+
+- **alembic**: 1.15.1
+- **blinker**: 1.9.0
+- **click**: 8.1.8
+- **colorama**: 0.4.6
+- **greenlet**: 3.1.1
+- **itsdangerous**: 2.2.0
+- **Mako**: 1.3.9
+- **MarkupSafe**: 3.0.2
+- **typing_extensions**: 4.12.2
+- **Werkzeug**: 3.1.3
 
 ## Installation:
 
@@ -36,6 +50,7 @@ This is a web application built using Flask and other modern technologies to man
 
 - test@test.com | test123
 - test2@test.com | test123
+- subcon@test.com | subpass
 
 ## References
 

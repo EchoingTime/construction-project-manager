@@ -11,9 +11,9 @@ from werkzeug.security import generate_password_hash, check_password_hash # Secu
 from . import db # Means from __init__.py import database
 from flask_login import login_user, login_required, logout_user, current_user # Handles logging in\
 
-
-
 auth = Blueprint('auth', __name__)
+
+# --------------------- Login Page ---------------------
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -29,12 +29,14 @@ def login():
                 if user.role == "subcontractor":    
                      return render_template("homeSub.html", user=current_user)
                 else:
-                    return redirect(url_for('views.home'))
+                    return redirect(url_for('views.project'))
             else:
                 flash('Incorrect password.', category='error')
         else:
             flash('Email does not exist.', category='error')
     return render_template("login.html", user=current_user)
+
+# --------------------- Logout Function ---------------------
 
 @auth.route('/logout')
 @login_required # Decorator, prohibits access to this page/root unless logged in 
@@ -42,14 +44,16 @@ def logout():
     logout_user()
     return redirect(url_for('auth.login'))
 
-@auth.route('/sign-up', methods=['GET', 'POST'])
+# --------------------- Registry ---------------------
+
+@auth.route('/registry', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST': # Checking Request
-        email = request.form.get('email')
         first_name = request.form.get('firstname')
+        email = request.form.get('email')
+        role = request.form.get('role')
         password1 = request.form.get('password')
         password2 = request.form.get('repeat-password')
-        role = request.form.get('role')
 
         user = User.query.filter_by(email=email).first()
 
@@ -71,4 +75,4 @@ def sign_up():
             flash('Account successfully created!', category='success')
             return redirect(url_for('views.home')) # Redirect to home page
 
-    return render_template("sign_up.html", user=current_user)
+    return render_template("registry.html", user=current_user)

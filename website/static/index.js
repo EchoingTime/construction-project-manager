@@ -1,29 +1,83 @@
 /*
 @File Name: index.js
-@Description: This file contains JavaScript functionality for the front-end of 
-the web application.
+@Description: This file contains the JavaScript functionality for the front-end of the web application.
 */
 
+/* --------------------- Navbar --------------------- */
+function showNavSidebar() {
+  const sidebar = document.querySelector(".nav-sidebar");
+  sidebar.style.display = "flex";
+}
+
+function hideNavSidebar() {
+  const sidebar = document.querySelector(".nav-sidebar");
+  sidebar.style.display = "none";
+}
+
+/* --------------------- Sidebar --------------------- */
+
+const toggleButton = document.getElementById("toggle-btn");
+const sidebar = document.getElementById("default-asidebar");
+
+function toggleSidebar() {
+  sidebar.classList.toggle("close");
+  toggleButton.classList.toggle("rotate");
+
+  closeSubMenus();
+}
+
+function toggleSubMenu(button) {
+  if (!button.nextElementSibling.classList.contains("show")) {
+    closeSubMenus();
+  }
+  button.nextElementSibling.classList.toggle("show");
+  button.classList.toggle("rotate");
+
+  if (sidebar.classList.contains("close")) {
+    sidebar.classList.toggle("close");
+    toggleButton.classList.toggle("rotate");
+  }
+}
+
+function closeSubMenus() {
+  Array.from(sidebar.getElementsByClassName("show")).forEach((uL) => {
+    uL.classList.remove("show");
+    uL.previousElementSibling.classList.remove("rotate");
+  });
+}
+
 /*--------------------- Message Flashing ---------------------*/
+
+// Utilized ChatGPT to help with the modification concept
 document.addEventListener("DOMContentLoaded", function () {
+  const flashContainer = document.getElementById("toggle-flash-container");
+  const alerts = flashContainer.querySelectorAll(".alert");
+
+  // If alerts > 0 then display the section alert-container
+  if (alerts.length > 0) {
+    flashContainer.style.display = "flex";
+  }
+
+  // Close Alert
   var closeButtons = document.querySelectorAll(".alert .close");
   closeButtons.forEach(function (button) {
     button.addEventListener("click", function () {
       var alert = this.parentElement;
       alert.style.display = "none";
+
+      // Makes alert-container hidden again
+      if (
+        flashContainer.querySelectorAll("alert[style*='display: block']")
+          .length === 0
+      ) {
+        flashContainer.style.display = "none";
+      }
     });
   });
 });
 
-/*--------------------- Navbar ---------------------*/
-function showSidebar() {
-  const sidebar = document.querySelector(".sidebar");
-  sidebar.style.display = "flex";
-}
-function hideSidebar() {
-  const sidebar = document.querySelector(".sidebar");
-  sidebar.style.display = "none";
-}
+/*--------------------- Delete Projects ---------------------*/
+
 function deleteProject(projectId) {
   fetch("/delete-project", {
     method: "POST",
@@ -34,6 +88,7 @@ function deleteProject(projectId) {
 }
 
 /*--------------------- Login and Signup Pages ---------------------*/
+
 const form = document.getElementById("form");
 const firstname_input = document.getElementById("firstname-input");
 const email_input = document.getElementById("email-input");
