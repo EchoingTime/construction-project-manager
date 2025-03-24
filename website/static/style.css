@@ -38,6 +38,7 @@
   --faded-error-background-clr: #c62b3d22;
   --error-border-clr: #870413;
   --active-clr: #5e63ff; /* Active states */
+  --deleting-clr: #ff2e46ca;
 }
 
 /*--------------------- Global Styles ---------------------*/
@@ -328,7 +329,7 @@ main {
   padding: min(30px, 7%);
   display: flex;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
 
   background-color: var(--base-clr);
@@ -343,13 +344,12 @@ main {
   border: 1px solid var(--line-clr);
   border-radius: 1em;
   margin-bottom: 20px;
-  width: 100%;
 
-  padding-top: 15px;
-  padding-bottom: 5px;
+  padding: 50px;
 }
 
 /*--------------------- Project Page Specifics ---------------------*/
+
 #project-section h2 {
   margin-bottom: 15px;
 }
@@ -358,13 +358,41 @@ main {
   border-radius: 10px;
   padding: 0 5px 5px 5px; /* | Top | Right | Bottom | Left */
   list-style: none;
+  background-color: var(--accent-clr);
 }
 #project-section li {
-  background-color: var(--accent-clr);
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-  color: var(--secondary-text-clr);
-  margin: 5px;
+  display: flex;
 }
+#project-section li p,
+#project-section .close {
+  margin: 10px 25px;
+  padding: 5px 10px;
+}
+#project-section li p {
+  border: 1px solid var(--base-clr);
+  border-right: none;
+  color: var(--secondary-text-clr);
+  flex: 1;
+  margin-right: 0;
+}
+#project-section .close {
+  background-color: transparent;
+  border: 1px solid var(--base-clr);
+  margin-left: auto;
+  border-radius: 0 10px 10px 0;
+}
+#project-section svg {
+  fill: var(--base-clr);
+  transition: all 0.3s ease;
+}
+#project-section .close:hover {
+  cursor: pointer;
+  box-shadow: 0 0 20px var(--deleting-clr); /* Glowing effect */
+}
+#project-section .close:hover svg {
+  fill: var(--deleting-clr);
+}
+
 /*--------------------- Footer ---------------------*/
 
 footer {

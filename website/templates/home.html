@@ -266,7 +266,7 @@ belonging to the current logged-in user, allowing users to view, add, and delete
         <ul>
           {% for project in user.projects %}
           <li>
-            {{ project.data }}
+            <p>{{ project.data }}</p>
             <button
               type="button"
               class="close"
