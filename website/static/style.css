@@ -31,10 +31,12 @@
   /* Status Colors */
   --success-text-clr: #121813; /* Success states */
   --success-background-clr: #28a74668;
-  --success-border-clr: #00571480;
-  --error-text-clr: #3c1419; /* Error states, warnings */
+  --faded-success-background-clr: #28a74622;
+  --success-border-clr: #005714;
+  --error-text-clr: #4d1a20; /* Error states, warnings */
   --error-background-clr: #c62b3d68;
-  --error-border-clr: #6f000d80;
+  --faded-error-background-clr: #c62b3d22;
+  --error-border-clr: #870413;
   --active-clr: #5e63ff; /* Active states */
 }
 
@@ -397,24 +399,32 @@ footer {
   border: 2.5px solid transparent;
   border-radius: 1em;
   position: relative;
-  width: 100%;
   box-sizing: border-box;
 }
 .alert-error {
+  font-weight: bold;
   color: var(--error-text-clr);
   background-color: var(--error-background-clr);
   border-color: var(--error-border-clr);
 }
 .alert-success {
+  font-weight: bold;
   color: var(--success-text-clr);
   background-color: var(--success-background-clr);
   border-color: var(--success-border-clr);
 }
 .alert .close {
-  font-size: 25px;
   cursor: pointer;
   position: absolute;
   right: 10px;
+  border: none;
+  background-color: transparent;
+}
+#error-close {
+  fill: var(--error-border-clr);
+}
+#success-close {
+  fill: var(--success-border-clr);
 }
 
 /*--------------------- Forms (Login & Registry) ---------------------*/
@@ -487,22 +497,13 @@ div:has(input:focus) > label {
 div:has(select:focus) > label {
   background-color: var(--hover-clr);
 }
-form input::placeholder {
+form input::placeholder,
+select:not(:invalid) {
   color: var(--text-faded-clr);
   font-style: italic;
 }
-select option:disabled {
-  color: var(--text-faded-clr);
-  font-style: italic;
-}
-select:invalid {
-  color: var(--text-faded-clr);
-  font-style: italic;
-}
-input:not(:placeholder-shown),
-#role-select:valid {
-  /* When information is filled */
-  background-color: var(--form-filled-bg-clr);
+select:not(:invalid) {
+  text-indent: 5px;
 }
 form button {
   margin-top: 10px;
@@ -527,10 +528,15 @@ a:hover {
   text-decoration: underline;
 }
 form div.incorrect label {
-  background-color: var(--error-background-clr);
+  background-color: var(--error-text-clr);
 }
 form div.incorrect input {
-  border-color: var(--error-background-clr);
+  border-color: var(--error-border-clr);
+  background-color: var(--faded-error-background-clr);
+}
+form div.incorrect input::placeholder {
+  color: var(--error-text-clr);
+  font-weight: bold;
 }
 #error-message {
   color: var(--error-text-clr);
