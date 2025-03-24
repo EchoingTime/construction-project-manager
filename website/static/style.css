@@ -30,10 +30,10 @@
   --hover-clr: #3a7ca5; /* Hover effects on links, buttons */
   --icon-hover-clr: #e0e6ed; /* Hover effects on icons */
   /* Status Colors */
-  --success-text-clr: #5ad878; /* Success states */
+  --success-text-clr: #121813; /* Success states */
   --success-background-clr: #28a74668;
   --success-border-clr: #00571480;
-  --error-text-clr: #f06272; /* Error states, warnings */
+  --error-text-clr: #3c1419; /* Error states, warnings */
   --error-background-clr: #c62b3d68;
   --error-border-clr: #6f000d80;
   --active-clr: #5e63ff; /* Active states */
@@ -56,17 +56,27 @@ svg {
 
 /*--------------------- Page Layout ---------------------*/
 
-body {
+#main-website-body,
+#intro-to-website-body {
   display: grid;
+
+  min-height: 100vh; /* Viewport Height */
+  min-height: 100dvh; /* Dynamic Viewport Height */
+}
+#main-website-body {
   grid-template-columns: auto 1fr; /* Set columns for sidebar and main */
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "navbar navbar"
     "sidebar main"
     "sidebar footer";
-
-  min-height: 100vh; /* Viewport Height */
-  min-height: 100dvh; /* Dynamic Viewport Height */
+}
+#intro-to-website-body {
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "navbar"
+    "main"
+    "footer";
 }
 
 /*--------------------- Navbar ---------------------*/
@@ -116,6 +126,9 @@ nav a:hover {
   background-color: var(--hover-clr);
   color: var(--hover-text-clr);
   text-decoration: none;
+}
+nav a:hover svg {
+  fill: var(--hover-text-clr);
 }
 nav li:first-child {
   margin-right: auto;
@@ -309,14 +322,15 @@ main {
   /* Ensures responsiveness! If container is 200px, then 7% of 200 is 14px, and this will be choosen over the fixed 30px */
   padding: min(30px, 7%);
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
+  flex-direction: column;
 
   background-color: var(--base-clr);
   color: var(--text-clr);
   transition: margin 0.3s ease;
 }
-section {
+.main-content-section {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -326,11 +340,8 @@ section {
   margin-bottom: 20px;
   width: 100%;
 
-  /* 2em is relative to font size! 16px would give 2em = 32px */
-  padding: min(2em, 15%);
-}
-section p {
-  margin-top: 1em;
+  padding-top: 15px;
+  padding-bottom: 5px;
 }
 
 /*--------------------- Footer ---------------------*/
@@ -345,36 +356,38 @@ footer {
   background-color: var(--base-clr);
   border-top: 1px solid var(--line-clr);
   color: var(--text-clr);
+  font-weight: bold;
 }
 
 /*--------------------- (Still Merging) Alert Box ---------------------*/
 
 .alert-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: none;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
   margin-bottom: 20px;
+  width: 100%;
 }
 .alert {
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1em;
   padding-right: 40px;
-  border: 1px solid transparent;
-  border-radius: 8px;
+  border: 2.5px solid transparent;
+  border-radius: 1em;
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
 }
 .alert-error {
-  color: var(--error-text-clr-clr);
+  color: var(--error-text-clr);
   background-color: var(--error-background-clr);
   border-color: var(--error-border-clr);
 }
 .alert-success {
-  color: var(--success-text-clr-clr);
+  color: var(--success-text-clr);
   background-color: var(--success-background-clr);
   border-color: var(--success-border-clr);
 }
@@ -385,7 +398,7 @@ footer {
   right: 10px;
 }
 
-/*--------------------- (Still Merging) Forms (Login & Registry) ---------------------*/
+/*--------------------- Forms (Login & Registry) ---------------------*/
 
 h1 {
   font-size: 2.5rem;
@@ -466,7 +479,6 @@ select option:disabled {
 select:invalid {
   color: var(--text-faded-clr);
   font-style: italic;
-  margin-left: 4px;
 }
 input:not(:placeholder-shown),
 #role-select:valid {

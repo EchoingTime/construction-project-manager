@@ -12,7 +12,7 @@ belonging to the current logged-in user, allowing users to view, add, and delete
     <title>Projects</title>
     <link rel="stylesheet" href="./../static/style.css" />
   </head>
-  <body>
+  <body id="main-website-body">
     <!--------------------- Navbar --------------------->
     <nav>
       <ul class="nav-sidebar">
@@ -212,27 +212,27 @@ belonging to the current logged-in user, allowing users to view, add, and delete
     </aside>
     <!--------------------- Main Content --------------------->
     <main>
-      <section>
-        <!----------- Message Flashing Container ----------->
-        <div class="alert-container">
-          {% with messages = get_flashed_messages(with_categories=true) %} {% if
-          messages %} {% for category, message in messages %} {% if category ==
-          'error' %}
-          <div class="alert-messages">
-            <div class="alert alert-error" role="alert">
-              <!-- Error alert -->
-              {{ message }}
-              <span class="close" aria-hidden="true">×</span>
-            </div>
-            {% else %}
-            <div class="alert alert-success" role="alert">
-              <!-- Success alert -->
-              {{ message }}
-              <span class="close" aria-hidden="true">×</span>
-            </div>
+      <!----------- Message Flashing Container ----------->
+      <section class="alert-container" id="toggle-flash-container">
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, message in messages %} {% if category ==
+        'error' %}
+        <div class="alert-messages">
+          <div class="alert alert-error" role="alert">
+            <!-- Error alert -->
+            {{ message }}
+            <span class="close" aria-hidden="true">×</span>
           </div>
-          {% endif %} {% endfor %} {% endif %} {% endwith %}
+          {% else %}
+          <div class="alert alert-success" role="alert">
+            <!-- Success alert -->
+            {{ message }}
+            <span class="close" aria-hidden="true">×</span>
+          </div>
         </div>
+        {% endif %} {% endfor %} {% endif %} {% endwith %}
+      </section>
+      <section class="main-content-section">
         <!----------- Main Page Content ----------->
         <h2>Projects</h2>
         <ul>

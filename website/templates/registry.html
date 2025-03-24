@@ -13,7 +13,7 @@ process in the web application.
     <title>Account Registry</title>
     <link rel="stylesheet" href="./../static/style.css" />
   </head>
-  <body class="no-sidebar">
+  <body class="no-sidebar" id="intro-to-website-body">
     <!--------------------- Navbar --------------------->
     <nav>
       <ul class="nav-sidebar">
@@ -56,27 +56,27 @@ process in the web application.
     </nav>
     <!--------------------- Main Content --------------------->
     <main>
-      <section>
-        <!----------- Message Flashing Container ----------->
-        <div class="alert-container">
-          {% with messages = get_flashed_messages(with_categories=true) %} {% if
-          messages %} {% for category, message in messages %} {% if category ==
-          'error' %}
-          <div class="alert-messages">
-            <div class="alert alert-error" role="alert">
-              <!-- Error alert -->
-              {{ message }}
-              <span class="close" aria-hidden="true">×</span>
-            </div>
-            {% else %}
-            <div class="alert alert-success" role="alert">
-              <!-- Success alert -->
-              {{ message }}
-              <span class="close" aria-hidden="true">×</span>
-            </div>
+      <!----------- Message Flashing Container ----------->
+      <section class="alert-container" id="toggle-flash-container">
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, message in messages %} {% if category ==
+        'error' %}
+        <div class="alert-messages">
+          <div class="alert alert-error" role="alert">
+            <!-- Error alert -->
+            {{ message }}
+            <span class="close" aria-hidden="true">×</span>
           </div>
-          {% endif %} {% endfor %} {% endif %} {% endwith %}
+          {% else %}
+          <div class="alert alert-success" role="alert">
+            <!-- Success alert -->
+            {{ message }}
+            <span class="close" aria-hidden="true">×</span>
+          </div>
         </div>
+        {% endif %} {% endfor %} {% endif %} {% endwith %}
+      </section>
+      <section class="main-content-section">
         <!----------- Main Page Content ----------->
         <h1>Register</h1>
         <p id="error-message"></p>

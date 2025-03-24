@@ -48,12 +48,30 @@ function closeSubMenus() {
 
 /*--------------------- Message Flashing ---------------------*/
 
+// Utilized ChatGPT to help with the modification concept
 document.addEventListener("DOMContentLoaded", function () {
+  const flashContainer = document.getElementById("toggle-flash-container");
+  const alerts = flashContainer.querySelectorAll(".alert");
+
+  // If alerts > 0 then display the section alert-container
+  if (alerts.length > 0) {
+    flashContainer.style.display = "flex";
+  }
+
+  // Close Alert
   var closeButtons = document.querySelectorAll(".alert .close");
   closeButtons.forEach(function (button) {
     button.addEventListener("click", function () {
       var alert = this.parentElement;
       alert.style.display = "none";
+
+      // Makes alert-container hidden again
+      if (
+        flashContainer.querySelectorAll("alert[style*='display: block']")
+          .length === 0
+      ) {
+        flashContainer.style.display = "none";
+      }
     });
   });
 });
