@@ -1,44 +1,83 @@
 <!--
-@File Name: sign-in.html
-@Description: This file contains the HTML form for user sign in, including fields for email 
+@File Name: login.html
+@Description: This file contains the HTML form for user login, including fields for email 
 and password. It is part of the user authentication process, allowing users 
 to access their accounts in the web application.
 -->
+
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en">
   <head>
-    <!--------------------- Meta Data --------------------->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!--------------------- Stylesheet --------------------->
-    <link rel="stylesheet" href="./../static/style.css" />
-    <!--------------------- Page Title --------------------->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign In</title>
+    <link rel="stylesheet" href="./../static/style.css" />
   </head>
-  <body>
-    <main class="page-container">
-      <!--------------------- Message Flashing --------------------->
-      <div class="alert-container">
-        {% with messages = get_flashed_messages(with_categories=true) %} {% if
-        messages %} {% for category, message in messages %} {% if category ==
-        'error' %}
-        <div class="alert-messages">
-          <div class="alert alert-error" role="alert">
-            <!-- Error alert -->
-            {{ message }}
-            <span class="close" aria-hidden="true">×</span>
+  <body class="no-sidebar">
+    <!--------------------- Navbar --------------------->
+    <nav>
+      <ul class="nav-sidebar">
+        <li onclick="hideNavSidebar()">
+          <a href="#"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 -960 960 960"
+              width="24px"
+              height="24px"
+            >
+              <path
+                d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
+              />
+            </svg>
+          </a>
+        </li>
+        <!----------- Navbar Sidebar ----------->
+        <li><a href="/registry">Sign Up</a></li>
+      </ul>
+      <!----------- Main Navbar ----------->
+      <ul>
+        <li class="nav-title">Construction Project Manager</li>
+        <li class="hideOnMobile"><a href="/registry">Sign Up</a></li>
+        <li class="menu-button" onclick="showNavSidebar()">
+          <a href="#">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 -960 960 960"
+              width="24px"
+              height="24px"
+            >
+              <path
+                d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"
+              />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!--------------------- Main Content --------------------->
+    <main>
+      <section>
+        <!----------- Message Flashing Container ----------->
+        <div class="alert-container">
+          {% with messages = get_flashed_messages(with_categories=true) %} {% if
+          messages %} {% for category, message in messages %} {% if category ==
+          'error' %}
+          <div class="alert-messages">
+            <div class="alert alert-error" role="alert">
+              <!-- Error alert -->
+              {{ message }}
+              <span class="close" aria-hidden="true">×</span>
+            </div>
+            {% else %}
+            <div class="alert alert-success" role="alert">
+              <!-- Success alert -->
+              {{ message }}
+              <span class="close" aria-hidden="true">×</span>
+            </div>
           </div>
-          {% else %}
-          <div class="alert alert-success" role="alert">
-            <!-- Success alert -->
-            {{ message }}
-            <span class="close" aria-hidden="true">×</span>
-          </div>
+          {% endif %} {% endfor %} {% endif %} {% endwith %}
         </div>
-        {% endif %} {% endfor %} {% endif %} {% endwith %}
-      </div>
-      <!--------------------- Sign In Content --------------------->
-      <div class="content-wrapper">
+        <!----------- Main Page Content ----------->
         <h1>Sign In</h1>
         <p id="error-message"></p>
         <form id="form" method="POST">
@@ -87,9 +126,10 @@ to access their accounts in the web application.
           <button type="submit">Sign In</button>
         </form>
         <p>Not registered? <a href="/registry">Create an Account</a></p>
-      </div>
+      </section>
     </main>
-    <!--------------------- JavaScript --------------------->
+    <!--------------------- Footer --------------------->
+    <footer>Construction Project Manager (CPM)</footer>
     <script
       type="text/javascript"
       src="{{ url_for('static', filename='index.js') }}"

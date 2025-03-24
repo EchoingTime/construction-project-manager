@@ -1,8 +1,50 @@
 /*
 @File Name: index.js
-@Description: This file contains JavaScript functionality for the front-end of 
-the web application.
+@Description: This file contains the JavaScript functionality for the front-end of the web application.
 */
+
+/* --------------------- Navbar --------------------- */
+function showNavSidebar() {
+  const sidebar = document.querySelector(".nav-sidebar");
+  sidebar.style.display = "flex";
+}
+
+function hideNavSidebar() {
+  const sidebar = document.querySelector(".nav-sidebar");
+  sidebar.style.display = "none";
+}
+
+/* --------------------- Sidebar --------------------- */
+
+const toggleButton = document.getElementById("toggle-btn");
+const sidebar = document.getElementById("default-asidebar");
+
+function toggleSidebar() {
+  sidebar.classList.toggle("close");
+  toggleButton.classList.toggle("rotate");
+
+  closeSubMenus();
+}
+
+function toggleSubMenu(button) {
+  if (!button.nextElementSibling.classList.contains("show")) {
+    closeSubMenus();
+  }
+  button.nextElementSibling.classList.toggle("show");
+  button.classList.toggle("rotate");
+
+  if (sidebar.classList.contains("close")) {
+    sidebar.classList.toggle("close");
+    toggleButton.classList.toggle("rotate");
+  }
+}
+
+function closeSubMenus() {
+  Array.from(sidebar.getElementsByClassName("show")).forEach((uL) => {
+    uL.classList.remove("show");
+    uL.previousElementSibling.classList.remove("rotate");
+  });
+}
 
 /*--------------------- Message Flashing ---------------------*/
 
@@ -15,17 +57,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-
-/*--------------------- Navbar ---------------------*/
-
-function showSidebar() {
-  const sidebar = document.querySelector(".sidebar");
-  sidebar.style.display = "flex";
-}
-function hideSidebar() {
-  const sidebar = document.querySelector(".sidebar");
-  sidebar.style.display = "none";
-}
 
 /*--------------------- Delete Projects ---------------------*/
 
