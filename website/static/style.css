@@ -38,6 +38,7 @@
   --error-border-clr: #870413;
   --active-clr: #5e63ff; /* Active states */
   --deleting-clr: #ff2e46ca;
+  --creating-clr: #2eff5fca;
 }
 
 /*--------------------- Global Styles ---------------------*/
@@ -49,6 +50,7 @@
 
 html {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
 }
 
 svg {
@@ -351,7 +353,7 @@ main {
 
 /*--------------------- Project Page Specifics ---------------------*/
 
-#project-section h2 {
+#header-project-page {
   margin-bottom: 15px;
 }
 #project-section ul {
@@ -367,19 +369,21 @@ main {
   padding: 5px 10px;
 }
 #project-section li p {
-  border: 1px solid var(--accent-clr);
-  border-right: none;
-  border-radius: 10px 0 0 10px;
   background-color: var(--accent-clr);
   color: var(--base-clr);
+  border-radius: 10px 0 0 10px;
+
+  border: 1px solid var(--accent-clr);
+  border-right: none;
   flex: 1;
   margin-right: 0;
 }
 #project-section .close {
+  border-radius: 0 10px 10px 0;
   background-color: transparent;
   border: 1px solid var(--accent-clr);
   margin-left: auto;
-  border-radius: 0 10px 10px 0;
+  border-left: none;
 }
 #project-section svg {
   fill: var(--icon-clr);
@@ -391,6 +395,38 @@ main {
 }
 #project-section .close:hover svg {
   fill: var(--deleting-clr);
+}
+
+#project-form {
+  display: flex;
+  flex-direction: row;
+  margin-top: 25px;
+  gap: 0;
+}
+#project-form input {
+  background-color: var(--base-clr);
+  padding: 0 10px 5px 10px; /* | Top | Right | Bottom | Left */
+  border: 2.5px solid var(--accent-clr);
+  border-right: none;
+}
+#project-form button svg {
+  background-color: var(--base-clr);
+  padding: 5px 10px 5px 10px; /* | Top | Right | Bottom | Left */
+  fill: var(--accent-clr);
+}
+#project-form button {
+  border: 2.5px solid var(--accent-clr);
+}
+#project-form svg:hover {
+  cursor: pointer;
+  fill: var(--creating-clr);
+}
+#project-form input:focus {
+  outline: none;
+}
+#project-form input::placeholder {
+  font-style: italic;
+  font-size: 14px;
 }
 
 /*--------------------- Footer ---------------------*/
@@ -462,7 +498,7 @@ h1 {
   font-weight: 900;
   text-transform: uppercase;
 }
-form {
+#form-sign-in-and-out {
   width: min(400px, 100%);
   margin-top: 20px;
   margin-bottom: 50px;
@@ -471,12 +507,12 @@ form {
   align-items: center;
   gap: 10px;
 }
-form > div {
+#form-sign-in-and-out > div {
   width: 100%;
   display: flex;
   justify-content: center;
 }
-form label {
+#form-sign-in-and-out label {
   flex-shrink: 0;
   height: 50px;
   width: 50px;
@@ -488,11 +524,11 @@ form label {
   font-size: 1.5rem;
   font-weight: 500;
 }
-form label svg {
+#form-sign-in-and-out label svg {
   fill: var(--base-clr);
 }
-form input,
-select {
+#form-sign-in-and-out input,
+#role-select {
   box-sizing: border-box;
   flex-grow: 1;
   min-width: 0;
@@ -508,32 +544,32 @@ select {
   padding: 0.5em;
   background-color: transparent;
 }
-form input:hover,
-select:hover {
+#form-sign-in-and-out input:hover,
+#role-select:hover {
   border-color: var(--accent-clr);
 }
-form input:focus,
-select:focus {
+#form-sign-in-and-out input:focus,
+#form-sign-in-and-out select:focus {
   outline: none;
   border-color: var(--hover-clr);
 }
-div:has(input:focus) > label {
+#form-sign-in-and-out div:has(input:focus) > label {
   /* Changes the icon box's color when changing field */
   background-color: var(--hover-clr);
 }
-div:has(select:focus) > label {
+#form-sign-in-and-out div:has(select:focus) > label {
   background-color: var(--hover-clr);
 }
-form input::placeholder {
+#form-sign-in-and-out input::placeholder {
   color: var(--text-faded-clr);
   font-style: italic;
 }
-select {
+#form-sign-in-and-out select {
   font-style: italic;
   text-indent: 5px;
   color: var(--text-faded-clr);
 }
-form button {
+#form-sign-in-and-out button {
   margin-top: 10px;
   border: none;
   border-radius: 1000px;
@@ -545,7 +581,7 @@ form button {
   cursor: pointer;
   transition: 150ms ease;
 }
-form button:hover {
+#form-sign-in-and-out button:hover {
   background-color: var(--hover-clr);
 }
 a {
@@ -555,14 +591,14 @@ a {
 a:hover {
   text-decoration: underline;
 }
-form div.incorrect label {
+#form-sign-in-and-out div.incorrect label {
   background-color: var(--error-text-clr);
 }
-form div.incorrect input {
+#form-sign-in-and-out div.incorrect input {
   border-color: var(--error-border-clr);
   background-color: var(--faded-error-background-clr);
 }
-form div.incorrect input::placeholder {
+#form-sign-in-and-out div.incorrect input::placeholder {
   color: var(--error-text-clr);
   font-weight: bold;
 }
