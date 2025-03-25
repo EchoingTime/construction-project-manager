@@ -78,13 +78,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 /*--------------------- Delete Projects ---------------------*/
 
-function deleteProject(projectId) {
-  fetch("/delete-project", {
-    method: "POST",
-    body: JSON.stringify({ projectId: projectId }),
-  }).then((_res) => {
-    window.location.href = "/";
-  });
+function deleteProject(button) {
+  const projectId = button.getAttribute("data-id");
+  const projectName = button.getAttribute("data-name");
+  const result = confirm(
+    "Click 'OK' to delete the following project:\n\n" + projectName
+  );
+  if (result) {
+    fetch("/delete-project", {
+      method: "POST",
+      body: JSON.stringify({ projectId: projectId }),
+    }).then((_res) => {
+      window.location.href = "/";
+    });
+  }
 }
 
 /*--------------------- Login and Signup Pages ---------------------*/

@@ -53,7 +53,7 @@ def delete_project():
     if project: # If note exists
         if project.user_id == current_user.id: # If we own that project
             db.session.delete(project) # Delete it
-            flash('Deleted Project', category='success')
+            flash('Project was successfully deleted!', category='success')
             db.session.commit()
     
     return jsonify({}) # Return empty response

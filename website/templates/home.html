@@ -270,7 +270,9 @@ belonging to the current logged-in user, allowing users to view, add, and delete
             <button
               type="button"
               class="close"
-              onClick="deleteProject('{{ project.id }}')"
+              data-id="{{ project.id }}"
+              data-name="{{ project.project_name }}"
+              onClick="deleteProject(this)"
             >
               <span aria-hidden="true"
                 ><svg
