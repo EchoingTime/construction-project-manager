@@ -58,14 +58,22 @@ After making a change to models.py (adding a new table or modifying an existing 
 
 1. Activate the virtual environment
    - For Windows Command Prompt/VS Code Terminal
-     - venv\Scripts\activate.bat
+     ```python
+     venv\Scripts\activate.bat
+     ```
    - For Git Bash or WSL (Mac/Linux)
-     - source venv/Scripts/activate
+     ```
+     python source venv/Scripts/activate
+     ```
 2. Set FLASK_APP
    - For Windows Command Prompt/VS Code Terminal
-     - set FLASK_APP=main.py
+     ```python
+     set FLASK_APP=main.py
+     ```
    - For Git Bash or WSL (Mac/Linux):
-     - export FLASK_APP=main.py
+     ```python
+     export FLASK_APP=main.py
+     ```
 3. Generate migration file
    - **This is an example:**
      ```python
@@ -79,7 +87,9 @@ After making a change to models.py (adding a new table or modifying an existing 
      ```
    - Make sure the data is copied before dropping the old `data` column.
 5. Apply the migration
-   - flask --app main.py db upgrade
+   ```python
+   flask --app main.py db upgrade
+   ```
 
 ## References
 
