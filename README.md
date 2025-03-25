@@ -40,7 +40,11 @@ This is a web application built using Flask and other modern technologies to man
 ## Installation:
 
 1. Clone the repository: https://github.com/EchoingTime/construction-project-manager.git
-2. Install the dependencies using `pip install -r requirements.txt`.
+2. Install the dependencies using:
+
+```python
+pip install -r requirements.txt
+```
 
 ## Running the Code:
 
