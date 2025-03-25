@@ -13,7 +13,6 @@
   /* Text Colors */
   --text-clr: #1e1e1e; /* Dark text */
   --text-faded-clr: #3a3a3a; /* Forms */
-  --secondary-text-clr: #f5f5f5; /* Secondary text */
   --hover-text-clr: #e0e6ed; /* Hover effects on text */
   --tertiary-text-clr: #000000; /* Tertiary text */
   /* Icon Colors */
@@ -24,7 +23,7 @@
   --transparent-border-clr: #343a4012; /* Transparent border */
   --secondary-tp-bg-clr: #0066cc23; /* Secondary Transparent background */
   --secondary-border-bg-clr: #0066cc21; /* Secondary Transparent border */
-  --form-filled-bg-clr: #eef7ff; /* Form Filled Background */
+  --form-bg-clr: #c1c1c160; /* Form background */
   /* Interactive Elements */
   --hover-clr: #3a7ca5; /* Hover effects on links, buttons */
   --icon-hover-clr: #e0e6ed; /* Hover effects on icons */
@@ -345,6 +344,8 @@ main {
   border-radius: 1em;
   margin-bottom: 20px;
 
+  width: 50%;
+
   padding: 50px;
 }
 
@@ -354,11 +355,8 @@ main {
   margin-bottom: 15px;
 }
 #project-section ul {
-  border: 1px solid var(--line-clr);
-  border-radius: 10px;
   padding: 0 5px 5px 5px; /* | Top | Right | Bottom | Left */
   list-style: none;
-  background-color: var(--accent-clr);
 }
 #project-section li {
   display: flex;
@@ -369,20 +367,22 @@ main {
   padding: 5px 10px;
 }
 #project-section li p {
-  border: 1px solid var(--base-clr);
+  border: 1px solid var(--accent-clr);
   border-right: none;
-  color: var(--secondary-text-clr);
+  border-radius: 10px 0 0 10px;
+  background-color: var(--accent-clr);
+  color: var(--base-clr);
   flex: 1;
   margin-right: 0;
 }
 #project-section .close {
   background-color: transparent;
-  border: 1px solid var(--base-clr);
+  border: 1px solid var(--accent-clr);
   margin-left: auto;
   border-radius: 0 10px 10px 0;
 }
 #project-section svg {
-  fill: var(--base-clr);
+  fill: var(--icon-clr);
   transition: all 0.3s ease;
 }
 #project-section .close:hover {
@@ -408,7 +408,7 @@ footer {
   font-weight: bold;
 }
 
-/*--------------------- (Still Merging) Alert Box ---------------------*/
+/*--------------------- Alert Box ---------------------*/
 
 .alert-container {
   display: none;
@@ -500,14 +500,13 @@ select {
   padding: 1em;
   font: inherit;
   border-radius: 0 10px 10px 0;
-  border: 2px solid var(--secondary-text-clr);
   border-left: none;
-  background-color: var(--secondary-text-clr);
+  background-color: transparent;
   transition: 150ms ease;
 }
 #role-select {
   padding: 0.5em;
-  background-color: var(--secondary-text-clr);
+  background-color: transparent;
 }
 form input:hover,
 select:hover {
@@ -525,13 +524,14 @@ div:has(input:focus) > label {
 div:has(select:focus) > label {
   background-color: var(--hover-clr);
 }
-form input::placeholder,
-select:not(:invalid) {
+form input::placeholder {
   color: var(--text-faded-clr);
   font-style: italic;
 }
-select:not(:invalid) {
+select {
+  font-style: italic;
   text-indent: 5px;
+  color: var(--text-faded-clr);
 }
 form button {
   margin-top: 10px;
@@ -539,7 +539,7 @@ form button {
   border-radius: 1000px;
   padding: 0.85em 4em;
   background-color: var(--accent-clr);
-  color: var(--secondary-text-clr);
+  color: var(--base-clr);
   font-weight: 600;
   text-transform: uppercase;
   cursor: pointer;
