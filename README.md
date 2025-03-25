@@ -52,6 +52,32 @@ This is a web application built using Flask and other modern technologies to man
 - test2@test.com | test123
 - subcon@test.com | subpass
 
+## Database Modifications:
+
+After making a change to models.py (adding a new table or modifying an existing one), read the instructions below.
+
+1. Activate the virtual environment
+   - For Windows Command Prompt/VS Code Terminal
+     - venv\Scripts\activate.bat
+   - For Git Bash or WSL (Mac/Linux)
+     - source venv/Scripts/activate
+2. Set FLASK_APP
+   - For Windows Command Prompt/VS Code Terminal
+     - set FLASK_APP=main.py
+   - For Git Bash or WSL (Mac/Linux):
+     - export FLASK_APP=main.py
+3. Generate migration file
+   - **This is an example:** flask --app main.py db migrate -m "Renamed data column to project_name"
+4. (Provided via ChatGPT) Modify the generated migration file:
+   - Open the migration file located in the `migrations/versions` folder.
+   - Add the following code to migrate data from `data` to `project_name`:
+     ```python
+     op.execute('UPDATE project SET project_name = data')
+     ```
+   - Make sure the data is copied before dropping the old `data` column.
+5. Apply the migration
+   - flask --app main.py db upgrade
+
 ## References
 
 - "Login & Signup with HTML, CSS, JavaScript (form validation)." Www.youtube.com, https://www.youtube.com/watch?v=bVl5_UdcAy0&ab_channel=Coding2GO.

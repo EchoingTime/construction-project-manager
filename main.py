@@ -5,8 +5,9 @@
     - Open Visual Studio Code's terminal
     - Run the following commands:
         - python (or python3) -m venv venv (if venv doesn't already exist)
-        - source venv/bin/activate (Mac/Linux)
-        - venv\Scripts\activate (Windows)
+        - (Try [before the following] only if the below activations do not work) venv\Scripts\activate.bat
+            - source venv/bin/activate (Mac/Linux)
+            - venv\Scripts\activate (Windows)
         - pip install -r requirements.txt (to update: pip freeze > requirements.txt)
         - python (or python3) main.py 
     - Testing Account: test@test.com | test123          

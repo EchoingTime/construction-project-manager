@@ -27,12 +27,12 @@ def project():
             flash('Project needs a descriptive title!', category='error')
         else:
             # Check if project already exists
-            existing_project = Project.query.filter_by(data=project, user_id=current_user.id).first()
+            existing_project = Project.query.filter_by(project_name=project, user_id=current_user.id).first()
             if existing_project:
                 flash("This project already exists!", category='error')
             else:
                 # Create and save it
-                new_project = Project(data=project, user_id=current_user.id)
+                new_project = Project(project_name=project, user_id=current_user.id)
                 db.session.add(new_project)
                 db.session.commit()
                 flash('Created New Project', category='success')

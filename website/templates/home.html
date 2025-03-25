@@ -266,7 +266,7 @@ belonging to the current logged-in user, allowing users to view, add, and delete
         <ul>
           {% for project in user.projects %}
           <li>
-            <p>{{ project.data }}</p>
+            <p>{{ project.project_name }}</p>
             <button
               type="button"
               class="close"
@@ -289,7 +289,7 @@ belonging to the current logged-in user, allowing users to view, add, and delete
           {% endfor %}
         </ul>
         <form method="POST">
-          <textarea name="project" id="project"></textarea>
+          <input type="text" name="project" id="project" maxlength="70" />
           <br />
           <div>
             <button type="submit">Create New Project</button>
