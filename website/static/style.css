@@ -234,7 +234,7 @@ aside {
 #default-asidebar .dropdown-btn,
 #default-asidebar .logo {
   display: flex;
-  align-items: center; /* Align items verticly */
+  align-items: center; /* Align items vertically */
 
   gap: 1em;
   padding: 0.85em;
@@ -326,7 +326,7 @@ aside {
 main {
   grid-area: main;
 
-  /* Ensures responsiveness! If container is 200px, then 7% of 200 is 14px, and this will be choosen over the fixed 30px */
+  /* Ensures responsiveness! If container is 200px, then 7% of 200 is 14px, and this will be chosen over the fixed 30px */
   padding: min(30px, 7%);
   display: flex;
   justify-content: flex-start;
