@@ -38,7 +38,7 @@
   --error-border-clr: #870413;
   --active-clr: #5e63ff; /* Active states */
   --deleting-clr: #ff2e46ca;
-  --creating-clr: #2eff5fca;
+  --creating-clr: #28da51ca;
 }
 
 /*--------------------- Global Styles ---------------------*/
@@ -364,6 +364,7 @@ main {
   display: flex;
 }
 #project-section li p,
+#project-section a,
 #project-section .close {
   margin: 10px 25px;
   padding: 5px 10px;
@@ -382,12 +383,6 @@ main {
   border-right: none;
   flex: 1;
   margin-right: 0;
-}
-
-#project-section li a,
-#project-section .close {
-  margin: 10px 25px;
-  padding: 5px 10px;
 }
 #project-section li a {
   border: 1px solid var(--accent-clr);
@@ -414,10 +409,12 @@ main {
 #project-section svg {
   fill: var(--icon-clr);
   transition: all 0.3s ease;
+  width: 16px;
 }
 #project-section .close:hover {
   cursor: pointer;
   box-shadow: 0 0 20px var(--deleting-clr); /* Glowing effect */
+  transition: all 0.3s ease;
 }
 #project-section .close:hover svg {
   fill: var(--deleting-clr);
@@ -429,30 +426,40 @@ main {
   margin-top: 25px;
   gap: 0;
 }
+#project-form button,
 #project-form input {
+  margin: 10px 25px;
+  padding: 5px 10px;
+  border: 2px solid var(--accent-clr);
   background-color: var(--base-clr);
-  padding: 0 10px 5px 10px; /* | Top | Right | Bottom | Left */
-  border: 2.5px solid var(--accent-clr);
-  border-right: none;
 }
-#project-form button svg {
-  background-color: var(--base-clr);
-  padding: 5px 10px 5px 10px; /* | Top | Right | Bottom | Left */
-  fill: var(--accent-clr);
+#project-form input {
+  margin-right: 0;
+}
+#project-form input::placeholder {
+  font-style: italic;
+  font-size: 12px;
 }
 #project-form button {
-  border: 2.5px solid var(--accent-clr);
+  display: flex;
+  margin-left: 0;
+  border-left: none;
 }
-#project-form svg:hover {
+#project-form svg {
+  fill: var(--icon-clr);
+  width: 20px;
+  transition: all 0.3s ease;
+}
+#project-form button:hover {
   cursor: pointer;
+  box-shadow: 0 0 20px var(--creating-clr); /* Glowing effect */
+  transition: all 0.3s ease;
+}
+#project-form button:hover svg {
   fill: var(--creating-clr);
 }
 #project-form input:focus {
   outline: none;
-}
-#project-form input::placeholder {
-  font-style: italic;
-  font-size: 14px;
 }
 
 /*--------------------- Footer ---------------------*/
