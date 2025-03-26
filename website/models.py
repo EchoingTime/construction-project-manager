@@ -29,7 +29,7 @@ class Project(db.Model): # Database model: An object blueprint/layout that will 
     project_name = db.Column(db.String(70))
     date = db.Column(db.DateTime(timezone=True), default=func.now()) # Gets current date and time
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) # 1-to-many relationship
-
+    subcontractors = db.relationship('Assignment', back_populates='project') #many to many relation
 # --------------------- Message Table ---------------------
 
 class Message(db.Model): #Model to handle the messages
@@ -39,3 +39,20 @@ class Message(db.Model): #Model to handle the messages
     message_text = db.Column(db.Text, nullable = False)
     timestamp = db.Column(db.DateTime, default = db.func.current_timestamp())
 
+#--------------------- Subcontractor Table ------------------
+class Subcontractor(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150))
+    email = db.Column(db.String(150), unique=True, nullable=False)
+    trade = db.Column(db.String(150))
+
+#--------------------- Assignment Table ----------------------
+class Assignment(db.Model):          #helper table for Subcontractor-Project Relationship
+    id = db.Column(db.Integer,primary_key=True)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    subcontractor_id = db.Column(db.Integer, db.ForeignKey('subcontractor.id'))
+    assigned_date = db.Column(db.DateTime, default=func.now())
+    status = db.Column(db.String(50), default='Incomplete')
+    project = db.relationship('Project', back_populates='subcontractors')
+    subcontractor = db.relationship('Subcontractor', backref=db.backref('assignments', lazy='dynamic'))
+ 

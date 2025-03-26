@@ -6,8 +6,9 @@ including rendering the home page, handling project creation, and deleting proje
 
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Project, Message, User
+from .models import Project, Message, User, Subcontractor, Assignment
 from . import db
+from datetime import datetime
 import json
 
 views = Blueprint('views', __name__)
@@ -47,7 +48,8 @@ def project():
 @views.route('/view-project/<int:project_id>', methods=['GET', 'POST'])
 def view_project(project_id):
     project = Project.query.get(project_id)
-    return render_template("project.html", project=project)
+    subcontractors = [assignment.subcontractor for assignment in project.subcontractors]
+    return render_template("project.html", project=project, subcontractors=subcontractors)
 # ----------- Project Deletion -----------
 
 @views.route('/delete-project', methods=['POST'])
@@ -90,3 +92,31 @@ def send_message():
     else:
         flash("Something went wrong!", category="error")
     return render_template("inbox.html", messages=messages)
+
+# -------------- Adding Subcontractors -----------
+@views.route('/add-subcontractor/<int:project_id>', methods=['POST'])
+def add_subcontractor(project_id):
+    if request.method == 'POST':
+        subcontractor_name = request.form.get('subcontractor_name')
+        subcontractor_email = request.form.get('subcontractor_email')
+        subcontractor_trade = request.form.get('subcontractor_trade')
+
+        if len(subcontractor_name) < 1 or len(subcontractor_email) < 1:
+            flash('Subcontractor name and email required!', category='error')
+        else:
+            existing_subcontractor = Subcontractor.query.filter_by(email=subcontractor_email).first()
+            if existing_subcontractor:
+                flash("This subcontractor already exists!", category='error')
+            else:
+                new_subcontractor=Subcontractor(name=subcontractor_name,email=subcontractor_email,trade=subcontractor_trade)
+                db.session.add(new_subcontractor)
+                db.session.commit()
+
+                new_assignment=Assignment(project_id=project_id,subcontractor_id=new_subcontractor.id,assigned_date=datetime.now(),status="Incomplete")
+                db.session.add(new_assignment)
+                db.session.commit()
+                flash('Subcontractor Added!', category='success')
+            return redirect(url_for('views.project', project_id=project_id))
+    return render_template("project.html", project_id=project_id)
+
+
