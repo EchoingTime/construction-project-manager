@@ -266,8 +266,9 @@ belonging to the current logged-in user, allowing users to view, add, and delete
         <ul>
           {% for project in user.projects %}
           <li>
-            <!-- <p>{{ project.project_name }}</p> -->
-            <a href="{{ url_for('views.view_project', project_id=project.id)}}"> {{project.project_name}}</a></a>
+            <a href="{{ url_for('views.view_project', project_id=project.id)}}">
+              {{project.project_name}}</a
+            >
             <button
               type="button"
               class="close"
