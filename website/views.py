@@ -43,6 +43,11 @@ def project():
     # Renders the page consisting of the user's projects
     return render_template("home.html", user=current_user)
 
+#------------ Project Viewing ------------
+@views.route('/view-project/<int:project_id>', methods=['GET', 'POST'])
+def view_project(project_id):
+    project = Project.query.get(project_id)
+    return render_template("project.html", project=project)
 # ----------- Project Deletion -----------
 
 @views.route('/delete-project', methods=['POST'])

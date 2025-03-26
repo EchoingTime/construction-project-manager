@@ -361,12 +361,12 @@ main {
 #project-section li {
   display: flex;
 }
-#project-section li p,
+#project-section li a,
 #project-section .close {
   margin: 10px 25px;
   padding: 5px 10px;
 }
-#project-section li p {
+#project-section li a {
   border: 1px solid var(--accent-clr);
   border-right: none;
   border-radius: 10px 0 0 10px;
