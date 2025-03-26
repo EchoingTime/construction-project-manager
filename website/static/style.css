@@ -363,19 +363,38 @@ main {
 #project-section li {
   display: flex;
 }
+#project-section li p,
+#project-section .close {
+  margin: 10px 25px;
+  padding: 5px 10px;
+}
+#project-section li p {
+  border: 1px solid var(--accent-clr);
+  border-right: none;
+  border-radius: 10px 0 0 10px;
+}
+#project-section li p {
+  background-color: var(--accent-clr);
+  color: var(--base-clr);
+  border-radius: 10px 0 0 10px;
+
+  border: 1px solid var(--accent-clr);
+  border-right: none;
+  flex: 1;
+  margin-right: 0;
+}
+
 #project-section li a,
 #project-section .close {
   margin: 10px 25px;
   padding: 5px 10px;
 }
-<<<<<<< HEAD
 #project-section li a {
   border: 1px solid var(--accent-clr);
   border-right: none;
   border-radius: 10px 0 0 10px;
-=======
-#project-section li p {
->>>>>>> 619b40baacd5a26806c3df2b887c24462d0d3a06
+}
+#project-section li a {
   background-color: var(--accent-clr);
   color: var(--base-clr);
   border-radius: 10px 0 0 10px;
