@@ -562,28 +562,30 @@ h1 {
   padding: 1em;
   font: inherit;
   border-radius: 0 10px 10px 0;
-  border-left: none;
-  background-color: transparent;
-  transition: 150ms ease;
+  border: none;
+  background-color: var(--form-bg-clr);
 }
 #role-select {
   padding: 0.5em;
-  background-color: transparent;
 }
 #form-sign-in-and-out input:hover,
 #role-select:hover {
-  border-color: var(--accent-clr);
+  border: 2px solid var(--hover-clr);
+  border-left: none;
 }
 #form-sign-in-and-out input:focus,
 #form-sign-in-and-out select:focus {
   outline: none;
-  border-color: var(--hover-clr);
+  border: 2px solid var(--active-clr);
+  border-left: none;
 }
-#form-sign-in-and-out div:has(input:focus) > label {
-  /* Changes the icon box's color when changing field */
-  background-color: var(--hover-clr);
-}
+#form-sign-in-and-out div:has(input:focus) > label,
 #form-sign-in-and-out div:has(select:focus) > label {
+  /* Changes the icon box's color when changing field */
+  background-color: var(--active-clr) !important;
+}
+#form-sign-in-and-out div:has(input:hover) > label,
+#form-sign-in-and-out div:has(select:hover) > label {
   background-color: var(--hover-clr);
 }
 #form-sign-in-and-out input::placeholder {
