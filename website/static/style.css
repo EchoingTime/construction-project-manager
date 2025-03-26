@@ -38,7 +38,7 @@
   --error-border-clr: #870413;
   --active-clr: #5e63ff; /* Active states */
   --deleting-clr: #ff2e46ca;
-  --creating-clr: #2eff5fca;
+  --creating-clr: #28da51ca;
 }
 
 /*--------------------- Global Styles ---------------------*/
@@ -234,7 +234,7 @@ aside {
 #default-asidebar .dropdown-btn,
 #default-asidebar .logo {
   display: flex;
-  align-items: center; /* Align items verticly */
+  align-items: center; /* Align items vertically */
 
   gap: 1em;
   padding: 0.85em;
@@ -326,7 +326,7 @@ aside {
 main {
   grid-area: main;
 
-  /* Ensures responsiveness! If container is 200px, then 7% of 200 is 14px, and this will be choosen over the fixed 30px */
+  /* Ensures responsiveness! If container is 200px, then 7% of 200 is 14px, and this will be chosen over the fixed 30px */
   padding: min(30px, 7%);
   display: flex;
   justify-content: flex-start;
@@ -364,6 +364,7 @@ main {
   display: flex;
 }
 #project-section li p,
+#project-section a,
 #project-section .close {
   margin: 10px 25px;
   padding: 5px 10px;
@@ -382,12 +383,6 @@ main {
   border-right: none;
   flex: 1;
   margin-right: 0;
-}
-
-#project-section li a,
-#project-section .close {
-  margin: 10px 25px;
-  padding: 5px 10px;
 }
 #project-section li a {
   border: 1px solid var(--accent-clr);
@@ -414,10 +409,12 @@ main {
 #project-section svg {
   fill: var(--icon-clr);
   transition: all 0.3s ease;
+  width: 16px;
 }
 #project-section .close:hover {
   cursor: pointer;
   box-shadow: 0 0 20px var(--deleting-clr); /* Glowing effect */
+  transition: all 0.3s ease;
 }
 #project-section .close:hover svg {
   fill: var(--deleting-clr);
@@ -429,30 +426,40 @@ main {
   margin-top: 25px;
   gap: 0;
 }
+#project-form button,
 #project-form input {
+  margin: 10px 25px;
+  padding: 5px 10px;
+  border: 2px solid var(--accent-clr);
   background-color: var(--base-clr);
-  padding: 0 10px 5px 10px; /* | Top | Right | Bottom | Left */
-  border: 2.5px solid var(--accent-clr);
-  border-right: none;
 }
-#project-form button svg {
-  background-color: var(--base-clr);
-  padding: 5px 10px 5px 10px; /* | Top | Right | Bottom | Left */
-  fill: var(--accent-clr);
+#project-form input {
+  margin-right: 0;
+}
+#project-form input::placeholder {
+  font-style: italic;
+  font-size: 12px;
 }
 #project-form button {
-  border: 2.5px solid var(--accent-clr);
+  display: flex;
+  margin-left: 0;
+  border-left: none;
 }
-#project-form svg:hover {
+#project-form svg {
+  fill: var(--icon-clr);
+  width: 20px;
+  transition: all 0.3s ease;
+}
+#project-form button:hover {
   cursor: pointer;
+  box-shadow: 0 0 20px var(--creating-clr); /* Glowing effect */
+  transition: all 0.3s ease;
+}
+#project-form button:hover svg {
   fill: var(--creating-clr);
 }
 #project-form input:focus {
   outline: none;
-}
-#project-form input::placeholder {
-  font-style: italic;
-  font-size: 14px;
 }
 
 /*--------------------- Footer ---------------------*/
@@ -562,28 +569,30 @@ h1 {
   padding: 1em;
   font: inherit;
   border-radius: 0 10px 10px 0;
-  border-left: none;
-  background-color: transparent;
-  transition: 150ms ease;
+  border: none;
+  background-color: var(--form-bg-clr);
 }
 #role-select {
   padding: 0.5em;
-  background-color: transparent;
 }
 #form-sign-in-and-out input:hover,
 #role-select:hover {
-  border-color: var(--accent-clr);
+  border: 2px solid var(--hover-clr);
+  border-left: none;
 }
 #form-sign-in-and-out input:focus,
 #form-sign-in-and-out select:focus {
   outline: none;
-  border-color: var(--hover-clr);
+  border: 2px solid var(--active-clr);
+  border-left: none;
 }
-#form-sign-in-and-out div:has(input:focus) > label {
-  /* Changes the icon box's color when changing field */
-  background-color: var(--hover-clr);
-}
+#form-sign-in-and-out div:has(input:focus) > label,
 #form-sign-in-and-out div:has(select:focus) > label {
+  /* Changes the icon box's color when changing field */
+  background-color: var(--active-clr) !important;
+}
+#form-sign-in-and-out div:has(input:hover) > label,
+#form-sign-in-and-out div:has(select:hover) > label {
   background-color: var(--hover-clr);
 }
 #form-sign-in-and-out input::placeholder {

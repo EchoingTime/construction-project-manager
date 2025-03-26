@@ -17,7 +17,7 @@ views = Blueprint('views', __name__)
 
 # ----------- Project Creation -----------
 
-# ChatGPT Assistance with page refreshing project dublications
+# ChatGPT Assistance with page refreshing project duplications
 @views.route('/', methods=['GET', 'POST']) # Main page of website
 @login_required
 def project():
@@ -54,7 +54,7 @@ def view_project(project_id):
 
 @views.route('/delete-project', methods=['POST'])
 def delete_project():
-    project = json.loads(request.data) # Takes in data from POST request and loads it as a Python dictonary of json object
+    project = json.loads(request.data) # Takes in data from POST request and loads it as a Python dictionary of json object
     projectId = project['projectId'] # Accesses project id attribute
     project = Project.query.get(projectId) # Look for the project that has that id
     if project: # If note exists
@@ -87,7 +87,7 @@ def send_message():
         messages = Message(sender_id=sender_id, receiver_id=receiver_id, message_text=content)
         db.session.add(messages)
         db.session.commit()
-        flash("Message sent", category="seccess")
+        flash("Message sent", category="success")
         return redirect(url_for("views.inbox"))
     else:
         flash("Something went wrong!", category="error")
