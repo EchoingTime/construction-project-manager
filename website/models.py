@@ -7,6 +7,7 @@
 from . import db # Importing from current package, the website folder, the db object from __init__.py
 from flask_login import UserMixin # Custom class that gives the user object specific things
 from sqlalchemy.sql import func
+from sqlalchemy import Enum # Allows the restriction of a column's values to a set of options
 
 # IMPORTANT BEFORE ADDING/CHANGING MODELS! Go to README.md and read instructions under Database Modifications
 
@@ -28,8 +29,11 @@ class Project(db.Model): # Database model: An object blueprint/layout that will 
     id = db.Column(db.Integer, primary_key=True)
     project_name = db.Column(db.String(70))
     date = db.Column(db.DateTime(timezone=True), default=func.now()) # Gets current date and time
+    # Migrations includes default value below v
+    progress = db.Column(Enum('Not Yet Started', 'On Hold', 'In Progress', 'Completed', 'Canceled', name='progress_status'), nullable=False, default='Not Yet Started') # Project's Progress: Not Yet Started (Grey) | On Hold (Orange) | In Progress (Yellow) | Completed (Green) | Canceled (Red)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) # 1-to-many relationship
     subcontractors = db.relationship('Assignment', back_populates='project') #many to many relation
+
 # --------------------- Message Table ---------------------
 
 class Message(db.Model): #Model to handle the messages
@@ -40,6 +44,7 @@ class Message(db.Model): #Model to handle the messages
     timestamp = db.Column(db.DateTime, default = db.func.current_timestamp())
 
 #--------------------- Subcontractor Table ------------------
+
 class Subcontractor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150))
@@ -47,6 +52,7 @@ class Subcontractor(db.Model):
     trade = db.Column(db.String(150))
 
 #--------------------- Assignment Table ----------------------
+
 class Assignment(db.Model):          #helper table for Subcontractor-Project Relationship
     id = db.Column(db.Integer,primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))

@@ -7,6 +7,10 @@
 - Patrick Sawicki
 - Joe Wagner
 
+## Deletions when final product is ready
+
+- .vscode folder : Includes settings.json for ignoring workplace spellings
+
 ## Description:
 
 This is a web application built using Flask and other modern technologies to manage construction projects.
@@ -58,7 +62,7 @@ pip install -r requirements.txt
 
 ## Database Modifications:
 
-After making a change to models.py (adding a new table or modifying an existing one), read the instructions below.
+After making a change to models.py (adding a new table or modifying an existing one), read the instructions below. If viewing via IDE, do not include Python (this is for styling the README).
 
 1. Activate the virtual environment
    - For Windows Command Prompt/VS Code Terminal
