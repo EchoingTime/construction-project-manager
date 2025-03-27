@@ -105,18 +105,23 @@ def add_subcontractor(project_id):
             flash('Subcontractor name and email required!', category='error')
         else:
             existing_subcontractor = Subcontractor.query.filter_by(email=subcontractor_email).first()
-            if existing_subcontractor:
-                flash("This subcontractor already exists!", category='error')
+            if existing_subcontractor is None:
+                flash("This subcontractor is not registered!", category='error')
+                return redirect(request.referrer)
+            #checks if the subcon has been assigned to THIS project already
+            existing_assignment = Assignment.query.filter_by(project_id=project_id,subcontractor_id=existing_subcontractor.id).first()
+            
+            if existing_assignment:
+                flash("This subcontractor is already assigned to this project!", category='error')
             else:
-                new_subcontractor=Subcontractor(name=subcontractor_name,email=subcontractor_email,trade=subcontractor_trade)
-                db.session.add(new_subcontractor)
-                db.session.commit()
-
-                new_assignment=Assignment(project_id=project_id,subcontractor_id=new_subcontractor.id,assigned_date=datetime.now(),status="Incomplete")
+                new_assignment=Assignment(project_id=project_id,subcontractor_id=existing_subcontractor.id,assigned_date=datetime.now(),status="Incomplete")
                 db.session.add(new_assignment)
                 db.session.commit()
                 flash('Subcontractor Added!', category='success')
-            return redirect(url_for('views.project', project_id=project_id))
-    return render_template("project.html", project_id=project_id)
+
+            project=Project.query.get(project_id) #get project before rendering template
+            return redirect(url_for('views.view_project', project_id=project_id))
+            #return redirect(url_for('views.project', project_id=project_id))
+            
 
 
