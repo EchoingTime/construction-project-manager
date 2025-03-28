@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-/*--------------------- Toggle Projection Delete svg ---------------------*/
+/*--------------------- Toggle Projection Edit ---------------------*/
 
 function toggleEdit() {
   const deleteSvg = document.querySelectorAll("#delete-svg");

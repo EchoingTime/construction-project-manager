@@ -442,12 +442,6 @@ main {
 #project-section .close:hover svg {
   fill: var(--deleting-clr);
 }
-#project-section .hidden-svg {
-  display: none;
-}
-#project-section .smooth-borders {
-  border-radius: 0%;
-}
 #project-status #not-yet-started-svg:hover {
   fill: var(--not-yet-started-clr);
 }
@@ -477,6 +471,15 @@ main {
 #project-status:has(#canceled-svg:hover) {
   box-shadow: 0 0 20px var(--canceled-clr);
   border-right-color: var(--canceled-clr) !important;
+}
+
+/*----------- Editing Project -----------*/
+
+#project-section .hidden-svg {
+  display: none;
+}
+#project-section .smooth-borders {
+  border-radius: 0%;
 }
 
 /*----------- Project Creation Box -----------*/
