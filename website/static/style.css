@@ -39,6 +39,12 @@
   --active-clr: #5e63ff; /* Active states */
   --deleting-clr: #ff2e46ca;
   --creating-clr: #28da51ca;
+  /* Progress Status Colors */
+  --not-yet-started-clr: #dcdcdc; /* Symbol: Not Started Google Icon */
+  --on-hold-clr: #ffa500; /* Symbol: Pause Circle Google Icon */
+  --in-progress-clr: #ffff00; /* Symbol: Auto Renew Google Icon */
+  --completed-clr: #00ff00; /* Symbol: Check Circle Google Icon */
+  --canceled-clr: #ff0000; /* Symbol: Block Google Icon */
 }
 
 /*--------------------- Global Styles ---------------------*/
@@ -356,6 +362,12 @@ main {
 #header-project-page {
   margin-bottom: 15px;
 }
+#project-section {
+  width: 85%;
+}
+
+/*----------- List of Projects -----------*/
+
 #project-section ul {
   padding: 0 5px 5px 5px; /* | Top | Right | Bottom | Left */
   list-style: none;
@@ -363,29 +375,59 @@ main {
 #project-section li {
   display: flex;
 }
-#project-section li p,
+#project-section #project-status,
 #project-section a,
 #project-section .close {
+  display: flex;
   margin-bottom: 5px;
   padding: 5px 10px;
+  align-items: center;
+  justify-content: center;
 }
-#project-section li p,
 #project-section li a {
   background-color: var(--accent-clr);
   color: var(--base-clr);
   border: 1px solid var(--accent-clr);
   border-right: none;
-  border-radius: 10px 0 0 10px;
 
   flex: 1;
   margin-right: 0;
+}
+#project-section #project-status {
+  display: flex;
+  background-color: var(--accent-clr);
+  color: var(--base-clr);
+
+  border-radius: 5px 0 0 5px;
+  margin-right: 0;
+  border: 1px solid var(--accent-clr);
+
+  border-right-color: var(--base-clr);
+}
+#project-section #project-status svg {
+  width: 22px;
+}
+#project-section #not-yet-started-svg {
+  fill: var(--not-yet-started-clr);
+}
+#project-section #on-hold-svg {
+  fill: var(--on-hold-clr);
+}
+#project-section #in-progress-svg {
+  fill: var(--in-progress-clr);
+}
+#project-section #completed-svg {
+  fill: var(--completed-clr);
+}
+#project-section #canceled-svg {
+  fill: var(--canceled-clr);
 }
 #project-section li a:hover {
   text-decoration: none;
   background-color: var(--hover-clr);
 }
 #project-section .close {
-  border-radius: 0 10px 10px 0;
+  border-radius: 0 5px 5px 0;
   background-color: transparent;
   border: 1px solid var(--accent-clr);
 }
@@ -402,6 +444,8 @@ main {
 #project-section .close:hover svg {
   fill: var(--deleting-clr);
 }
+
+/*----------- Project Creation Box -----------*/
 
 #project-form {
   display: flex;
