@@ -43,9 +43,12 @@
 
 /*--------------------- Global Styles ---------------------*/
 
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
+  box-sizing: border-box; /* Ensures padding and border are included in total sizing */
 }
 
 html {
@@ -59,8 +62,7 @@ svg {
 
 /*--------------------- Page Layout ---------------------*/
 
-#main-website-body,
-#intro-to-website-body {
+body {
   display: grid;
 
   min-height: 100vh; /* Viewport Height */
@@ -86,7 +88,6 @@ svg {
 
 nav {
   grid-area: navbar;
-  box-sizing: border-box;
 
   position: sticky;
   top: 0;
@@ -183,7 +184,6 @@ nav li:first-child {
 
 aside {
   grid-area: sidebar;
-  box-sizing: border-box; /* Ensures padding and border are included in total sizing */
 
   position: sticky; /* Sticks to position within parent container when scrolling */
   top: 65px; /* Sidebar sticks beneath navbar when scrolling */
@@ -348,7 +348,7 @@ main {
 
   width: 50%;
 
-  padding: 50px;
+  padding: 25px;
 }
 
 /*--------------------- Project Page Specifics ---------------------*/
@@ -453,6 +453,7 @@ footer {
   display: flex;
   justify-content: center;
   padding: 0.5em;
+  font-size: 14px;
 
   background-color: var(--base-clr);
   border-top: 1px solid var(--line-clr);
@@ -479,7 +480,6 @@ footer {
   border: 2.5px solid transparent;
   border-radius: 1em;
   position: relative;
-  box-sizing: border-box;
 }
 .alert-error {
   font-weight: bold;
@@ -545,7 +545,6 @@ h1 {
 }
 #form-sign-in-and-out input,
 #role-select {
-  box-sizing: border-box;
   flex-grow: 1;
   min-width: 0;
   height: 50px;
@@ -694,7 +693,6 @@ a:hover {
 
     display: flex;
     justify-content: center;
-    box-sizing: border-box;
 
     width: 100%;
     height: 60px;
@@ -713,7 +711,6 @@ a:hover {
     display: flex;
     justify-content: center;
 
-    box-sizing: border-box;
     padding: 1em;
     width: auto;
 
