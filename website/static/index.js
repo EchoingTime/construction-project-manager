@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 /*--------------------- Toggle Projection Delete svg ---------------------*/
 
-function toggleDelete() {
+function toggleEdit() {
   const deleteSvg = document.querySelectorAll("#delete-svg");
   const borderToSmooth = document.querySelectorAll("#project-link");
   const editIcon = document.querySelector("#edit-project");

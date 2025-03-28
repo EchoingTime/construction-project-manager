@@ -40,7 +40,7 @@
   --deleting-clr: #ff2e46ca;
   --creating-clr: #28da51ca;
   /* Progress Status Colors */
-  --not-yet-started-clr: #dcdcdc; /* Symbol: Not Started Google Icon */
+  --not-yet-started-clr: #007bff; /* Symbol: Not Started Google Icon */
   --on-hold-clr: #ffa500; /* Symbol: Pause Circle Google Icon */
   --in-progress-clr: #ffff00; /* Symbol: Auto Renew Google Icon */
   --completed-clr: #00ff00; /* Symbol: Check Circle Google Icon */
@@ -418,24 +418,6 @@ main {
 
   border-right-color: var(--base-clr);
 }
-#project-section #project-status svg {
-  width: 22px;
-}
-#project-section #not-yet-started-svg {
-  fill: var(--not-yet-started-clr);
-}
-#project-section #on-hold-svg {
-  fill: var(--on-hold-clr);
-}
-#project-section #in-progress-svg {
-  fill: var(--in-progress-clr);
-}
-#project-section #completed-svg {
-  fill: var(--completed-clr);
-}
-#project-section #canceled-svg {
-  fill: var(--canceled-clr);
-}
 #project-section li a:hover {
   text-decoration: none;
   background-color: var(--hover-clr);
@@ -465,6 +447,36 @@ main {
 }
 #project-section .smooth-borders {
   border-radius: 0%;
+}
+#project-status #not-yet-started-svg:hover {
+  fill: var(--not-yet-started-clr);
+}
+#project-status:has(#not-yet-started-svg:hover),
+#project-status:has(#on-hold-svg:hover),
+#project-status:has(#in-progress-svg:hover),
+#project-status:has(#completed-svg:hover),
+#project-status:has(#canceled-svg:hover) {
+  transition: all 0.3s ease;
+}
+#project-status:has(#not-yet-started-svg:hover) {
+  box-shadow: 0 0 20px var(--not-yet-started-clr);
+  border-right-color: var(--not-yet-started-clr) !important;
+}
+#project-status:has(#on-hold-svg:hover) {
+  box-shadow: 0 0 20px var(--on-hold-clr);
+  border-right-color: var(--on-hold-clr) !important;
+}
+#project-status:has(#in-progress-svg:hover) {
+  box-shadow: 0 0 20px var(--in-progress-clr);
+  border-right-color: var(--in-progress-clr) !important;
+}
+#project-status:has(#completed-svg:hover) {
+  box-shadow: 0 0 20px var(--completed-clr);
+  border-right-color: var(--completed-clr) !important;
+}
+#project-status:has(#canceled-svg:hover) {
+  box-shadow: 0 0 20px var(--canceled-clr);
+  border-right-color: var(--canceled-clr) !important;
 }
 
 /*----------- Project Creation Box -----------*/
