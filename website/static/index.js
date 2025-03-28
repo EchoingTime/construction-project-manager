@@ -76,6 +76,19 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+/*--------------------- Toggle Projection Delete svg ---------------------*/
+
+function toggleDelete() {
+  const deleteSvg = document.querySelectorAll("#delete-svg");
+  const borderToSmooth = document.querySelectorAll("#project-link");
+  deleteSvg.forEach((svg) => {
+    svg.classList.toggle("hidden-svg");
+  });
+  borderToSmooth.forEach((a) => {
+    a.classList.toggle("smooth-borders");
+  });
+}
+
 /*--------------------- Delete Projects ---------------------*/
 
 function deleteProject(button) {

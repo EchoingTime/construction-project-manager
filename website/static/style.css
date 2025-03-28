@@ -359,11 +359,24 @@ main {
 
 /*--------------------- Project Page Specifics ---------------------*/
 
-#header-project-page {
-  margin-bottom: 15px;
-}
 #project-section {
   width: 85%;
+}
+
+/*----------- Header Section -----------*/
+
+#project-header {
+  display: flex;
+  justify-items: center;
+  margin-bottom: 5px;
+  padding: 1em;
+}
+#project-header #edit-project {
+  margin-left: 5px;
+  fill: var(--accent-clr);
+}
+#project-header svg:hover {
+  cursor: pointer;
 }
 
 /*----------- List of Projects -----------*/
@@ -389,6 +402,7 @@ main {
   color: var(--base-clr);
   border: 1px solid var(--accent-clr);
   border-right: none;
+  border-radius: 0 5px 5px 0;
 
   flex: 1;
   margin-right: 0;
@@ -428,21 +442,29 @@ main {
 }
 #project-section .close {
   border-radius: 0 5px 5px 0;
-  background-color: transparent;
+  background-color: var(--accent-clr);
   border: 1px solid var(--accent-clr);
+  border-left-color: var(--base-clr);
 }
 #project-section svg {
-  fill: var(--icon-clr);
+  fill: var(--icon-form-clr);
   transition: all 0.3s ease;
   width: 16px;
 }
 #project-section .close:hover {
   cursor: pointer;
   box-shadow: 0 0 20px var(--deleting-clr); /* Glowing effect */
+  border-left-color: var(--deleting-clr);
   transition: all 0.3s ease;
 }
 #project-section .close:hover svg {
   fill: var(--deleting-clr);
+}
+#project-section .hidden-svg {
+  display: none;
+}
+#project-section .smooth-borders {
+  border-radius: 0%;
 }
 
 /*----------- Project Creation Box -----------*/
