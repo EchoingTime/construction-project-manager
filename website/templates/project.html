@@ -285,16 +285,20 @@
               {% if project.deadline is none %}
               <!-- No Project Deadline Assigned -->
               <p>Assign Project Deadline</p>
-              <input type="date" name="deadline" required />
-              <button type="submit">Assign</button>
+              <div class="div-dead">
+                <input type="date" name="deadline" required />
+                <button type="submit">Assign</button>
+              </div>
               {% else %}
               <p>{{ project.deadline }}</p>
-              <input
-                type="date"
-                name="deadline"
-                value="{{ project.deadline }}"
-              />
-              <button type="submit">Reassign</button>
+              <div class="div-dead">
+                <input
+                  type="date"
+                  name="deadline"
+                  value="{{ project.deadline }}"
+                />
+                <button type="submit">Reassign</button>
+              </div>
               {% endif %}
             </form>
           </section>

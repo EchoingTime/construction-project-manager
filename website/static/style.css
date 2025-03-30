@@ -544,7 +544,15 @@ main {
   border-bottom: 1px solid var(--line-clr);
 }
 #project_details button {
-  padding: 2.5px;
+  padding: 5px;
+  color: var(--base-clr);
+  background-color: var(--accent-clr);
+  border: 1px solid var(--accent-clr);
+  border-radius: 0.25em;
+}
+#project_details button:hover {
+  background-color: var(--hover-clr);
+  transition: all 0.3s ease-in-out;
 }
 #project_details form {
   display: flex;
@@ -582,6 +590,26 @@ main {
 }
 #project_details #deadline-form {
   gap: 10px;
+}
+.div-dead {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+.div-dead input {
+  padding-left: 5px;
+  color: var(--text-faded-clr);
+  font-style: italic;
+  border: 2px solid var(--accent-clr);
+}
+.div-dead input:focus {
+  outline: none;
+}
+.div-dead input:hover {
+  border-color: var(--hover-clr);
+}
+#project_details .div-dead button:hover {
+  background-color: var(--hover-clr);
 }
 
 /*--------------------- Footer ---------------------*/
