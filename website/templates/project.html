@@ -1,25 +1,49 @@
-<li><a href="/">Home</a></li>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Details</title>
+  </head>
+  <body>
+    <form
+      method="POST"
+      action="{{ url_for('views.add_subcontractor', project_id=project.id) }}"
+    >
+      <label for="subcontractor_name">Name:</label>
+      <input
+        type="text"
+        name="subcontractor_name"
+        id="subcontractor_name"
+        required
+      /><br />
 
+      <label for="subcontractor_email">Email:</label>
+      <input
+        type="email"
+        name="subcontractor_email"
+        id="subcontractor_email"
+        required
+      /><br />
 
-<form method="POST" action="{{ url_for('views.add_subcontractor', project_id=project.id) }}">
-    <label for="subcontractor_name">Name:</label>
-    <input type="text" name="subcontractor_name" id="subcontractor_name" required><br>
+      <label for="subcontractor_trade">Trade:</label>
+      <input
+        type="text"
+        name="subcontractor_trade"
+        id="subcontractor_trade"
+        required
+      /><br />
 
-    <label for="subcontractor_email">Email:</label>
-    <input type="email" name="subcontractor_email" id="subcontractor_email" required><br>
+      <button type="submit">Add Subcontractor</button>
+    </form>
 
-    <label for="subcontractor_trade">Trade:</label>
-    <input type="text" name="subcontractor_trade" id="subcontractor_trade" required><br>
-
-    <button type="submit">Add Subcontractor</button>
-</form>
-
-
-<h2>Subcontractors</h2>
-<ul>
-    {% for subcontractor in subcontractors %}
-        <li>{{ subcontractor.name }}</li>
-    {% else %}
-        <li>No subcontractors assigned yet.</li>
-    {% endfor %}
-</ul>
+    <h2>Subcontractors</h2>
+    <ul>
+      {% for subcontractor in subcontractors %}
+      <li>{{ subcontractor.name }}</li>
+      {% else %}
+      <li>No subcontractors assigned yet.</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

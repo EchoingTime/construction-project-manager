@@ -370,6 +370,7 @@ main {
   justify-items: center;
   margin-bottom: 5px;
   padding: 1em;
+  text-wrap: nowrap;
 }
 #project-header #edit-project {
   margin-left: 5px;
@@ -818,5 +819,14 @@ a:hover {
   }
   .no-sidebar footer {
     margin-bottom: 0px;
+  }
+}
+
+/*----------- Projects Overview -----------*/
+
+@media (max-width: 800px) {
+  #project-header {
+    text-wrap: wrap;
+    text-align: center;
   }
 }
