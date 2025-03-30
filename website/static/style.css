@@ -124,13 +124,16 @@ nav a,
   align-items: center;
 
   height: 100%;
-  padding: 0 30px;
+  padding: 0 15px;
 
   color: var(--text-clr);
   text-decoration: none;
 }
 .nav-title {
   font-weight: 600;
+}
+nav svg {
+  margin-right: 5px;
 }
 nav a:hover {
   background-color: var(--hover-clr);
