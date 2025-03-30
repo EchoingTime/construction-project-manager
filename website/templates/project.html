@@ -254,7 +254,9 @@
         </div>
         {% endif %} {% endfor %} {% endif %} {% endwith %}
       </section>
-      <section class="main-content-section">
+      <section class="main-content-section" id="project_details">
+        <!----------- Main Page Content ----------->
+        <h2 id="header-project-specifics">{{ project.project_name }}</h2>
         <form
           method="POST"
           action="{{ url_for('views.add_subcontractor', project_id=project.id) }}"

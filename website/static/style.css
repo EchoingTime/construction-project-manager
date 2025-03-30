@@ -357,7 +357,7 @@ main {
   padding: 25px;
 }
 
-/*--------------------- Project Page Specifics (Overview) ---------------------*/
+/*--------------------- Project Page Overview ---------------------*/
 
 #project-section {
   width: 85%;
@@ -525,6 +525,12 @@ main {
 }
 #project-form input:focus {
   outline: none;
+}
+
+/*--------------------- Project Page Details ---------------------*/
+
+#project_details {
+  width: 100%;
 }
 
 /*--------------------- Footer ---------------------*/
@@ -821,7 +827,8 @@ a:hover {
 /*----------- Projects Overview -----------*/
 
 @media (max-width: 800px) {
-  #project-header {
+  #project-header,
+  #header-project-specifics {
     text-wrap: wrap;
     text-align: center;
   }

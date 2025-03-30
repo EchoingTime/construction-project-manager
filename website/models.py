@@ -29,15 +29,16 @@ class Project(db.Model): # Database model: An object blueprint/layout that will 
     id = db.Column(db.Integer, primary_key=True)
     project_name = db.Column(db.String(70))
     date = db.Column(db.DateTime(timezone=True), default=func.now()) # Gets current date and time
-    # Migrations includes default value below v
+    # Migrations includes default value below v (progress)
     progress = db.Column(Enum('Not Yet Started', 'On Hold', 'In Progress', 'Completed', 'Canceled', name='progress_status'), nullable=False, default='Not Yet Started') # Project's Progress: Not Yet Started (Blue) | On Hold (Orange) | In Progress (Yellow) | Completed (Green) | Canceled (Red)
+    deadline = db.Column(db.Date, nullable=True) # Project Deadline
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) # 1-to-many relationship
     subcontractors = db.relationship('Assignment', back_populates='project') #many to many relation
 
 # --------------------- Message Table ---------------------
 
 class Message(db.Model): #Model to handle the messages
-    id = db.Column(db.Integer, primary_key=True)   #store all messages in a table 
+    id = db.Column(db.Integer, primary_key=True) #store all messages in a table 
     sender_id = db.Column(db.Integer, db.ForeignKey('user.id')) #used to fetch the correct messages based on who received and who sent
     receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     message_text = db.Column(db.Text, nullable = False)
@@ -53,7 +54,7 @@ class Subcontractor(db.Model):
 
 #--------------------- Assignment Table ----------------------
 
-class Assignment(db.Model):          #helper table for Subcontractor-Project Relationship
+class Assignment(db.Model): #helper table for Subcontractor-Project Relationship
     id = db.Column(db.Integer,primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
     subcontractor_id = db.Column(db.Integer, db.ForeignKey('subcontractor.id'))

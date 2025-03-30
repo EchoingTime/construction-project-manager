@@ -87,7 +87,7 @@ After making a change to models.py (adding a new table or modifying an existing 
      ```python
      flask --app main.py db migrate -m "Renamed data column to project_name"
      ```
-4. (Provided via ChatGPT) Modify the generated migration file:
+4. (Provided via ChatGPT - This is for the above example) Modify the generated migration file:
    - Open the migration file located in the `migrations/versions` folder.
    - Add the following code to migrate data from `data` to `project_name`:
      ```python
