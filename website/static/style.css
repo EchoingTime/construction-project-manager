@@ -74,7 +74,7 @@ body {
   min-height: 100vh; /* Viewport Height */
   min-height: 100dvh; /* Dynamic Viewport Height */
 }
-#main-website-body {
+#default-website-body {
   grid-template-columns: auto 1fr; /* Set columns for sidebar and main */
   grid-template-rows: auto 1fr auto;
   grid-template-areas:

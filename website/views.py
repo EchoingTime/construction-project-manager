@@ -19,7 +19,7 @@ views = Blueprint('views', __name__)
 
 # ChatGPT Assistance with page refreshing project duplications
 @views.route('/', methods=['GET', 'POST']) # Main page of website
-@login_required
+@login_required # Make sure to include this if a user must be logged in to view a page!
 def project():
     if request.method == 'POST':
         project = request.form.get('project')
@@ -45,14 +45,18 @@ def project():
     return render_template("home.html", user=current_user)
 
 #------------ Project Viewing ------------
+
 @views.route('/view-project/<int:project_id>', methods=['GET', 'POST'])
+@login_required
 def view_project(project_id):
     project = Project.query.get(project_id)
     subcontractors = [assignment.subcontractor for assignment in project.subcontractors]
     return render_template("project.html", project=project, subcontractors=subcontractors)
+
 # ----------- Project Deletion -----------
 
 @views.route('/delete-project', methods=['POST'])
+@login_required
 def delete_project():
     project = json.loads(request.data) # Takes in data from POST request and loads it as a Python dictionary of json object
     projectId = project['projectId'] # Accesses project id attribute
@@ -68,6 +72,7 @@ def delete_project():
 # --------------------- Inbox Page ---------------------
 
 @views.route('/inbox')
+@login_required
 def inbox():
     user_id = current_user.id 
     messages = Message.query.join(User, Message.sender_id == User.id).filter(Message.receiver_id == user_id).add_columns(Message.id, Message.message_text, Message.timestamp, User.email.label('sender_name')).order_by(Message.timestamp.desc()).all()
@@ -76,6 +81,7 @@ def inbox():
 # ----------- Sending Messages -----------
 
 @views.route('/send_message', methods=['POST'])
+@login_required
 def send_message():
     sender_id = current_user.id
     receiver_name = request.form['receiver_email']
@@ -94,7 +100,9 @@ def send_message():
     return render_template("inbox.html", messages=messages)
 
 # -------------- Adding Subcontractors -----------
+
 @views.route('/add-subcontractor/<int:project_id>', methods=['POST'])
+@login_required
 def add_subcontractor(project_id):
     if request.method == 'POST':
         subcontractor_name = request.form.get('subcontractor_name')
