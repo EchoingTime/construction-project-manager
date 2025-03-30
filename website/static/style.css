@@ -357,7 +357,7 @@ main {
   padding: 25px;
 }
 
-/*--------------------- Project Page Specifics ---------------------*/
+/*--------------------- Project Page Specifics (Overview) ---------------------*/
 
 #project-section {
   width: 85%;
@@ -809,10 +809,6 @@ a:hover {
   }
   main {
     padding: 2em 1em 60px 1em;
-  }
-  section {
-    border: none;
-    padding: 0;
   }
   footer {
     margin-bottom: 60px;

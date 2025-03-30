@@ -51,7 +51,7 @@ def project():
 def view_project(project_id):
     project = Project.query.get(project_id)
     subcontractors = [assignment.subcontractor for assignment in project.subcontractors]
-    return render_template("project.html", project=project, subcontractors=subcontractors)
+    return render_template("project.html", project=project, subcontractors=subcontractors, user=current_user)
 
 # ----------- Project Deletion -----------
 
