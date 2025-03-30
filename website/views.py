@@ -69,6 +69,24 @@ def delete_project():
     
     return jsonify({}) # Return empty response
 
+# ----------- Project Deadline Update -----------
+
+# Route /update_deadline is needed for the html code, form --> action, to direct changes to
+@views.route('/update_deadline/<int:project_id>', methods=['POST'])
+@login_required
+def update_deadline(project_id):
+    project = Project.query.get(project_id)
+
+    # Must be changed from a string to a valid date object for the database
+    new_deadline_str = request.form.get('deadline') # Gets via input that has name='deadline'
+
+    if new_deadline_str:
+        project.deadline = datetime.strptime(new_deadline_str, "%Y-%m-%d").date()
+    
+    db.session.commit()
+    flash('Deadline successfully updated!', category='success')
+    return redirect(url_for('views.view_project', project_id=project_id, user=current_user))
+
 # --------------------- Inbox Page ---------------------
 
 @views.route('/inbox')

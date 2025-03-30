@@ -272,46 +272,79 @@
       </section>
       <section class="main-content-section" id="project_details">
         <!----------- Main Page Content ----------->
-        <h2 id="header-project-specifics">{{ project.project_name }}</h2>
-        <form
-          method="POST"
-          action="{{ url_for('views.add_subcontractor', project_id=project.id) }}"
-        >
-          <label for="subcontractor_name">Name:</label>
-          <input
-            type="text"
-            name="subcontractor_name"
-            id="subcontractor_name"
-            required
-          /><br />
-
-          <label for="subcontractor_email">Email:</label>
-          <input
-            type="email"
-            name="subcontractor_email"
-            id="subcontractor_email"
-            required
-          /><br />
-
-          <label for="subcontractor_trade">Trade:</label>
-          <input
-            type="text"
-            name="subcontractor_trade"
-            id="subcontractor_trade"
-            required
-          /><br />
-
-          <button type="submit">Add Subcontractor</button>
-        </form>
-
-        <h2>Subcontractors</h2>
-        <ul>
-          {% for subcontractor in subcontractors %}
-          <li>{{ subcontractor.name }}</li>
-          {% else %}
-          <li>No subcontractors assigned yet.</li>
-          {% endfor %}
-        </ul>
+        <h2 id="header-project-details">{{ project.project_name }}</h2>
+        <section class="sub-sections top-section">
+          <section class="sub-sections" id="deadline-sub-section">
+            <h3>Project Deadline</h3>
+            <!-- Form is needed to send update -->
+            <form
+              id="deadline-form"
+              method="POST"
+              action="{{ url_for('views.update_deadline', project_id=project.id) }}"
+            >
+              {% if project.deadline is none %}
+              <!-- No Project Deadline Assigned -->
+              <p>Assign Project Deadline</p>
+              <input type="date" name="deadline" required />
+              <button type="submit">Assign</button>
+              {% else %}
+              <p>{{ project.deadline }}</p>
+              <input
+                type="date"
+                name="deadline"
+                value="{{ project.deadline }}"
+              />
+              <button type="submit">Reassign</button>
+              {% endif %}
+            </form>
+          </section>
+          <section class="sub-sections" id="completion-status-sub-section">
+            <h3>Completion Status</h3>
+            <p>{{ project.progress }}</p>
+          </section>
+        </section>
+        <section class="sub-sections bottom-section">
+          <section class="sub-sections" id="subcontractors-sub-section">
+            <h3>Subcontractors</h3>
+            <ul>
+              {% for subcontractor in subcontractors %}
+              <li>{{ subcontractor.name }}</li>
+              {% else %}
+              <li>No subcontractors assigned yet.</li>
+              {% endfor %}
+            </ul>
+            <form
+              method="POST"
+              action="{{ url_for('views.add_subcontractor', project_id=project.id) }}"
+            >
+              <label for="subcontractor_name">Name:</label>
+              <input
+                type="text"
+                name="subcontractor_name"
+                id="subcontractor_name"
+                required
+              /><br />
+              <label for="subcontractor_email">Email:</label>
+              <input
+                type="email"
+                name="subcontractor_email"
+                id="subcontractor_email"
+                required
+              /><br />
+              <label for="subcontractor_trade">Trade:</label>
+              <input
+                type="text"
+                name="subcontractor_trade"
+                id="subcontractor_trade"
+                required
+              /><br />
+              <button type="submit">Add Subcontractor</button>
+            </form>
+          </section>
+          <section class="sub-sections" id="task-sub-section">
+            <h3>Tasks</h3>
+          </section>
+        </section>
       </section>
     </main>
     <!--------------------- Footer --------------------->

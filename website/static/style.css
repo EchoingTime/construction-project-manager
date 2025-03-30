@@ -66,7 +66,7 @@ svg {
   fill: var(--icon-clr);
 }
 
-/*--------------------- Page Layout ---------------------*/
+/*--------------------- Page Layouts ---------------------*/
 
 body {
   display: grid;
@@ -347,17 +347,23 @@ main {
   transition: margin 0.3s ease;
 }
 .main-content-section {
+  width: 100%;
+  padding: 25px;
+  border-radius: 1em;
+}
+.main-content-section,
+.sub-sections {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   border: 1px solid var(--line-clr);
-  border-radius: 1em;
   margin-bottom: 20px;
-
+}
+.sub-sections {
+  padding: 10px;
+  border-radius: 0.5em;
   width: 50%;
-
-  padding: 25px;
 }
 
 /*--------------------- Project Page Overview ---------------------*/
@@ -532,8 +538,50 @@ main {
 
 /*--------------------- Project Page Details ---------------------*/
 
-#project_details {
+#project_details h3 {
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--line-clr);
+}
+#project_details button {
+  padding: 2.5px;
+}
+#project_details form {
+  display: flex;
+  flex-direction: column;
+}
+#project_details #header-project-details {
+  margin-bottom: 25px;
+}
+#project_details .top-section,
+#project_details .bottom-section {
   width: 100%;
+  border-color: green;
+  gap: 10px;
+}
+#project_details .top-section {
+  flex-direction: row;
+}
+#deadline-sub-section,
+#completion-status-sub-section {
+  height: 85%;
+}
+#subcontractors-sub-section,
+#task-sub-section {
+  width: 100%;
+}
+#project_details #deadline-sub-section {
+  text-wrap: wrap;
+  text-align: center;
+}
+#project_details #deadline-sub-section p {
+  margin-bottom: 5px;
+}
+#project_details #deadline-form > p {
+  order: -1;
+}
+#project_details #deadline-form {
+  gap: 10px;
 }
 
 /*--------------------- Footer ---------------------*/
