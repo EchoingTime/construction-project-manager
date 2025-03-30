@@ -32,8 +32,23 @@ class Project(db.Model): # Database model: An object blueprint/layout that will 
     # Migrations includes default value below v (progress)
     progress = db.Column(Enum('Not Yet Started', 'On Hold', 'In Progress', 'Completed', 'Canceled', name='progress_status'), nullable=False, default='Not Yet Started') # Project's Progress: Not Yet Started (Blue) | On Hold (Orange) | In Progress (Yellow) | Completed (Green) | Canceled (Red)
     deadline = db.Column(db.Date, nullable=True) # Project Deadline
+
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) # 1-to-many relationship
+
     subcontractors = db.relationship('Assignment', back_populates='project') #many to many relation
+    tasks = db.relationship('Task', backref='project', lazy='dynamic') # 1-to-many relationship
+
+# --------------------- Task Table ---------------------
+
+class Task(db.Model): # Model to allow contractors to assign tasks
+    id = db.Column(db.Integer, primary_key=True)
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    deadline = db.Column(db.Date, nullable=True) # Task Deadline
+    completion = db.Column(Enum('Completed', 'In Progress', 'Canceled', name='completion_status'), nullable=False, default='In Progress')
+
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False) # Foreign Key
 
 # --------------------- Message Table ---------------------
 
