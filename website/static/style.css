@@ -588,6 +588,9 @@ main {
   text-wrap: wrap;
   text-align: center;
 }
+#project-details #deadline-sub-section p {
+  font-weight: bold;
+}
 #project-details #deadline-form {
   gap: 10px;
 }
