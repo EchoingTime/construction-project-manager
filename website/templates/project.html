@@ -305,6 +305,80 @@
           <section class="sub-sections" id="completion-status-sub-section">
             <h3>Completion Status</h3>
             <p>{{ project.progress }}</p>
+            <form
+              id="completion-form"
+              method="POST"
+              action="{{ url_for('views.update_project_completion_status', project_id=project.id) }}"
+            >
+              <ul>
+                {% if project.progress != 'Not Yet Started' %}
+                <li>
+                  <label for="status-not-yet-started">
+                    <!-- for connects to id -->
+                    <input
+                      type="radio"
+                      id="status-not-yet-started"
+                      name="project-status"
+                      value="Not Yet Started"
+                    />
+                    Not Yet Started
+                  </label>
+                </li>
+                {% endif %} {% if project.progress != 'On Hold' %}
+                <li>
+                  <label for="status-on-hold">
+                    <input
+                      type="radio"
+                      id="status-on-hold"
+                      name="project-status"
+                      value="On Hold"
+                    />
+                    On Hold
+                  </label>
+                </li>
+                {% endif %} {% if project.progress != 'In Progress' %}
+                <li>
+                  <label for="status-in-progress">
+                    <input
+                      type="radio"
+                      id="status-in-progress"
+                      name="project-status"
+                      value="In Progress"
+                    />
+                    In Progress
+                  </label>
+                </li>
+                {% endif %} {% if project.progress != 'Completed' %}
+                <li>
+                  <label for="status-completed">
+                    <input
+                      type="radio"
+                      id="status-completed"
+                      name="project-status"
+                      value="Completed"
+                    />
+                    Completed
+                  </label>
+                </li>
+                {% endif %} {% if project.progress != 'Canceled' %}
+                <li>
+                  <label for="status-canceled">
+                    <input
+                      type="radio"
+                      id="status-canceled"
+                      name="project-status"
+                      value="Canceled"
+                    />
+                    Canceled
+                  </label>
+                </li>
+                {% endif %}
+              </ul>
+              <div class="buttons">
+                <button type="submit">Save Status</button>
+                <button type="reset">Clear</button>
+              </div>
+            </form>
           </section>
         </section>
         <section class="sub-sections bottom-section">

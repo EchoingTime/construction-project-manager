@@ -87,6 +87,24 @@ def update_deadline(project_id):
     flash('Deadline successfully updated!', category='success')
     return redirect(url_for('views.view_project', project_id=project_id, user=current_user))
 
+# ----------- Project Completion Status Update -----------
+
+# Note: In the Project table, the column is called progress and not status.
+@views.route('/update_project_completion_status/<int:project_id>', methods=['POST'])
+@login_required
+def update_project_completion_status(project_id):
+    project = Project.query.get(project_id)
+
+    new_status = request.form.get('project-status')
+
+    if new_status: # To ensure an option was selected
+        project.progress = new_status
+        db.session.commit()
+        flash('Completion Status successfully updated!', category='success')
+    else:
+        flash('No status selected!', category='error')
+    return redirect(url_for('views.view_project', project_id=project_id, user=current_user))
+
 # --------------------- Inbox Page ---------------------
 
 @views.route('/inbox')

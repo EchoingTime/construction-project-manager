@@ -558,6 +558,9 @@ main {
   display: flex;
   flex-direction: column;
 }
+#project_details p {
+  margin-bottom: 10px;
+}
 #project_details #header-project-details {
   margin-bottom: 25px;
 }
@@ -570,6 +573,9 @@ main {
 #project_details .top-section {
   flex-direction: row;
 }
+
+/*----------- Deadline Section -----------*/
+
 #deadline-sub-section,
 #completion-status-sub-section {
   height: 85%;
@@ -581,12 +587,6 @@ main {
 #project_details #deadline-sub-section {
   text-wrap: wrap;
   text-align: center;
-}
-#project_details #deadline-sub-section p {
-  margin-bottom: 5px;
-}
-#project_details #deadline-form > p {
-  order: -1;
 }
 #project_details #deadline-form {
   gap: 10px;
@@ -610,6 +610,24 @@ main {
 }
 #project_details .div-dead button:hover {
   background-color: var(--hover-clr);
+}
+
+/*----------- Completion Status Section -----------*/
+#project_details h3 {
+  margin-top: 10px;
+}
+#project_details #completion-form .buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+#project_details #completion-form button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#project_details #completion-form li {
+  list-style: none;
+  padding: 5px;
 }
 
 /*--------------------- Footer ---------------------*/
