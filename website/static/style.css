@@ -455,6 +455,18 @@ main {
 #project-status #not-yet-started-svg:hover {
   fill: var(--not-yet-started-clr);
 }
+#project-status #on-hold-svg:hover {
+  fill: var(--on-hold-clr);
+}
+#project-status #in-progress-svg:hover {
+  fill: var(--in-progress-clr);
+}
+#project-status #completed-svg:hover {
+  fill: var(--completed-clr);
+}
+#project-status #canceled-svg:hover {
+  fill: var(--canceled-clr);
+}
 #project-status:has(#not-yet-started-svg:hover),
 #project-status:has(#on-hold-svg:hover),
 #project-status:has(#in-progress-svg:hover),
