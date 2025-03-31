@@ -538,39 +538,39 @@ main {
 
 /*--------------------- Project Page Details ---------------------*/
 
-#project_details h3 {
+#project-details h3 {
   margin-bottom: 10px;
   padding-bottom: 5px;
   border-bottom: 1px solid var(--line-clr);
 }
-#project_details button {
+#project-details button {
   padding: 5px;
   color: var(--base-clr);
   background-color: var(--accent-clr);
   border: 1px solid var(--accent-clr);
   border-radius: 0.25em;
 }
-#project_details button:hover {
+#project-details button:hover {
   background-color: var(--hover-clr);
   transition: all 0.3s ease-in-out;
 }
-#project_details form {
+#project-details form {
   display: flex;
   flex-direction: column;
 }
-#project_details p {
+#project-details p {
   margin-bottom: 10px;
 }
-#project_details #header-project-details {
+#project-details #header-project-details {
   margin-bottom: 25px;
 }
-#project_details .top-section,
-#project_details .bottom-section {
+#project-details .top-section,
+#project-details .bottom-section {
   width: 100%;
   border-color: green;
   gap: 10px;
 }
-#project_details .top-section {
+#project-details .top-section {
   flex-direction: row;
 }
 
@@ -584,11 +584,11 @@ main {
 #task-sub-section {
   width: 100%;
 }
-#project_details #deadline-sub-section {
+#project-details #deadline-sub-section {
   text-wrap: wrap;
   text-align: center;
 }
-#project_details #deadline-form {
+#project-details #deadline-form {
   gap: 10px;
 }
 .div-dead {
@@ -608,26 +608,52 @@ main {
 .div-dead input:hover {
   border-color: var(--hover-clr);
 }
-#project_details .div-dead button:hover {
+#project-details .div-dead button:hover {
   background-color: var(--hover-clr);
 }
 
 /*----------- Completion Status Section -----------*/
-#project_details h3 {
+
+#project-details h3 {
   margin-top: 10px;
 }
-#project_details #completion-form .buttons {
+#project-details #completion-form .buttons {
   display: flex;
   flex-direction: row;
   gap: 10px;
 }
-#project_details #completion-form button {
+#project-details #completion-form button {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-#project_details #completion-form li {
+#project-details #completion-form li {
   list-style: none;
   padding: 5px;
+}
+#project-details #completion-status-sub-section p {
+  display: flex;
+  align-items: flex-end; /* Aligns svg on the bottom next to p text */
+  gap: 5px;
+  border: 1px solid var(--accent-clr);
+  padding: 5px;
+  border-radius: 0.25em;
+  color: var(--base-clr);
+  background-color: var(--accent-clr);
+}
+#displaying-completion-status #not-yet-started-svg {
+  fill: var(--not-yet-started-clr);
+}
+#displaying-completion-status #on-hold-svg {
+  fill: var(--on-hold-clr);
+}
+#displaying-completion-status #in-progress-svg {
+  fill: var(--in-progress-clr);
+}
+#displaying-completion-status #completed-svg {
+  fill: var(--completed-clr);
+}
+#displaying-completion-status #canceled-svg {
+  fill: var(--canceled-clr);
 }
 
 /*--------------------- Footer ---------------------*/
