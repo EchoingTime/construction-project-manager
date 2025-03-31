@@ -301,7 +301,7 @@ aside {
 #default-asidebar .sub-menu.show {
   grid-template-rows: 1fr; /* 1fr is a responsive unit that will adjust automatically */
 }
-#default-asidebar .dropdown-btn svg {
+#default-asidebar .dropdown-btn .arrow-down-svg {
   transition: 200ms ease;
 }
 #default-asidebar .rotate svg:last-child {
