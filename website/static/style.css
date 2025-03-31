@@ -617,18 +617,26 @@ main {
 #project-details h3 {
   margin-top: 10px;
 }
+#project-details select {
+  border: 2px solid var(--accent-clr);
+  padding: 5px;
+  color: var(--text-faded-clr);
+  font-style: italic;
+  background-color: var(--base-clr);
+}
+#project-details select:focus {
+  outline: none;
+  border-color: var(--hover-clr);
+}
 #project-details #completion-form .buttons {
   display: flex;
+  justify-content: center;
   flex-direction: row;
   gap: 10px;
 }
 #project-details #completion-form button {
   margin-top: 10px;
   margin-bottom: 10px;
-}
-#project-details #completion-form li {
-  list-style: none;
-  padding: 5px;
 }
 #project-details #completion-status-sub-section p {
   display: flex;
