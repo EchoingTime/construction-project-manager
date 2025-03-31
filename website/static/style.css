@@ -567,11 +567,14 @@ main {
 #project-details .top-section,
 #project-details .bottom-section {
   width: 100%;
-  border-color: green;
   gap: 10px;
 }
 #project-details .top-section {
   flex-direction: row;
+  border: none;
+}
+#project-details .bottom-section {
+  border-color: green;
 }
 
 /*----------- Deadline Section -----------*/
