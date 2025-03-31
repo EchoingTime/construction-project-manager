@@ -13,6 +13,18 @@ import json
 
 views = Blueprint('views', __name__)
 
+# --------------------- Home Pages ---------------------
+
+@views.route('/home')
+@login_required
+def home():
+    if current_user.role == "contractor": # Goes to contractor page
+        return render_template("home.html", user=current_user)
+    elif current_user.role == "subcontractor":
+        return render_template("homeSub.html", user=current_user)
+    else:
+        return "Unauthorized", 403
+
 # --------------------- Project Page ---------------------
 
 # ----------- Project Creation -----------
@@ -105,6 +117,40 @@ def update_project_completion_status(project_id):
         flash('No status selected!', category='error')
     return redirect(url_for('views.view_project', project_id=project_id, user=current_user))
 
+# ----------- Project Add Subcontractor -----------
+
+@views.route('/views.add_subcontractor/<int:project_id>', methods=['POST'])
+@login_required
+def add_subcontractor(project_id):
+    # Obtain what user filled inside the Subcontractor form
+    form_email = request.form.get('subcontractor-email')
+
+    # Query all users that have the role "subcontractor" and extract the associated emails
+    valid_user_email = [user.email for user in User.query.filter_by(role='subcontractor').all()]
+    
+    if form_email not in valid_user_email:
+        flash('This is not a valid subcontractor email!', category='error')
+        return redirect(url_for('views.view_project', project_id=project_id))
+    
+    # Query for subcontractor's ID from the Subcontractor Table
+    subcontractor = Subcontractor.query.filter_by(email=form_email).first()
+
+    if not subcontractor:
+        flash('Subcontractor does not exist!', category='error')
+        return redirect(url_for('views.view_project', project_id=project_id))
+
+    # Checks if the subcontractor has been assigned to THIS project already
+    existing_project_assignment = Assignment.query.filter_by(project_id=project_id, subcontractor_id=subcontractor.id).first()
+
+    if existing_project_assignment:
+        flash('This subcontractor is already assigned to this project!', category='error')
+    else:
+        new_assignment = Assignment(project_id=project_id, subcontractor_id = subcontractor.id, assigned_date=datetime.now(), status='Incomplete')
+        db.session.add(new_assignment)
+        db.session.commit()
+        flash('Subcontractor Assigned!', category='success')
+    return redirect(url_for('views.view_project', project_id=project_id))
+
 # --------------------- Inbox Page ---------------------
 
 @views.route('/inbox')
@@ -134,38 +180,3 @@ def send_message():
     else:
         flash("Something went wrong!", category="error")
     return render_template("inbox.html", messages=messages)
-
-# -------------- Adding Subcontractors -----------
-
-@views.route('/add-subcontractor/<int:project_id>', methods=['POST'])
-@login_required
-def add_subcontractor(project_id):
-    if request.method == 'POST':
-        subcontractor_name = request.form.get('subcontractor_name')
-        subcontractor_email = request.form.get('subcontractor_email')
-        subcontractor_trade = request.form.get('subcontractor_trade')
-
-        if len(subcontractor_name) < 1 or len(subcontractor_email) < 1:
-            flash('Subcontractor name and email required!', category='error')
-        else:
-            existing_subcontractor = Subcontractor.query.filter_by(email=subcontractor_email).first()
-            if existing_subcontractor is None:
-                flash("This subcontractor is not registered!", category='error')
-                return redirect(request.referrer)
-            #checks if the subcon has been assigned to THIS project already
-            existing_assignment = Assignment.query.filter_by(project_id=project_id,subcontractor_id=existing_subcontractor.id).first()
-            
-            if existing_assignment:
-                flash("This subcontractor is already assigned to this project!", category='error')
-            else:
-                new_assignment=Assignment(project_id=project_id,subcontractor_id=existing_subcontractor.id,assigned_date=datetime.now(),status="Incomplete")
-                db.session.add(new_assignment)
-                db.session.commit()
-                flash('Subcontractor Added!', category='success')
-
-            project=Project.query.get(project_id) #get project before rendering template
-            return redirect(url_for('views.view_project', project_id=project_id))
-            #return redirect(url_for('views.project', project_id=project_id))
-            
-
-

@@ -650,7 +650,7 @@ main {
   display: flex;
   justify-content: center;
   flex-direction: row;
-  gap: 10px;
+  gap: 5px;
 }
 #project-details #completion-form button {
   margin-top: 10px;
@@ -680,6 +680,83 @@ main {
 }
 #displaying-completion-status #canceled-svg {
   fill: var(--canceled-clr);
+}
+
+/*----------- Subcontractors Section -----------*/
+
+#subcontractors-sub-section h3 {
+  display: flex;
+  gap: 10px;
+}
+#subcontractors-sub-section h3 svg:hover {
+  cursor: pointer;
+  fill: var(--hover-clr);
+}
+#subcontractors-sub-section ul {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 85%;
+}
+#subcontractors-sub-section p {
+  display: flex;
+  gap: 5px;
+}
+#subcontractors-sub-section ul p {
+  justify-content: center;
+  font-weight: bold;
+}
+#subcontractors-sub-section #subcon-div {
+  display: flex;
+  list-style: none;
+
+  background-color: var(--accent-clr);
+  border: 1px solid var(--accent-clr);
+  border-radius: 0.25em;
+  color: var(--base-clr);
+  padding: 5px 5px 5px 0; /* | Top | Right | Bottom | Left */
+  margin-bottom: 5px;
+}
+#subcontractors-sub-section ul li {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+#subcontractors-sub-section #subcon-name,
+#subcontractors-sub-section #subcon-email,
+#subcontractors-sub-section #subcon-trade {
+  display: flex;
+  gap: 5px;
+}
+#subcontractors-sub-section #subcon-name {
+  width: 100px;
+}
+#subcontractors-sub-section #subcon-list-icon {
+  fill: var(--base-clr);
+}
+#subcontractors-sub-section .subcon-icon-svg {
+  width: 20px;
+}
+#subcontractors-sub-section ul .subcon-icon-svg {
+  fill: var(--base-clr);
+}
+#subcontractors-sub-section form {
+  border: 1px solid var(--accent-clr);
+  border-radius: 0.25em;
+  padding: 25px;
+  width: 65%;
+}
+#subcontractors-sub-section form input {
+  border: 2px solid var(--accent-clr);
+  padding: 2.5px;
+}
+#subcontractors-sub-section form input:focus {
+  outline: none;
+  border-color: var(--active-clr) !important;
+}
+#subcontractors-sub-section form input:hover {
+  border-color: var(--hover-clr);
 }
 
 /*--------------------- Footer ---------------------*/
@@ -848,15 +925,27 @@ a:hover {
 #form-sign-in-and-out div.incorrect label {
   background-color: var(--error-text-clr);
 }
-#form-sign-in-and-out div.incorrect input {
+#form-sign-in-and-out div.incorrect:has(input:focus) > label,
+#form-sign-in-and-out div.incorrect:has(select:focus) > label {
+  /* PREVENT changes to the icon box's color when changing field - counters other one */
+  background-color: var(--error-text-clr) !important;
+}
+#form-sign-in-and-out div.incorrect:has(input:hover) > label,
+#form-sign-in-and-out div.incorrect:has(select:hover) > label {
+  background-color: var(--error-text-clr);
+}
+#form-sign-in-and-out div.incorrect input,
+#form-sign-in-and-out div.incorrect select {
   border-color: var(--error-border-clr);
   background-color: var(--faded-error-background-clr);
 }
-#form-sign-in-and-out div.incorrect input::placeholder {
+#form-sign-in-and-out div.incorrect input::placeholder,
+#form-sign-in-and-out div.incorrect select {
   color: var(--error-text-clr);
   font-weight: bold;
 }
 #error-message {
+  text-align: center;
   color: var(--error-text-clr);
 }
 

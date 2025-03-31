@@ -119,12 +119,79 @@ function deleteProject(button) {
 
 /*--------------------- Login and Signup Pages ---------------------*/
 
+/*----------- Addition to Registry -----------*/
+
 const form = document.getElementById("form-sign-in-and-out");
+
+// If, on signup, user select subcontractors, then pop up additional form input called Trade
+// ChatGPT Assistance for adding trade input
+document.getElementById("role-select").addEventListener("change", function () {
+  // Producing a div to fit new input into
+  let trade_div = document.getElementById("trade-div");
+
+  if (this.value === "subcontractor" && !trade_div) {
+    // Create div
+    trade_div = document.createElement("div");
+    trade_div.id = "trade-div"; // So we know how to remove it
+
+    // Creating label for svg
+    let trade_label = document.createElement("label");
+    trade_label.setAttribute("for", "trade-input");
+
+    // Create svg
+    let trade_svg = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "svg"
+    );
+    trade_svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    trade_svg.setAttribute("height", "24px");
+    trade_svg.setAttribute("viewBox", "0 -960 960 960");
+    trade_svg.setAttribute("width", "24px");
+
+    // Creating svg path
+    let trade_path = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "path"
+    );
+    trade_path.setAttribute(
+      "d",
+      "M160-120q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720h160v-80q0-33 23.5-56.5T400-880h160q33 0 56.5 23.5T640-800v80h160q33 0 56.5 23.5T880-640v440q0 33-23.5 56.5T800-120H160Zm0-80h640v-440H160v440Zm240-520h160v-80H400v80ZM160-200v-440 440Z"
+    );
+
+    // Appending path to svg
+    trade_svg.appendChild(trade_path);
+
+    // Appending svg to label
+    trade_label.appendChild(trade_svg);
+
+    // Create input field
+    let trade_input = document.createElement("input");
+    trade_input.type = "text";
+    trade_input.name = "trade";
+    trade_input.id = "trade-input";
+    trade_input.placeholder = "Enter your trade";
+
+    // Appending the new label and input to the new div, then append div to the form!
+    trade_div.appendChild(trade_label);
+    trade_div.appendChild(trade_input);
+    form.insertBefore(trade_div, form.lastElementChild);
+  } else if (this.value !== "subcontractor") {
+    // Remove it
+    if (trade_div) {
+      trade_div.remove();
+    }
+  }
+});
+
+/*----------- Registry Errors -----------*/
+
 const firstname_input = document.getElementById("firstname-input");
 const email_input = document.getElementById("email-input");
 const password_input = document.getElementById("password-input");
 const repeat_password_input = document.getElementById("repeat-password-input");
 const error_message = document.getElementById("error-message");
+const role_select = document.getElementById("role-select");
+let trade_input = document.getElementById("trade-input");
 
 form.addEventListener("submit", (e) => {
   let errors = [];
@@ -174,8 +241,24 @@ function getSignupFormErrors(firstname, email, password, repeatPassword) {
     repeat_password_input.parentElement.classList.add("incorrect");
   }
 
+  // Role selection addition
+  if (!role_select.value) {
+    errors.push("Must select a role!");
+    role_select.parentElement.classList.add("incorrect");
+  }
+
+  // Trade input validation (if it exists)
+  trade_input = document.getElementById("trade-input");
+
+  if (trade_input && trade_input.value.trim() === "") {
+    errors.push("Trade is required for subcontractors");
+    trade_input.parentElement.classList.add("incorrect");
+  }
+
   return errors;
 }
+
+/*----------- Login Errors -----------*/
 
 function getLoginFormErrors(email, password) {
   let errors = [];

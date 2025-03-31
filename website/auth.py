@@ -6,7 +6,7 @@ with password hashing for security.
 """
 
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import User
+from .models import User, Subcontractor
 from werkzeug.security import generate_password_hash, check_password_hash # Security
 from . import db # Means from __init__.py import database
 from flask_login import login_user, login_required, logout_user, current_user # Handles logging in\
@@ -52,6 +52,7 @@ def sign_up():
         first_name = request.form.get('firstname')
         email = request.form.get('email')
         role = request.form.get('role')
+        trade = request.form.get('trade')
         password1 = request.form.get('password')
         password2 = request.form.get('repeat-password')
 
@@ -68,11 +69,17 @@ def sign_up():
         elif len(password1) < 7:
             flash('Password must be at least 7 characters.', category='error')
         else:
-            new_user = User(email=email, first_name=first_name, password=generate_password_hash(password1, method='pbkdf2:sha256'), role=role) # pbkdf2:sha256 is a hashing algorithm
+            # Salt length recommended by Chat
+            new_user = User(email=email, first_name=first_name, password=generate_password_hash(password1, method='pbkdf2:sha256', salt_length=16), role=role) # pbkdf2:sha256 is a hashing algorithm
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
             flash('Account successfully created!', category='success')
+            # Updates Subcontractor Table
+            if role == 'subcontractor':
+                new_subcontractor = Subcontractor(name=first_name, email=email, trade=trade)
+                db.session.add(new_subcontractor)
+                db.session.commit()
             return redirect(url_for('views.home')) # Redirect to home page
 
     return render_template("registry.html", user=current_user)
