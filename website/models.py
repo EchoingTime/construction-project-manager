@@ -38,6 +38,9 @@ class Project(db.Model): # Database model: An object blueprint/layout that will 
     subcontractors = db.relationship('Assignment', back_populates='project') #many to many relation
     tasks = db.relationship('Task', backref='project', lazy='dynamic') # 1-to-many relationship
 
+    files = db.relationship('File', back_populates='project')
+    pass
+
 # --------------------- Task Table ---------------------
 
 class Task(db.Model): # Model to allow contractors to assign tasks
@@ -77,4 +80,14 @@ class Assignment(db.Model): #helper table for Subcontractor-Project Relationship
     status = db.Column(db.String(50), default='Incomplete')
     project = db.relationship('Project', back_populates='subcontractors')
     subcontractor = db.relationship('Subcontractor', backref=db.backref('assignments', lazy='dynamic'))
- 
+
+#--------------------- File Table ----------------------
+
+class File(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(150), nullable=False)
+    data = db.Column(db.LargeBinary, nullable=False)
+    upload_date = db.Column(db.DateTime, default=db.func.current_timestamp())
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
+    project = db.relationship('Project', back_populates='files')
+    pass

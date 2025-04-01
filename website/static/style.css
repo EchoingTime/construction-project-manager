@@ -1071,3 +1071,36 @@ a:hover {
     text-align: center;
   }
 }
+
+/* CSS for the file upload section */
+form#file-upload-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+form#file-upload-form label {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+form#file-upload-form input[type="file"] {
+  margin-bottom: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+form#file-upload-form button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+form#file-upload-form button[type="submit"]:hover {
+  background-color: #45a049;
+}

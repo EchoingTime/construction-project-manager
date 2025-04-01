@@ -26,9 +26,11 @@ def create_app(): # Initialize Flask
     migrate.init_app(app,db)
     from .views import views # Got blueprints imported
     from .auth import auth
+    from .file_upload import file_upload
 
     app.register_blueprint(views, url_prefix='/') # Register blueprints
     app.register_blueprint(auth, url_prefix='/') # Slash means no prefix
+    app.register_blueprint(file_upload, url_prefix='/')
 
     from .models import User, Project # Must specify User and Project objects here
 
