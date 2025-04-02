@@ -210,6 +210,7 @@ aside {
   background-color: var(--base-clr);
   border-right: 1px solid var(--line-clr);
   color: var(--text-clr);
+  z-index: 998;
 }
 
 /*----------- Default SideBar -----------*/
