@@ -275,7 +275,9 @@
       <section class="main-content-section" id="project-details">
         <!----------- Main Page Content ----------->
         <h2 id="header-project-details">{{ project.project_name }}</h2>
+        <!------ Top Section ------>
         <section class="sub-sections top-section">
+          <!------ Deadline sub-section ------>
           <section class="sub-sections" id="deadline-sub-section">
             <h3>Project Deadline</h3>
             <!-- Form is needed to send update -->
@@ -285,7 +287,6 @@
               action="{{ url_for('views.update_deadline', project_id=project.id) }}"
             >
               {% if project.deadline is none %}
-              <!-- No Project Deadline Assigned -->
               <p>Assign Project Deadline</p>
               <div class="div-dead">
                 <input type="date" name="deadline" required />
@@ -304,6 +305,7 @@
               {% endif %}
             </form>
           </section>
+          <!------ Completion sub-section ------>
           <section class="sub-sections" id="completion-status-sub-section">
             <h3>Completion Status</h3>
             <p id="displaying-completion-status">
@@ -398,7 +400,9 @@
             </form>
           </section>
         </section>
+        <!------ Bottom Section ------>
         <section class="sub-sections bottom-section">
+          <!------ Subcontractor sub-section ------>
           <section class="sub-sections" id="subcontractors-sub-section">
             <h3>
               Subcontractors
@@ -531,14 +535,20 @@
               </div>
             </form>
           </section>
+          <!------ Tasks sub-section ------>
           <section class="sub-sections" id="task-sub-section">
             <h3>Tasks</h3>
           </section>
-            <form action="{{ url_for('file_upload.upload_file', project_id=project.id) }}" method="post" enctype="multipart/form-data">
-                <label for="file">Choose file:</label>
-                <input type="file" name="file" id="file" required>
-                <button type="submit">Upload</button>
-            </form>
+          <!------ File Upload sub-section ------>
+          <form
+            action="{{ url_for('file_upload.upload_file', project_id=project.id) }}"
+            method="post"
+            enctype="multipart/form-data"
+          >
+            <label for="file">Choose file:</label>
+            <input type="file" name="file" id="file" required />
+            <button type="submit">Upload</button>
+          </form>
         </section>
       </section>
     </main>

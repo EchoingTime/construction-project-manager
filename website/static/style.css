@@ -745,7 +745,7 @@ main {
   border: 1px solid var(--accent-clr);
   border-radius: 0.25em;
   padding: 25px;
-  width: 65%;
+  width: 25%;
 }
 #subcontractors-sub-section form input {
   border: 2px solid var(--accent-clr);
@@ -1093,7 +1093,7 @@ form#file-upload-form input[type="file"] {
 }
 
 form#file-upload-form button[type="submit"] {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 10px 20px;
   border: none;
