@@ -406,6 +406,9 @@
           <section class="sub-sections" id="subcontractors-sub-section">
             <h3>Subcontractors</h3>
             <div class="table-wrapper">
+              {% if subcontractors|length == 0 %}
+              <p>No Subcontractor's Assigned</p>
+              {% else %}
               <table>
                 <thead>
                   <tr id="header-row">
@@ -421,11 +424,10 @@
                     <td>{{ subcontractor.email}}</td>
                     <td>{{ subcontractor.trade }}</td>
                   </tr>
-                  {% else %}
-                  <p>No subcontractors assigned yet.</p>
                   {% endfor %}
                 </tbody>
               </table>
+              {% endif %}
             </div>
             <form
               method="POST"
