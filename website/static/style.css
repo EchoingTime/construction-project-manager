@@ -622,6 +622,7 @@ main {
 .div-dead input {
   padding-left: 5px;
   color: var(--text-faded-clr);
+  background-color: var(--base-clr);
   font-style: italic;
   border: 2px solid var(--accent-clr);
 }
@@ -722,6 +723,8 @@ main {
 }
 #subcontractors-sub-section form textarea {
   border: 2px solid var(--accent-clr);
+  background-color: var(--base-clr);
+  font-style: italic;
   padding: 5px 5px 0 5px;
 
   resize: none;
