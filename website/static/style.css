@@ -584,9 +584,12 @@ main {
 #project-details .top-section {
   flex-direction: row;
   border: none;
+  margin: 0;
+  padding-bottom: 0;
 }
 #project-details .bottom-section {
-  border-color: green;
+  border: none;
+  padding-top: 5px;
 }
 
 /*----------- Deadline Section -----------*/
@@ -684,79 +687,61 @@ main {
 
 /*----------- Subcontractors Section -----------*/
 
-#subcontractors-sub-section h3 {
+/*----- List: Subcontractors ------*/
+
+#subcontractors-sub-section #subcon-div li {
   display: flex;
-  gap: 10px;
-}
-#subcontractors-sub-section h3 svg:hover {
-  cursor: pointer;
-  fill: var(--hover-clr);
-}
-#subcontractors-sub-section ul {
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  width: 85%;
-}
-#subcontractors-sub-section p {
-  display: flex;
-  gap: 5px;
-}
-#subcontractors-sub-section ul p {
-  justify-content: center;
-  font-weight: bold;
-}
-#subcontractors-sub-section #subcon-div {
-  display: flex;
+  flex-direction: row;
   list-style: none;
 
-  background-color: var(--accent-clr);
   border: 1px solid var(--accent-clr);
   border-radius: 0.25em;
-  color: var(--base-clr);
-  padding: 5px 5px 5px 0; /* | Top | Right | Bottom | Left */
+  padding: 5px 5px 5px 5px; /* | Top | Right | Bottom | Left */
   margin-bottom: 5px;
-}
-#subcontractors-sub-section ul li {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
 }
 #subcontractors-sub-section #subcon-name,
 #subcontractors-sub-section #subcon-email,
 #subcontractors-sub-section #subcon-trade {
   display: flex;
+  border: 2px solid green;
+}
+
+/*----- Add Subcontractors ------*/
+
+#subcontractors-sub-section form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 25px;
+  padding: 5px 10px 5px 10px;
+  border: 2px solid green;
   gap: 5px;
 }
-#subcontractors-sub-section #subcon-name {
-  width: 100px;
-}
-#subcontractors-sub-section #subcon-list-icon {
-  fill: var(--base-clr);
-}
-#subcontractors-sub-section .subcon-icon-svg {
-  width: 20px;
-}
-#subcontractors-sub-section ul .subcon-icon-svg {
-  fill: var(--base-clr);
-}
-#subcontractors-sub-section form {
-  border: 1px solid var(--accent-clr);
-  border-radius: 0.25em;
-  padding: 25px;
-  width: 25%;
-}
-#subcontractors-sub-section form input {
+#subcontractors-sub-section form textarea {
   border: 2px solid var(--accent-clr);
-  padding: 2.5px;
+  padding: 5px 5px 0 5px;
+
+  resize: none;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
-#subcontractors-sub-section form input:focus {
+#subcontractors-sub-section form textarea:focus {
   outline: none;
   border-color: var(--active-clr) !important;
 }
-#subcontractors-sub-section form input:hover {
+#subcontractors-sub-section form textarea:hover {
   border-color: var(--hover-clr);
+}
+
+/*----------- Tasks Section -----------*/
+
+/*----------- Fileload Section -----------*/
+
+#project-details #file-upload-sub-section {
+  display: flex;
+  border-color: red;
+  margin: 0;
 }
 
 /*--------------------- Footer ---------------------*/
