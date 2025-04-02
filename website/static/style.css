@@ -105,6 +105,7 @@ nav {
   border-bottom: 1px solid var(--line-clr);
   color: var(--text-clr);
   user-select: none;
+  z-index: 999;
 }
 nav ul {
   width: 100%;
@@ -704,18 +705,50 @@ main {
 #subcontractors-sub-section #subcon-trade {
   display: flex;
   border: 2px solid green;
+  padding: 0 5px 0 5px;
 }
 
 /*----- Add Subcontractors ------*/
 
+#subcontractors-sub-section table {
+  background-color: var(--transparent-bg-clr);
+}
+#subcontractors-sub-section .table-wrapper {
+  display: flex;
+  max-width: 85%;
+  max-height: 250px;
+  overflow: auto;
+}
+#subcontractors-sub-section table {
+  border-top: none;
+  border-collapse: collapse;
+  width: 100%;
+}
+#subcontractors-sub-section th,
+#subcontractors-sub-section td {
+  border: 0.5px solid var(--accent-clr);
+  padding: 5px;
+  white-space: nowrap;
+}
+#subcontractors-sub-section #header-row {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: var(--transparent-bg-clr);
+}
+#subcontractors-sub-section th {
+  background-color: var(--transparent-bg-clr);
+  color: var(--text-faded-clr);
+  z-index: 2;
+}
+
 #subcontractors-sub-section form {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  margin-top: 25px;
+  margin-top: 5px;
   padding: 5px 10px 5px 10px;
-  border: 2px solid green;
-  gap: 5px;
+  gap: 10px;
 }
 #subcontractors-sub-section form textarea {
   border: 2px solid var(--accent-clr);
@@ -732,6 +765,9 @@ main {
 }
 #subcontractors-sub-section form textarea:hover {
   border-color: var(--hover-clr);
+}
+#subcontractors-sub-section p {
+  font-weight: bold;
 }
 
 /*----------- Tasks Section -----------*/

@@ -405,19 +405,28 @@
           <!------ Subcontractor sub-section ------>
           <section class="sub-sections" id="subcontractors-sub-section">
             <h3>Subcontractors</h3>
-            <ul>
-              {% for subcontractor in subcontractors %}
-              <div id="subcon-div">
-                <li>
-                  <div id="subcon-name">{{ subcontractor.name }}</div>
-                  <div id="subcon-email">{{ subcontractor.email}}</div>
-                  <div id="subcon-trade">{{ subcontractor.trade }}</div>
-                </li>
-              </div>
-              {% else %}
-              <p>No subcontractors assigned yet.</p>
-              {% endfor %}
-            </ul>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr id="header-row">
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Trade</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for subcontractor in subcontractors %}
+                  <tr>
+                    <td>{{ subcontractor.name }}</td>
+                    <td>{{ subcontractor.email}}</td>
+                    <td>{{ subcontractor.trade }}</td>
+                  </tr>
+                  {% else %}
+                  <p>No subcontractors assigned yet.</p>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
             <form
               method="POST"
               action="{{ url_for('views.add_subcontractor', project_id=project.id) }}"
