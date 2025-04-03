@@ -101,7 +101,8 @@ After making a change to models.py (adding a new table or modifying an existing 
 
 ## References
 
-- "Login & Signup with HTML, CSS, JavaScript (form validation)." Www.youtube.com, https://www.youtube.com/watch?v=bVl5_UdcAy0&ab_channel=Coding2GO.
-- “How to Create a Responsive Navigation Bar (for Beginners).” Www.youtube.com, https://www.youtube.com/watch?v=U8smiWQ8Seg&ab_channel=Coding2GO.
-- “Python Website Full Tutorial - Flask, Authentication, Databases & More.” Www.youtube.com, https://www.youtube.com/watch?v=dam0GPOAvVI&ab_channel=TechWithTim.
-- ChatGPT for formatting header documentation
+- “An Idea for a Simple Responsive Spreadsheet | CSS-Tricks.” CSS-Tricks, 28 Nov. 2017, css-tricks.com/idea-simple-responsive-spreadsheet/.
+- 2025.Coding2GO. “Login & Signup with HTML, CSS, JavaScript (Form Validation).” YouTube, 13 July 2024, www.youtube.com/watch?v=bVl5_UdcAy0.
+- “How to Create a Responsive Navigation Bar (for Beginners).” Www.youtube.com, www.youtube.com/watch?v=U8smiWQ8Seg.
+- OpenAI. “ChatGPT.” ChatGPT, OpenAI, chatgpt.com/.
+- “Python Website Full Tutorial - Flask, Authentication, Databases & More.” Www.youtube.com, www.youtube.com/watch?v=dam0GPOAvVI. Accessed 20 June 2021.

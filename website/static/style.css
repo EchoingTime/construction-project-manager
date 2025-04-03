@@ -105,6 +105,7 @@ nav {
   border-bottom: 1px solid var(--line-clr);
   color: var(--text-clr);
   user-select: none;
+  z-index: 999;
 }
 nav ul {
   width: 100%;
@@ -209,6 +210,7 @@ aside {
   background-color: var(--base-clr);
   border-right: 1px solid var(--line-clr);
   color: var(--text-clr);
+  z-index: 998;
 }
 
 /*----------- Default SideBar -----------*/
@@ -584,9 +586,12 @@ main {
 #project-details .top-section {
   flex-direction: row;
   border: none;
+  margin: 0;
+  padding-bottom: 0;
 }
 #project-details .bottom-section {
-  border-color: green;
+  border: none;
+  padding-top: 5px;
 }
 
 /*----------- Deadline Section -----------*/
@@ -617,6 +622,7 @@ main {
 .div-dead input {
   padding-left: 5px;
   color: var(--text-faded-clr);
+  background-color: var(--base-clr);
   font-style: italic;
   border: 2px solid var(--accent-clr);
 }
@@ -684,79 +690,67 @@ main {
 
 /*----------- Subcontractors Section -----------*/
 
-#subcontractors-sub-section h3 {
+/*----- List: Subcontractors ------*/
+
+#subcontractors-sub-section .table-wrapper {
   display: flex;
+  max-width: 85%;
+  max-height: 250px;
+  overflow: auto;
+}
+#subcontractors-sub-section table {
+  border-top: none;
+  border-collapse: collapse;
+  width: 100%;
+}
+#subcontractors-sub-section th,
+#subcontractors-sub-section td {
+  border: 0.5px solid var(--accent-clr);
+
+  padding: 5px;
+  white-space: nowrap;
+}
+
+/*----- Add Subcontractors ------*/
+
+#subcontractors-sub-section form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5px;
+  padding: 5px 10px 5px 10px;
   gap: 10px;
 }
-#subcontractors-sub-section h3 svg:hover {
-  cursor: pointer;
-  fill: var(--hover-clr);
-}
-#subcontractors-sub-section ul {
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  width: 85%;
-}
-#subcontractors-sub-section p {
-  display: flex;
-  gap: 5px;
-}
-#subcontractors-sub-section ul p {
-  justify-content: center;
-  font-weight: bold;
-}
-#subcontractors-sub-section #subcon-div {
-  display: flex;
-  list-style: none;
-
-  background-color: var(--accent-clr);
-  border: 1px solid var(--accent-clr);
-  border-radius: 0.25em;
-  color: var(--base-clr);
-  padding: 5px 5px 5px 0; /* | Top | Right | Bottom | Left */
-  margin-bottom: 5px;
-}
-#subcontractors-sub-section ul li {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-#subcontractors-sub-section #subcon-name,
-#subcontractors-sub-section #subcon-email,
-#subcontractors-sub-section #subcon-trade {
-  display: flex;
-  gap: 5px;
-}
-#subcontractors-sub-section #subcon-name {
-  width: 100px;
-}
-#subcontractors-sub-section #subcon-list-icon {
-  fill: var(--base-clr);
-}
-#subcontractors-sub-section .subcon-icon-svg {
-  width: 20px;
-}
-#subcontractors-sub-section ul .subcon-icon-svg {
-  fill: var(--base-clr);
-}
-#subcontractors-sub-section form {
-  border: 1px solid var(--accent-clr);
-  border-radius: 0.25em;
-  padding: 25px;
-  width: 65%;
-}
-#subcontractors-sub-section form input {
+#subcontractors-sub-section form textarea {
   border: 2px solid var(--accent-clr);
-  padding: 2.5px;
+  background-color: var(--base-clr);
+  font-style: italic;
+  padding: 5px 5px 0 5px;
+
+  resize: none;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
-#subcontractors-sub-section form input:focus {
+#subcontractors-sub-section form textarea:focus {
   outline: none;
   border-color: var(--active-clr) !important;
 }
-#subcontractors-sub-section form input:hover {
+#subcontractors-sub-section form textarea:hover {
   border-color: var(--hover-clr);
+}
+#subcontractors-sub-section p {
+  font-weight: bold;
+}
+
+/*----------- Tasks Section -----------*/
+
+/*----------- Fileload Section -----------*/
+
+#project-details #file-upload-sub-section {
+  display: flex;
+  border-color: red;
+  margin: 0;
 }
 
 /*--------------------- Footer ---------------------*/
@@ -1093,7 +1087,7 @@ form#file-upload-form input[type="file"] {
 }
 
 form#file-upload-form button[type="submit"] {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 10px 20px;
   border: none;

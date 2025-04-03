@@ -275,7 +275,9 @@
       <section class="main-content-section" id="project-details">
         <!----------- Main Page Content ----------->
         <h2 id="header-project-details">{{ project.project_name }}</h2>
+        <!------ Top Section ------>
         <section class="sub-sections top-section">
+          <!------ Deadline sub-section ------>
           <section class="sub-sections" id="deadline-sub-section">
             <h3>Project Deadline</h3>
             <!-- Form is needed to send update -->
@@ -285,7 +287,6 @@
               action="{{ url_for('views.update_deadline', project_id=project.id) }}"
             >
               {% if project.deadline is none %}
-              <!-- No Project Deadline Assigned -->
               <p>Assign Project Deadline</p>
               <div class="div-dead">
                 <input type="date" name="deadline" required />
@@ -304,6 +305,7 @@
               {% endif %}
             </form>
           </section>
+          <!------ Completion sub-section ------>
           <section class="sub-sections" id="completion-status-sub-section">
             <h3>Completion Status</h3>
             <p id="displaying-completion-status">
@@ -419,147 +421,143 @@
             </form>
           </section>
         </section>
+        <!------ Bottom Section ------>
         <section class="sub-sections bottom-section">
+          <!------ Subcontractor sub-section ------>
           <section class="sub-sections" id="subcontractors-sub-section">
-            <h3>
-              Subcontractors
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 -960 960 960"
-                width="24px"
-              >
-                <path
-                  d="M720-400v-120H600v-80h120v-120h80v120h120v80H800v120h-80Zm-360-80q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm80-80h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0-80Zm0 400Z"
-                />
-              </svg>
-            </h3>
-            <p>
-              Name
-              <svg
-                class="subcon-icon-svg"
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 -960 960 960"
-                width="24px"
-              >
-                <path
-                  d="M160-80q-33 0-56.5-23.5T80-160v-440q0-33 23.5-56.5T160-680h200v-120q0-33 23.5-56.5T440-880h80q33 0 56.5 23.5T600-800v120h200q33 0 56.5 23.5T880-600v440q0 33-23.5 56.5T800-80H160Zm0-80h640v-440H600q0 33-23.5 56.5T520-520h-80q-33 0-56.5-23.5T360-600H160v440Zm80-80h240v-18q0-17-9.5-31.5T444-312q-20-9-40.5-13.5T360-330q-23 0-43.5 4.5T276-312q-17 8-26.5 22.5T240-258v18Zm320-60h160v-60H560v60Zm-200-60q25 0 42.5-17.5T420-420q0-25-17.5-42.5T360-480q-25 0-42.5 17.5T300-420q0 25 17.5 42.5T360-360Zm200-60h160v-60H560v60ZM440-600h80v-200h-80v200Zm40 220Z"
-                />
-              </svg>
-              | Email
-              <svg
-                class="subcon-icon-svg"
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 -960 960 960"
-                width="24px"
-              >
-                <path
-                  d="M560-520h280v-200H560v200Zm140-50-100-70v-40l100 70 100-70v40l-100 70ZM80-120q-33 0-56.5-23.5T0-200v-560q0-33 23.5-56.5T80-840h800q33 0 56.5 23.5T960-760v560q0 33-23.5 56.5T880-120H80Zm556-80h244v-560H80v560h4q42-75 116-117.5T360-360q86 0 160 42.5T636-200ZM360-400q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM182-200h356q-34-38-80.5-59T360-280q-51 0-97 21t-81 59Zm178-280q-17 0-28.5-11.5T320-520q0-17 11.5-28.5T360-560q17 0 28.5 11.5T400-520q0 17-11.5 28.5T360-480Zm120 0Z"
-                />
-              </svg>
-              | Trade
-              <svg
-                class="subcon-icon-svg"
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 -960 960 960"
-                width="24px"
-              >
-                <path
-                  d="M160-120q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720h160v-80q0-33 23.5-56.5T400-880h160q33 0 56.5 23.5T640-800v80h160q33 0 56.5 23.5T880-640v440q0 33-23.5 56.5T800-120H160Zm0-80h640v-440H160v440Zm240-520h160v-80H400v80ZM160-200v-440 440Z"
-                />
-              </svg>
-            </p>
-            <ul>
-              {% for subcontractor in subcontractors %}
-              <div id="subcon-div">
-                <svg
-                  id="subcon-list-icon"
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                >
-                  <path
-                    d="M480-200 200-480l280-280 280 280-280 280Zm0-114 166-166-166-166-166 166 166 166Zm0-166Z"
-                  />
-                </svg>
-                <li>
-                  <div id="subcon-name">
-                    <svg
-                      class="subcon-icon-svg"
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="24px"
-                      viewBox="0 -960 960 960"
-                      width="24px"
-                    >
-                      <path
-                        d="M160-80q-33 0-56.5-23.5T80-160v-440q0-33 23.5-56.5T160-680h200v-120q0-33 23.5-56.5T440-880h80q33 0 56.5 23.5T600-800v120h200q33 0 56.5 23.5T880-600v440q0 33-23.5 56.5T800-80H160Zm0-80h640v-440H600q0 33-23.5 56.5T520-520h-80q-33 0-56.5-23.5T360-600H160v440Zm80-80h240v-18q0-17-9.5-31.5T444-312q-20-9-40.5-13.5T360-330q-23 0-43.5 4.5T276-312q-17 8-26.5 22.5T240-258v18Zm320-60h160v-60H560v60Zm-200-60q25 0 42.5-17.5T420-420q0-25-17.5-42.5T360-480q-25 0-42.5 17.5T300-420q0 25 17.5 42.5T360-360Zm200-60h160v-60H560v60ZM440-600h80v-200h-80v200Zm40 220Z"
-                      />
-                    </svg>
-                    {{ subcontractor.name }}
-                  </div>
-                  <div id="subcon-email">
-                    <svg
-                      class="subcon-icon-svg"
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="24px"
-                      viewBox="0 -960 960 960"
-                      width="24px"
-                    >
-                      <path
-                        d="M560-520h280v-200H560v200Zm140-50-100-70v-40l100 70 100-70v40l-100 70ZM80-120q-33 0-56.5-23.5T0-200v-560q0-33 23.5-56.5T80-840h800q33 0 56.5 23.5T960-760v560q0 33-23.5 56.5T880-120H80Zm556-80h244v-560H80v560h4q42-75 116-117.5T360-360q86 0 160 42.5T636-200ZM360-400q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM182-200h356q-34-38-80.5-59T360-280q-51 0-97 21t-81 59Zm178-280q-17 0-28.5-11.5T320-520q0-17 11.5-28.5T360-560q17 0 28.5 11.5T400-520q0 17-11.5 28.5T360-480Zm120 0Z"
-                      />
-                    </svg>
-                    {{ subcontractor.email}}
-                  </div>
-                  <div id="subcon-trade">
-                    <svg
-                      class="subcon-icon-svg"
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="24px"
-                      viewBox="0 -960 960 960"
-                      width="24px"
-                    >
-                      <path
-                        d="M160-120q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720h160v-80q0-33 23.5-56.5T400-880h160q33 0 56.5 23.5T640-800v80h160q33 0 56.5 23.5T880-640v440q0 33-23.5 56.5T800-120H160Zm0-80h640v-440H160v440Zm240-520h160v-80H400v80ZM160-200v-440 440Z"
-                      />
-                    </svg>
-                    {{ subcontractor.trade }}
-                  </div>
-                </li>
-              </div>
+            <h3>Subcontractors</h3>
+            <div class="table-wrapper">
+              {% if subcontractors|length == 0 %}
+              <p>No Subcontractor's Assigned</p>
               {% else %}
-              <p>No subcontractors assigned yet.</p>
-              {% endfor %}
-            </ul>
+              <table>
+                <thead>
+                  <tr id="header-row">
+                    <th id="name-th">Name</th>
+                    <th id="email-th">Email</th>
+                    <th id="trade-th">Trade</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for subcontractor in subcontractors %}
+                  <tr>
+                    <td>{{ subcontractor.name }}</td>
+                    <td>{{ subcontractor.email}}</td>
+                    <td>{{ subcontractor.trade }}</td>
+                  </tr>
+                  <tr>
+                    <td>{{ subcontractor.name }}</td>
+                    <td>{{ subcontractor.email}}</td>
+                    <td>{{ subcontractor.trade }}</td>
+                  </tr>
+                  <tr>
+                    <td>{{ subcontractor.name }}</td>
+                    <td>{{ subcontractor.email}}</td>
+                    <td>{{ subcontractor.trade }}</td>
+                  </tr>
+                  <tr>
+                    <td>{{ subcontractor.name }}</td>
+                    <td>{{ subcontractor.email}}</td>
+                    <td>{{ subcontractor.trade }}</td>
+                  </tr>
+                  <tr>
+                    <td>{{ subcontractor.name }}</td>
+                    <td>{{ subcontractor.email}}</td>
+                    <td>{{ subcontractor.trade }}</td>
+                  </tr>
+                  <tr>
+                    <td>{{ subcontractor.name }}</td>
+                    <td>{{ subcontractor.email}}</td>
+                    <td>{{ subcontractor.trade }}</td>
+                  </tr>
+                  <tr>
+                    <td>{{ subcontractor.name }}</td>
+                    <td>{{ subcontractor.email}}</td>
+                    <td>{{ subcontractor.trade }}</td>
+                  </tr>
+                  <tr>
+                    <td>{{ subcontractor.name }}</td>
+                    <td>{{ subcontractor.email}}</td>
+                    <td>{{ subcontractor.trade }}</td>
+                  </tr>
+                  <tr>
+                    <td>{{ subcontractor.name }}</td>
+                    <td>{{ subcontractor.email}}</td>
+                    <td>{{ subcontractor.trade }}</td>
+                  </tr>
+                  <tr>
+                    <td>{{ subcontractor.name }}</td>
+                    <td>{{ subcontractor.email}}</td>
+                    <td>{{ subcontractor.trade }}</td>
+                  </tr>
+                  <tr>
+                    <td>{{ subcontractor.name }}</td>
+                    <td>{{ subcontractor.email}}</td>
+                    <td>{{ subcontractor.trade }}</td>
+                  </tr>
+                  <tr>
+                    <td>{{ subcontractor.name }}</td>
+                    <td>{{ subcontractor.email}}</td>
+                    <td>{{ subcontractor.trade }}</td>
+                  </tr>
+                  <tr>
+                    <td>{{ subcontractor.name }}</td>
+                    <td>{{ subcontractor.email}}</td>
+                    <td>{{ subcontractor.trade }}</td>
+                  </tr>
+                  <tr>
+                    <td>{{ subcontractor.name }}</td>
+                    <td>{{ subcontractor.email}}</td>
+                    <td>{{ subcontractor.trade }}</td>
+                  </tr>
+                  <tr>
+                    <td>{{ subcontractor.name }}</td>
+                    <td>{{ subcontractor.email}}</td>
+                    <td>{{ subcontractor.trade }}</td>
+                  </tr>
+                  <tr>
+                    <td>{{ subcontractor.name }}</td>
+                    <td>{{ subcontractor.email}}</td>
+                    <td>{{ subcontractor.trade }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              {% endif %}
+            </div>
             <form
               method="POST"
               action="{{ url_for('views.add_subcontractor', project_id=project.id) }}"
             >
-              <label for="subcontractor-email">Email:</label>
-              <input
-                type="email"
+              <textarea
                 name="subcontractor-email"
                 id="subcontractor-email"
+                placeholder="Enter Email..."
                 required
-              /><br />
+              ></textarea>
               <div id="subcon-buttons">
                 <button type="submit">Add Subcontractor</button>
                 <button type="reset">Clear</button>
               </div>
             </form>
           </section>
+          <!------ Tasks sub-section ------>
           <section class="sub-sections" id="task-sub-section">
             <h3>Tasks</h3>
           </section>
-            <form action="{{ url_for('file_upload.upload_file', project_id=project.id) }}" method="post" enctype="multipart/form-data">
-                <label for="file">Choose file:</label>
-                <input type="file" name="file" id="file" required>
-                <button type="submit">Upload</button>
+          <!------ File Upload sub-section ------>
+          <section class="sub-sections" id="file-upload-sub-section">
+            <form
+              action="{{ url_for('file_upload.upload_file', project_id=project.id) }}"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              <h3>Files</h3>
+              <label for="file">Choose file:</label>
+              <input type="file" name="file" id="file" required />
+              <button type="submit">Upload</button>
             </form>
+          </section>
         </section>
       </section>
     </main>
