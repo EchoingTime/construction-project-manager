@@ -35,6 +35,8 @@ class Project(db.Model): # Database model: An object blueprint/layout that will 
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) # 1-to-many relationship
 
+    address= db.Column(db.String(255), nullable = True)
+
     subcontractors = db.relationship('Assignment', back_populates='project') #many to many relation
     tasks = db.relationship('Task', backref='project', lazy='dynamic') # 1-to-many relationship
 
@@ -50,7 +52,6 @@ class Task(db.Model): # Model to allow contractors to assign tasks
     description = db.Column(db.Text, nullable=True)
     deadline = db.Column(db.Date, nullable=True) # Task Deadline
     completion = db.Column(Enum('Completed', 'In Progress', 'Canceled', name='completion_status'), nullable=False, default='In Progress')
-
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False) # Foreign Key
 
 # --------------------- Message Table ---------------------
@@ -69,6 +70,7 @@ class Subcontractor(db.Model):
     name = db.Column(db.String(150))
     email = db.Column(db.String(150), unique=True, nullable=False)
     trade = db.Column(db.String(150))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', name = "fk_subcon"))
 
 #--------------------- Assignment Table ----------------------
 

@@ -21,7 +21,8 @@ def home():
     if current_user.role == "contractor": # Goes to contractor page
         return render_template("home.html", user=current_user)
     elif current_user.role == "subcontractor":
-        return render_template("homeSub.html", user=current_user)
+        #return render_template("homeSub.html", user=current_user)
+        redirect(url_for('views.homeSub'))
     else:
         return "Unauthorized", 403
 
@@ -180,3 +181,39 @@ def send_message():
     else:
         flash("Something went wrong!", category="error")
     return render_template("inbox.html", messages=messages)
+
+# -------------- Add Address -------------
+
+@views.route('/update_address/<int:project_id>', methods=['POST'])
+def update_address(project_id):
+    project=Project.query.get(project_id)
+    new_address=request.form.get('project_address')
+    if new_address:
+        project.address=new_address
+        db.session.commit()
+    return redirect(url_for('views.view_project', project_id=project_id))
+ 
+# ---------------- Subcontractor Projects --------------
+
+@views.route('/subcontractor_projects')
+def subcontractor_projects():
+    subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
+    
+    assignments=Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
+    assigned_projects=[assignment.project for assignment in assignments]
+    return render_template('homeSub.html', assigned_projects=assigned_projects)
+
+# ---------------- Subcontractor Home ------------------
+@views.route("/homeSub")
+def home_sub():
+    subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
+    assignments = Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
+    assigned_projects=[assignment.project for assignment in assigned_projects]
+
+    return render_template("homeSub.html", assigned_projects=assigned_projects, user=current_user)
+
+
+
+
+    
+    
