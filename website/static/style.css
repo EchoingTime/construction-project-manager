@@ -508,6 +508,22 @@ main {
 
 /*----------- Project Creation Box -----------*/
 
+#deadline-sub-section,
+#completion-status-sub-section,
+#address-sub-section {
+  height: 85%;
+}
+#subcontractors-sub-section,
+#task-sub-section,
+#file-upload-sub-section {
+  width: 100%;
+}
+#project-details h3 {
+  text-align: center;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--line-clr);
+}
 #project-form {
   display: flex;
   flex-direction: row;
@@ -524,6 +540,9 @@ main {
 #project-form input {
   margin-right: 0;
 }
+#project-form input:focus {
+  outline: none;
+}
 #project-form input::placeholder {
   font-style: italic;
   font-size: 12px;
@@ -533,29 +552,49 @@ main {
   margin-left: 0;
   border-left: none;
 }
-#project-form svg {
-  fill: var(--icon-clr);
-  width: 20px;
-  transition: all 0.3s ease;
-}
 #project-form button:hover {
   cursor: pointer;
   box-shadow: 0 0 20px var(--creating-clr); /* Glowing effect */
   transition: all 0.3s ease;
 }
+#project-form svg {
+  fill: var(--icon-clr);
+  width: 20px;
+  transition: all 0.3s ease;
+}
 #project-form button:hover svg {
   fill: var(--creating-clr);
 }
-#project-form input:focus {
-  outline: none;
+
+/*----------- Project Details' Forms -----------*/
+
+#project-details form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5px;
+  padding: 5px 10px 5px 10px;
+  gap: 10px;
 }
+#project-details form textarea {
+  border: 2px solid var(--accent-clr);
+  background-color: var(--base-clr);
+  font-style: italic;
+  padding: 5px 5px 0 5px;
 
-/*--------------------- Project Page Details ---------------------*/
-
-#project-details h3 {
-  margin-bottom: 10px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid var(--line-clr);
+  resize: none;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+#project-details form textarea:focus,
+#project-details form select:focus {
+  outline: none;
+  border-color: var(--active-clr) !important;
+}
+#project-details form textarea:hover,
+#project-details form select:hover {
+  border-color: var(--hover-clr);
 }
 #project-details button {
   padding: 5px;
@@ -567,13 +606,11 @@ main {
 #project-details button:hover {
   background-color: var(--hover-clr);
   transition: all 0.3s ease-in-out;
-}
-#project-details form {
-  display: flex;
-  flex-direction: column;
+  cursor: pointer;
 }
 #project-details p {
   margin-bottom: 10px;
+  font-weight: bold;
 }
 #project-details #header-project-details {
   margin-bottom: 25px;
@@ -596,14 +633,6 @@ main {
 
 /*----------- Deadline Section -----------*/
 
-#deadline-sub-section,
-#completion-status-sub-section {
-  height: 85%;
-}
-#subcontractors-sub-section,
-#task-sub-section {
-  width: 100%;
-}
 #project-details #deadline-sub-section {
   text-wrap: wrap;
   text-align: center;
@@ -688,6 +717,14 @@ main {
   fill: var(--canceled-clr);
 }
 
+/*----------- Address Section -----------*/
+
+#address-sub-section .div-address,
+#address-sub-section #address-buttons {
+  display: flex;
+  gap: 5px;
+}
+
 /*----------- Subcontractors Section -----------*/
 
 /*----- List: Subcontractors ------*/
@@ -709,38 +746,6 @@ main {
 
   padding: 5px;
   white-space: nowrap;
-}
-
-/*----- Add Subcontractors ------*/
-
-#subcontractors-sub-section form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 5px;
-  padding: 5px 10px 5px 10px;
-  gap: 10px;
-}
-#subcontractors-sub-section form textarea {
-  border: 2px solid var(--accent-clr);
-  background-color: var(--base-clr);
-  font-style: italic;
-  padding: 5px 5px 0 5px;
-
-  resize: none;
-  white-space: nowrap;
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-#subcontractors-sub-section form textarea:focus {
-  outline: none;
-  border-color: var(--active-clr) !important;
-}
-#subcontractors-sub-section form textarea:hover {
-  border-color: var(--hover-clr);
-}
-#subcontractors-sub-section p {
-  font-weight: bold;
 }
 
 /*----------- Tasks Section -----------*/
