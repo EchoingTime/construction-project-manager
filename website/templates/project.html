@@ -399,25 +399,40 @@
               </div>
             </form>
           </section>
-             <!----------- Address Updates ------------>
+          <!----------- Address Updates ------------>
           <section class="sub-sections" id="address">
             <h3>Address</h3>
             <!----------- Address Update Form ------------>
-            <form action="{{ url_for('views.update_address', project_id=project.id)}}" method="POST">
-               {% if project.address is none %}
-               <p>Assign Project Address</p>
-               <div class="div-address">
-                <input type="text" name="project_address" required placeholder="Enter Address">
+            <form
+              action="{{ url_for('views.update_address', project_id=project.id)}}"
+              method="POST"
+            >
+              {% if project.address is none %}
+              <p>Assign Project Address</p>
+              <div class="div-address">
+                <input
+                  type="text"
+                  name="project_address"
+                  required
+                  placeholder="Enter Address"
+                />
                 <button type="submit">Assign Address</button>
               </div>
               {% else %}
               <p>{{ project.address }}</p>
               <div class="div-address">
-                <input type="text" name="project_address" placeholder="Enter Address" id="project_address" value="" required>
+                <input
+                  type="text"
+                  name="project_address"
+                  placeholder="Enter Address"
+                  id="project_address"
+                  value=""
+                  required
+                />
                 <button type="submit">Update Address</button>
                 <button type="reset">Clear</button>
               </div>
-                {% endif %}
+              {% endif %}
             </form>
           </section>
         </section>
@@ -440,81 +455,6 @@
                 </thead>
                 <tbody>
                   {% for subcontractor in subcontractors %}
-                  <tr>
-                    <td>{{ subcontractor.name }}</td>
-                    <td>{{ subcontractor.email}}</td>
-                    <td>{{ subcontractor.trade }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ subcontractor.name }}</td>
-                    <td>{{ subcontractor.email}}</td>
-                    <td>{{ subcontractor.trade }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ subcontractor.name }}</td>
-                    <td>{{ subcontractor.email}}</td>
-                    <td>{{ subcontractor.trade }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ subcontractor.name }}</td>
-                    <td>{{ subcontractor.email}}</td>
-                    <td>{{ subcontractor.trade }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ subcontractor.name }}</td>
-                    <td>{{ subcontractor.email}}</td>
-                    <td>{{ subcontractor.trade }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ subcontractor.name }}</td>
-                    <td>{{ subcontractor.email}}</td>
-                    <td>{{ subcontractor.trade }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ subcontractor.name }}</td>
-                    <td>{{ subcontractor.email}}</td>
-                    <td>{{ subcontractor.trade }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ subcontractor.name }}</td>
-                    <td>{{ subcontractor.email}}</td>
-                    <td>{{ subcontractor.trade }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ subcontractor.name }}</td>
-                    <td>{{ subcontractor.email}}</td>
-                    <td>{{ subcontractor.trade }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ subcontractor.name }}</td>
-                    <td>{{ subcontractor.email}}</td>
-                    <td>{{ subcontractor.trade }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ subcontractor.name }}</td>
-                    <td>{{ subcontractor.email}}</td>
-                    <td>{{ subcontractor.trade }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ subcontractor.name }}</td>
-                    <td>{{ subcontractor.email}}</td>
-                    <td>{{ subcontractor.trade }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ subcontractor.name }}</td>
-                    <td>{{ subcontractor.email}}</td>
-                    <td>{{ subcontractor.trade }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ subcontractor.name }}</td>
-                    <td>{{ subcontractor.email}}</td>
-                    <td>{{ subcontractor.trade }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ subcontractor.name }}</td>
-                    <td>{{ subcontractor.email}}</td>
-                    <td>{{ subcontractor.trade }}</td>
-                  </tr>
                   <tr>
                     <td>{{ subcontractor.name }}</td>
                     <td>{{ subcontractor.email}}</td>
