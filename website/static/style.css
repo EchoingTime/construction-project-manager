@@ -566,6 +566,8 @@ main {
   fill: var(--creating-clr);
 }
 
+/*--------------------- Project Detail Page ---------------------*/
+
 /*----------- Project Details' Forms -----------*/
 
 #project-details form {
@@ -573,6 +575,7 @@ main {
   flex-direction: column;
   align-items: center;
   padding: 0 10px 5px 10px;
+  margin-top: 5px;
 }
 #project-details form textarea {
   border: 2px solid var(--accent-clr);
@@ -785,7 +788,7 @@ main {
   margin-left: 5px;
 }
 #subcontractors-sub-section form textarea {
-  margin-top: 0;
+  margin-top: 10px;
 }
 
 /*----------- Tasks Section -----------*/
