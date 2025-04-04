@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function toggleEdit() {
   const deleteSvg = document.querySelectorAll("#delete-svg");
-  const borderToSmooth = document.querySelectorAll("#project-link");
+  const borderToSmooth = document.querySelectorAll(".date");
   const editIcon = document.querySelector("#edit-project");
 
   if (editIcon.innerHTML.includes("M200-200h57l391")) {
@@ -94,8 +94,8 @@ function toggleEdit() {
   deleteSvg.forEach((svg) => {
     svg.classList.toggle("hidden-svg");
   });
-  borderToSmooth.forEach((a) => {
-    a.classList.toggle("smooth-borders");
+  borderToSmooth.forEach((el) => {
+    el.classList.toggle("smooth-borders");
   });
 }
 

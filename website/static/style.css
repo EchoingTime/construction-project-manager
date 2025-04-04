@@ -404,22 +404,28 @@ main {
 }
 #project-section #project-status,
 #project-section a,
+#project-section li .date,
 #project-section .close {
   display: flex;
   margin-bottom: 5px;
   padding: 5px 10px;
   align-items: center;
+  text-align: center;
   justify-content: center;
 }
 #project-section li a {
   background-color: var(--accent-clr);
   color: var(--base-clr);
   border: 1px solid var(--accent-clr);
-  border-right: none;
-  border-radius: 0 5px 5px 0;
+  border-right-color: var(--base-clr);
 
   flex: 1;
   margin-right: 0;
+}
+#project-section li .date {
+  background-color: var(--accent-clr);
+  color: var(--base-clr);
+  border-radius: 0 5px 5px 0;
 }
 #project-section #project-status {
   display: flex;
@@ -505,7 +511,7 @@ main {
   display: none;
 }
 #project-section .smooth-borders {
-  border-radius: 0%;
+  border-radius: 0% !important;
 }
 
 /*----------- Project Creation Box -----------*/
@@ -1139,6 +1145,12 @@ a:hover {
   #header-project-specifics {
     text-wrap: wrap;
     text-align: center;
+  }
+  #project-section a {
+    border-radius: 5px;
+  }
+  #project-section .mobile-remove {
+    display: none !important;
   }
 }
 
