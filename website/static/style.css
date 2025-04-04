@@ -531,7 +531,6 @@ main {
   flex-direction: row;
   justify-content: center;
   margin-top: 25px;
-  gap: 0;
 }
 #project-form #filter-projects,
 #project-form #project-column-info {
@@ -575,12 +574,6 @@ main {
 }
 #project-form button:hover {
   box-shadow: 0 0 20px var(--creating-clr); /* Glowing effect */
-}
-#project-form #project-column-info:hover {
-  box-shadow: 0 0 20px var(--info-clr);
-}
-#project-form #filter-projects:hover {
-  box-shadow: 0 0 20px var(--filter-clr);
 }
 #project-form svg {
   fill: var(--icon-clr);
