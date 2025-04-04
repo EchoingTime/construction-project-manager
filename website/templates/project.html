@@ -288,7 +288,7 @@
               action="{{ url_for('views.update_deadline', project_id=project.id) }}"
             >
               {% if project.deadline is none %}
-              <p>Assign Project Deadline</p>
+              <p>No Deadline Assigned</p>
               <div class="div-dead">
                 <input type="date" name="deadline" required />
                 <button type="submit">Assign</button>
@@ -421,7 +421,7 @@
               method="POST"
             >
               {% if project.address is none %}
-              <p>Assign Project Address</p>
+              <p>No Address Assigned</p>
               <div class="div-address">
                 <textarea
                   name="project_address"

@@ -706,6 +706,7 @@ main {
   display: flex;
   align-items: flex-end; /* Aligns svg on the bottom next to p text */
   gap: 5px;
+  margin-top: 5px;
   border: 1px solid var(--accent-clr);
   padding: 5px;
   border-radius: 0.25em;
@@ -746,6 +747,9 @@ main {
 
 /*----- List: Subcontractors ------*/
 
+#subcontractors-sub-section h3 {
+  margin-bottom: 15px;
+}
 #subcontractors-sub-section .table-wrapper {
   display: flex;
   max-width: 85%;
