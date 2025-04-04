@@ -530,15 +530,18 @@ main {
   margin-top: 25px;
   gap: 0;
 }
+#project-form #filter-projects,
+#project-form #project-column-info {
+  align-self: center;
+}
 #project-form button,
-#project-form input {
-  margin: 10px 25px;
+#project-form input,
+#project-form #filter-projects,
+#project-form #project-column-info {
+  margin: 10px 0 10px 0;
   padding: 5px 10px;
   border: 2px solid var(--accent-clr);
   background-color: var(--base-clr);
-}
-#project-form input {
-  margin-right: 0;
 }
 #project-form input:focus {
   outline: none;
@@ -548,9 +551,11 @@ main {
   font-size: 12px;
 }
 #project-form button {
-  display: flex;
-  margin-left: 0;
   border-left: none;
+}
+#project-form #filter-projects,
+#project-form #project-column-info {
+  border-right: none;
 }
 #project-form button:hover {
   cursor: pointer;
