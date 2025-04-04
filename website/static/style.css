@@ -572,20 +572,23 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 5px;
-  padding: 5px 10px 5px 10px;
-  gap: 10px;
+  padding: 0 10px 5px 10px;
 }
 #project-details form textarea {
   border: 2px solid var(--accent-clr);
   background-color: var(--base-clr);
   font-style: italic;
   padding: 5px 5px 0 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 
   resize: none;
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
+}
+#project-details form select {
+  margin-top: 5px;
 }
 #project-details form textarea:focus,
 #project-details form select:focus {
@@ -609,11 +612,19 @@ main {
   cursor: pointer;
 }
 #project-details p {
-  margin-bottom: 10px;
-  font-weight: bold;
+  display: flex;
+  gap: 5px;
+  padding: 5px;
+  background-color: var(--accent-clr);
+  color: var(--base-clr);
+  border: 1px solid var(--accent-clr);
+  border-radius: 0.25em;
+}
+#project-details p svg {
+  fill: var(--base-clr);
 }
 #project-details #header-project-details {
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 #project-details .top-section,
 #project-details .bottom-section {
@@ -636,9 +647,6 @@ main {
 #project-details #deadline-sub-section {
   text-wrap: wrap;
   text-align: center;
-}
-#project-details #deadline-sub-section p {
-  font-weight: bold;
 }
 #project-details #deadline-form {
   gap: 10px;
@@ -722,7 +730,13 @@ main {
 #address-sub-section .div-address,
 #address-sub-section #address-buttons {
   display: flex;
-  gap: 5px;
+  align-self: center;
+}
+#address-sub-section .div-address {
+  flex-direction: column;
+}
+#address-sub-section #address-submit {
+  margin-right: 3.5px;
 }
 
 /*----------- Subcontractors Section -----------*/
@@ -736,16 +750,42 @@ main {
   overflow: auto;
 }
 #subcontractors-sub-section table {
-  border-top: none;
-  border-collapse: collapse;
   width: 100%;
+}
+#subcontractors-sub-section tr {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  border: 1px solid var(--accent-clr);
+  border-radius: 0.25em;
 }
 #subcontractors-sub-section th,
 #subcontractors-sub-section td {
-  border: 0.5px solid var(--accent-clr);
-
-  padding: 5px;
+  display: flex;
+  flex: 1;
+  padding: 5px 10px 5px 10px;
+  align-items: center;
+  justify-content: center;
   white-space: nowrap;
+}
+#subcontractors-sub-section td {
+  background-color: var(--accent-clr);
+  color: var(--base-clr);
+}
+#subcontractors-sub-section th:first-child,
+#subcontractors-sub-section td:first-child {
+  justify-content: flex-start;
+}
+#subcontractors-sub-section th:last-child,
+#subcontractors-sub-section td:last-child {
+  justify-content: flex-end;
+}
+#subcontractors-sub-section th svg {
+  fill: var(--accent-clr);
+  margin-left: 5px;
+}
+#subcontractors-sub-section form textarea {
+  margin-top: 0;
 }
 
 /*----------- Tasks Section -----------*/
