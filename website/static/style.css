@@ -39,6 +39,8 @@
   --active-clr: #5e63ff; /* Active states */
   --deleting-clr: #ff2e46ca;
   --creating-clr: #28da51ca;
+  --info-clr: #2196f3;
+  --filter-clr: #8c90f4;
   /* Progress Status Colors */
   --not-yet-started-clr: #007bff; /* Symbol: Not Started Google Icon */
   --on-hold-clr: #ffa500; /* Symbol: Pause Circle Google Icon */
@@ -527,6 +529,7 @@ main {
 #project-form {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   margin-top: 25px;
   gap: 0;
 }
@@ -535,7 +538,7 @@ main {
   align-self: center;
 }
 #project-form button,
-#project-form input,
+#project-form textarea,
 #project-form #filter-projects,
 #project-form #project-column-info {
   margin: 10px 0 10px 0;
@@ -543,10 +546,17 @@ main {
   border: 2px solid var(--accent-clr);
   background-color: var(--base-clr);
 }
-#project-form input:focus {
+#project-form textarea {
+  padding: 5px 5px 0 5px;
+  resize: none;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+#project-form textarea:focus {
   outline: none;
 }
-#project-form input::placeholder {
+#project-form textarea::placeholder {
   font-style: italic;
   font-size: 12px;
 }
@@ -557,10 +567,20 @@ main {
 #project-form #project-column-info {
   border-right: none;
 }
-#project-form button:hover {
+#project-form button,
+#project-form #filter-projects,
+#project-form #project-column-info {
   cursor: pointer;
-  box-shadow: 0 0 20px var(--creating-clr); /* Glowing effect */
   transition: all 0.3s ease;
+}
+#project-form button:hover {
+  box-shadow: 0 0 20px var(--creating-clr); /* Glowing effect */
+}
+#project-form #project-column-info:hover {
+  box-shadow: 0 0 20px var(--info-clr);
+}
+#project-form #filter-projects:hover {
+  box-shadow: 0 0 20px var(--filter-clr);
 }
 #project-form svg {
   fill: var(--icon-clr);
@@ -569,6 +589,12 @@ main {
 }
 #project-form button:hover svg {
   fill: var(--creating-clr);
+}
+#project-form #project-column-info:hover svg {
+  fill: var(--info-clr);
+}
+#project-form #filter-projects:hover svg {
+  fill: var(--filter-clr);
 }
 
 /*--------------------- Project Detail Page ---------------------*/
