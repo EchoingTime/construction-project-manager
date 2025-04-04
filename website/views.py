@@ -21,8 +21,7 @@ def home():
     if current_user.role == "contractor": # Goes to contractor page
         return render_template("home.html", user=current_user)
     elif current_user.role == "subcontractor":
-        #return render_template("homeSub.html", user=current_user)
-        redirect(url_for('views.homeSub'))
+        return render_template("homeSub.html", user=current_user)
     else:
         return "Unauthorized", 403
 
