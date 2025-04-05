@@ -1,537 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Project Details</title>
-    <link rel="stylesheet" href="./../static/style.css" />
-  </head>
-
-  <body id="default-website-body">
-    <!--------------------- Navbar --------------------->
-    <nav>
-      <ul class="nav-sidebar">
-        <li onclick="hideNavSidebar()">
-          <a href="#"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 -960 960 960"
-              width="24px"
-              height="24px"
-            >
-              <path
-                d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
-              />
-            </svg>
-          </a>
-        </li>
-        <!----------- Navbar Sidebar ----------->
-        <li><a href="/">Home</a></li>
-        <li><a href="/inbox">Inbox</a></li>
-        <li><a href="/logout">Logout</a></li>
-      </ul>
-      <!----------- Main Navbar ----------->
-      <ul>
-        <li class="nav-title">Construction Project Manager</li>
-        <li class="hideOnMobile">
-          <a href="/"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-            >
-              <path
-                d="M680-600h80v-80h-80v80Zm0 160h80v-80h-80v80Zm0 160h80v-80h-80v80Zm0 160v-80h160v-560H480v56l-80-58v-78h520v720H680Zm-640 0v-400l280-200 280 200v400H360v-200h-80v200H40Zm80-80h80v-200h240v200h80v-280L320-622 120-480v280Zm560-360ZM440-200v-200H200v200-200h240v200Z"
-              />
-            </svg>
-            Home</a
-          >
-        </li>
-        <li class="hideOnMobile">
-          <a href="/inbox"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-            >
-              <path
-                d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z"
-              />
-            </svg>
-            Inbox</a
-          >
-        </li>
-        <li class="hideOnMobile">
-          <a href="/logout"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-            >
-              <path
-                d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"
-              />
-            </svg>
-            Logout</a
-          >
-        </li>
-        <li class="menu-button" onclick="showNavSidebar()">
-          <a href="#">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 -960 960 960"
-              width="24px"
-              height="24px"
-            >
-              <path
-                d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"
-              />
-            </svg>
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <!--------------------- Sidebar --------------------->
-    <aside id="default-asidebar">
-      <ul>
-        <li>
-          <span class="logo">CPM</span>
-          <button onclick="toggleSidebar()" id="toggle-btn">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 -960 960 960"
-              width="24px"
-              height="24px"
-            >
-              <path
-                d="M440-240 200-480l240-240 56 56-183 184 183 184-56 56Zm264 0L464-480l240-240 56 56-183 184 183 184-56 56Z"
-              />
-            </svg>
-          </button>
-        </li>
-        <li>
-          <a href="/">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-            >
-              <path
-                d="M680-600h80v-80h-80v80Zm0 160h80v-80h-80v80Zm0 160h80v-80h-80v80Zm0 160v-80h160v-560H480v56l-80-58v-78h520v720H680Zm-640 0v-400l280-200 280 200v400H360v-200h-80v200H40Zm80-80h80v-200h240v200h80v-280L320-622 120-480v280Zm560-360ZM440-200v-200H200v200-200h240v200Z"
-              />
-            </svg>
-            <span>Home</span>
-          </a>
-        </li>
-        <li>
-          <!----------- Dropdown Menu ----------->
-          <button onclick="toggleSubMenu(this)" class="dropdown-btn">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 -960 960 960"
-              width="24px"
-              height="24px"
-            >
-              <path
-                d="M560-320h80v-80h80v-80h-80v-80h-80v80h-80v80h80v80ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h240l80 80h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H447l-80-80H160v480Zm0 0v-480 480Z"
-              />
-            </svg>
-            <span>Create</span>
-            <svg
-              class="arrow-down-svg"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 -960 960 960"
-              width="24px"
-              height="24px"
-            >
-              <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
-            </svg>
-          </button>
-          <ul class="sub-menu">
-            <div>
-              <li><a href="#">Folder</a></li>
-              <li><a href="#">Document</a></li>
-              <li><a href="#">Project</a></li>
-            </div>
-          </ul>
-        </li>
-        <li>
-          <!----------- Dropdown Menu ----------->
-          <button onclick="toggleSubMenu(this)" class="dropdown-btn">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 -960 960 960"
-              width="24px"
-              height="24px"
-            >
-              <path
-                d="M222-200 80-342l56-56 85 85 170-170 56 57-225 226Zm0-320L80-662l56-56 85 85 170-170 56 57-225 226Zm298 240v-80h360v80H520Zm0-320v-80h360v80H520Z"
-              />
-            </svg>
-            <span>Checklists</span>
-            <svg
-              class="arrow-down-svg"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 -960 960 960"
-              width="24px"
-              height="24px"
-            >
-              <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
-            </svg>
-          </button>
-          <ul class="sub-menu">
-            <div>
-              <li><a href="#">Lorem</a></li>
-              <li><a href="#">Lorem</a></li>
-              <li><a href="#">Lorem</a></li>
-            </div>
-          </ul>
-        </li>
-        <li>
-          <a href="calendar.html"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 -960 960 960"
-              width="24px"
-              height="24px"
-            >
-              <path
-                d="M200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Zm280 240q-17 0-28.5-11.5T440-440q0-17 11.5-28.5T480-480q17 0 28.5 11.5T520-440q0 17-11.5 28.5T480-400Zm-160 0q-17 0-28.5-11.5T280-440q0-17 11.5-28.5T320-480q17 0 28.5 11.5T360-440q0 17-11.5 28.5T320-400Zm320 0q-17 0-28.5-11.5T600-440q0-17 11.5-28.5T640-480q17 0 28.5 11.5T680-440q0 17-11.5 28.5T640-400ZM480-240q-17 0-28.5-11.5T440-280q0-17 11.5-28.5T480-320q17 0 28.5 11.5T520-280q0 17-11.5 28.5T480-240Zm-160 0q-17 0-28.5-11.5T280-280q0-17 11.5-28.5T320-320q17 0 28.5 11.5T360-280q0 17-11.5 28.5T320-240Zm320 0q-17 0-28.5-11.5T600-280q0-17 11.5-28.5T640-320q17 0 28.5 11.5T680-280q0 17-11.5 28.5T640-240Z"
-              />
-            </svg>
-            <span>Calendar</span></a
-          >
-        </li>
-        <li>
-          <a href="#"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 -960 960 960"
-              width="24px"
-              height="24px"
-            >
-              <path
-                d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"
-              />
-            </svg>
-            <span>Profile</span></a
-          >
-        </li>
-      </ul>
-    </aside>
-    <!--------------------- Main Content --------------------->
-    <main>
-      <!----------- Message Flashing Container ----------->
-      <section class="alert-container" id="toggle-flash-container">
-        {% with messages = get_flashed_messages(with_categories=true) %} {% if
-        messages %} {% for category, message in messages %} {% if category ==
-        'error' %}
-        <div class="alert-messages">
-          <div class="alert alert-error" role="alert">
-            <!-- Error alert -->
-            {{ message }}
-            <button class="close">
-              <span
-                ><svg
-                  id="error-close"
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                >
-                  <path
-                    d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
-                  />
-                </svg>
-              </span>
-            </button>
-          </div>
-          {% else %}
-          <div class="alert alert-success" role="alert">
-            <!-- Success alert -->
-            {{ message }}
-            <button class="close">
-              <span>
-                <svg
-                  id="success-close"
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                >
-                  <path
-                    d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
-                  />
-                </svg>
-              </span>
-            </button>
-          </div>
-        </div>
-        {% endif %} {% endfor %} {% endif %} {% endwith %}
-      </section>
-      <section class="main-content-section" id="project-details">
-        <!----------- Main Page Content ----------->
-        <h2 id="header-project-details">{{ project.project_name }}</h2>
-        <!------ Top Section ------>
-        <section class="sub-sections top-section">
-          <!------ Deadline sub-section ------>
-          <section class="sub-sections" id="deadline-sub-section">
-            <h3>Project Deadline</h3>
-            <!-- Form is needed to send update -->
-            <form
-              id="deadline-form"
-              method="POST"
-              action="{{ url_for('views.update_deadline', project_id=project.id) }}"
-            >
-              {% if project.deadline is none %}
-              <p>Assign Project Deadline</p>
-              {% if user.role != 'subcontractor' %}
-              <div class="div-dead">
-                <input type="date" name="deadline" required />
-                <button type="submit">Assign</button>
-              </div>
-              {% endif %}
-              
-              {% else %}
-
-              <p>{{ project.deadline }}</p>
-              <div class="div-dead">
-                <input
-                  type="date"
-                  name="deadline"
-                  value="{{ project.deadline }}"
-                />
-                {% if user.role != 'subcontractor' %}
-                <button type="submit">Reassign</button>
-              </div>
-              {% endif %}
-              {% endif %}
-            </form>
-          </section>
-          <!------ Completion sub-section ------>
-          <section class="sub-sections" id="completion-status-sub-section">
-            <h3>Completion Status</h3>
-            <p id="displaying-completion-status">
-              {{ project.progress }} {% if project.progress == "Not Yet Started"
-              %}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 -960 960 960"
-                width="24px"
-                id="not-yet-started-svg"
-              >
-                <path
-                  d="M320-320h80v-320h-80v320Zm160 0 240-160-240-160v320Zm0 240q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-                />
-              </svg>
-              {% elif project.progress == "On Hold" %}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 -960 960 960"
-                width="24px"
-                id="on-hold-svg"
-              >
-                <path
-                  d="M360-320h80v-320h-80v320Zm160 0h80v-320h-80v320ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-                />
-              </svg>
-              {% elif project.progress == "In Progress" %}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 -960 960 960"
-                width="24px"
-                id="in-progress-svg"
-              >
-                <path
-                  d="M204-318q-22-38-33-78t-11-82q0-134 93-228t227-94h7l-64-64 56-56 160 160-160 160-56-56 64-64h-7q-100 0-170 70.5T240-478q0 26 6 51t18 49l-60 60ZM481-40 321-200l160-160 56 56-64 64h7q100 0 170-70.5T720-482q0-26-6-51t-18-49l60-60q22 38 33 78t11 82q0 134-93 228t-227 94h-7l64 64-56 56Z"
-                />
-              </svg>
-              {% elif project.progress == "Completed" %}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 -960 960 960"
-                width="24px"
-                id="completed-svg"
-              >
-                <path
-                  d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-                />
-              </svg>
-              {% elif project.progress == "Canceled" %}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 -960 960 960"
-                width="24px"
-                id="canceled-svg"
-              >
-                <path
-                  d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q54 0 104-17.5t92-50.5L228-676q-33 42-50.5 92T160-480q0 134 93 227t227 93Zm252-124q33-42 50.5-92T800-480q0-134-93-227t-227-93q-54 0-104 17.5T284-732l448 448Z"
-                />
-              </svg>
-              {% else %} Progress Status Icon Error {% endif %}
-            </p>
-            <form
-              id="completion-form"
-              method="POST"
-              action="{{ url_for('views.update_project_completion_status', project_id=project.id) }}"
-            >
-            {% if user.role != 'subcontractor' %}
-              <select id="project-status" name="project-status">
-                <option value="" disabled selected hidden>
-                  Change Project Status
-                </option>
-                {% if project.progress != 'Not Yet Started' %}
-                <option value="Not Yet Started">Not Yet Started</option>
-                {% endif %} {% if project.progress != 'On Hold' %}
-                <option value="On Hold">On Hold</option>
-                {% endif %} {% if project.progress != 'In Progress' %}
-                <option value="In Progress">In Progress</option>
-                {% endif %} {% if project.progress != 'Completed' %}
-                <option value="Completed">Completed</option>
-                {% endif %} {% if project.progress != 'Canceled' %}
-                <option value="Canceled">Canceled</option>
-                {% endif %}
-              </select>
-              {% if user.role != 'subcontractor' %}
-              <div class="buttons">
-                <button type="submit">Update</button>
-                <button type="reset">Clear</button>
-              </div>
-              {% endif %}
-              {% endif %}
-            </form>
-          </section>
-          <!----------- Address Updates ------------>
-          <section class="sub-sections" id="address-sub-section">
-            <h3>Address</h3>
-            <!----------- Address Update Form ---------->
-            <form
-              action="{{ url_for('views.update_address', project_id=project.id)}}"
-              method="POST"
-              > <!--subcontractor view for address section-->
-              {% if user.role == 'subcontractor' %}
-              <p>{{ project.address }}</p>
-              <div class="div-address">
-              {% else %}
-
-              {% if project.address is none %}
-              <p>Assign Project Address</p>
-              <div class="div-address">
-                <textarea
-                  name="project_address"
-                  id="project_address"
-                  placeholder="Enter Address"
-                  required
-                ></textarea>
-                <button type="submit">Assign Address</button>
-              </div>
-                {% else %}
-              <p>{{ project.address }}</p>
-              <div class="div-address">
-                <textarea
-                  name="project_address"
-                  id="project_address"
-                  placeholder="Enter Address"
-                  value=""
-                  required
-                ></textarea>
-               <div id="address-buttons">
-                  <button type="submit">Update Address</button>
-                  <button type="reset">Clear</button>
-                </div>
-              </div>
-                 {% endif %}
-
-              </div>
-              {% endif %}
-            </form>                     
-            
-          </section>
-        </section>
-        <!------ Bottom Section ------>
-        <section class="sub-sections bottom-section">
-          <!------ Subcontractor sub-section ------>
-          <section class="sub-sections" id="subcontractors-sub-section">
-            <h3>Subcontractors</h3>
-            <div class="table-wrapper">
-              {% if subcontractors|length == 0 %}
-              <p>No Subcontractor's Assigned</p>
-              {% else %}
-              <table>
-                <thead>
-                  <tr id="header-row">
-                    <th id="name-th">Name</th>
-                    <th id="email-th">Email</th>
-                    <th id="trade-th">Trade</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for subcontractor in subcontractors %}
-                  <tr>
-                    <td>{{ subcontractor.name }}</td>
-                    <td>{{ subcontractor.email}}</td>
-                    <td>{{ subcontractor.trade }}</td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-              {% endif %}
-            </div>
-            <form
-              method="POST"
-              action="{{ url_for('views.add_subcontractor', project_id=project.id) }}"
-            >
-            {% if user.role != 'subcontractor' %}
-              <textarea
-                name="subcontractor-email"
-                id="subcontractor-email"
-                placeholder="Enter Email"
-                required
-              ></textarea>
-              <div id="subcon-buttons">
-                <button type="submit">Add Subcontractor</button>
-                <button type="reset">Clear</button>
-              </div>
-            </form>
-            {% endif %}
-          </section>
-          <!------ Tasks sub-section ------>
-          <section class="sub-sections" id="task-sub-section">
-            <h3>Tasks</h3>
-          </section>
-          <!------ File Upload sub-section ------>
-          <section class="sub-sections" id="file-upload-sub-section">
-            <form
-              action="{{ url_for('file_upload.upload_file', project_id=project.id) }}"
-              method="post"
-              enctype="multipart/form-data"
-            >
-              <h3>Files</h3>
-              <label for="file">Choose file:</label>
-              <input type="file" name="file" id="file" required />
-              <button type="submit">Upload</button>
-            </form>
-          </section>
-        </section>
-      </section>
-    </main>
-    <!--------------------- Footer --------------------->
-    <footer>Construction Project Manager (CPM)</footer>
-    <script
-      type="text/javascript"
-      src="{{ url_for('static', filename='index.js') }}"
-    ></script>
-  </body>
-</html>
 <!--
 @File Name: project.html
 @Description: This file represents a specific project and its respective details. 
@@ -562,11 +28,12 @@ not remove, and add tasks and upload files.
       >
         {% if project.deadline is none %}
         <p>No Deadline Assigned</p>
+        {% if user.role != 'subcontractor' %}
         <div class="div-dead">
           <input type="date" name="deadline" required />
           <button type="submit">Assign</button>
         </div>
-        {% else %}
+        {% endif %} {% else %}
         <p>
           {{ project.deadline }}
           <svg
@@ -582,9 +49,10 @@ not remove, and add tasks and upload files.
         </p>
         <div class="div-dead">
           <input type="date" name="deadline" value="{{ project.deadline }}" />
+          {% if user.role != 'subcontractor' %}
           <button type="submit">Reassign</button>
         </div>
-        {% endif %}
+        {% endif %} {% endif %}
       </form>
     </section>
     <!------ Completion sub-section ------>
@@ -658,6 +126,7 @@ not remove, and add tasks and upload files.
         method="POST"
         action="{{ url_for('views.update_project_completion_status', project_id=project.id) }}"
       >
+        {% if user.role != 'subcontractor' %}
         <select id="project-status" name="project-status">
           <option value="" disabled selected hidden>
             Change Project Status
@@ -674,57 +143,65 @@ not remove, and add tasks and upload files.
           <option value="Canceled">Canceled</option>
           {% endif %}
         </select>
+        {% if user.role != 'subcontractor' %}
         <div class="buttons">
           <button type="submit">Update</button>
           <button type="reset">Clear</button>
         </div>
+        {% endif %} {% endif %}
       </form>
     </section>
     <!----------- Address Updates ------------>
     <section class="sub-sections" id="address-sub-section">
       <h3>Address</h3>
-      <!----------- Address Update Form ------------>
+      <!----------- Address Update Form ---------->
       <form
         action="{{ url_for('views.update_address', project_id=project.id)}}"
         method="POST"
       >
-        {% if project.address is none %}
-        <p>No Address Assigned</p>
+        <!--subcontractor view for address section-->
+        {% if user.role == 'subcontractor' %}
+        <p>{{ project.address }}</p>
         <div class="div-address">
-          <textarea
-            name="project_address"
-            id="project_address"
-            placeholder="Enter Address"
-            required
-          ></textarea>
-          <button type="submit">Assign Address</button>
-        </div>
-        {% else %}
-        <p>
-          {{ project.address }}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24px"
-            viewBox="0 -960 960 960"
-            width="24px"
-          >
-            <path
-              d="M480-480q33 0 56.5-23.5T560-560q0-33-23.5-56.5T480-640q-33 0-56.5 23.5T400-560q0 33 23.5 56.5T480-480Zm0 294q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Zm0-480Z"
-            />
-          </svg>
-        </p>
-        <div class="div-address">
-          <textarea
-            name="project_address"
-            id="project_address"
-            placeholder="Enter Address"
-            value=""
-            required
-          ></textarea>
-          <div id="address-buttons">
-            <button type="submit" id="address-submit">Update Address</button>
-            <button type="reset">Clear</button>
+          {% else %} {% if project.address is none %}
+          <p>No Address Assigned</p>
+          <div class="div-address">
+            <textarea
+              name="project_address"
+              id="project_address"
+              placeholder="Enter Address"
+              required
+            ></textarea>
+            <button type="submit">Assign Address</button>
           </div>
+          {% else %}
+          <p>
+            {{ project.address }}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+            >
+              <path
+                d="M480-480q33 0 56.5-23.5T560-560q0-33-23.5-56.5T480-640q-33 0-56.5 23.5T400-560q0 33 23.5 56.5T480-480Zm0 294q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Zm0-480Z"
+              />
+            </svg>
+          </p>
+          <div class="div-address">
+            <textarea
+              name="project_address"
+              id="project_address"
+              placeholder="Enter Address"
+              value=""
+              required
+            ></textarea>
+            <div id="address-buttons">
+              <button type="submit" id="address-submit">Update Address</button>
+              <button type="reset">Clear</button>
+            </div>
+          </div>
+          {% endif %}
         </div>
         {% endif %}
       </form>
@@ -799,6 +276,7 @@ not remove, and add tasks and upload files.
         method="POST"
         action="{{ url_for('views.add_subcontractor', project_id=project.id) }}"
       >
+        {% if user.role != 'subcontractor' %}
         <textarea
           name="subcontractor-email"
           id="subcontractor-email"
@@ -810,6 +288,7 @@ not remove, and add tasks and upload files.
           <button type="reset">Clear</button>
         </div>
       </form>
+      {% endif %}
     </section>
     <!------ Tasks sub-section ------>
     <section class="sub-sections" id="task-sub-section">
