@@ -264,6 +264,7 @@ function closeSubMenus() {
 function toggleEdit() {
   const deleteSvg = document.querySelectorAll("#delete-svg");
   const borderToSmooth = document.querySelectorAll(".date, #project-link");
+  const leftBorderRadius = document.querySelectorAll("#project-link");
   const editIcon = document.querySelector("#edit-project");
 
   if (editIcon.innerHTML.includes("M200-200h57l391")) {
@@ -279,6 +280,9 @@ function toggleEdit() {
   });
   borderToSmooth.forEach((el) => {
     el.classList.toggle("smooth-borders");
+  });
+  leftBorderRadius.forEach((el) => {
+    el.classList.toggle("left-radius");
   });
 }
 

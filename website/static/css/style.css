@@ -509,8 +509,10 @@ main {
   display: none;
 }
 #project-section .smooth-borders {
-  border-right: none;
   border-radius: 0% !important;
+}
+#project-section .left-radius {
+  border-radius: 5px 0 0 5px !important;
 }
 
 /*----------- Project Creation Box -----------*/
@@ -1239,6 +1241,7 @@ a:hover {
     text-align: center;
   }
   #project-section a {
+    border-right: none;
     border-radius: 5px;
   }
   #project-section .mobile-remove {
