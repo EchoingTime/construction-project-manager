@@ -39,6 +39,8 @@
   --active-clr: #5e63ff; /* Active states */
   --deleting-clr: #ff2e46ca;
   --creating-clr: #28da51ca;
+  --info-clr: #2196f3;
+  --filter-clr: #8c90f4;
   /* Progress Status Colors */
   --not-yet-started-clr: #007bff; /* Symbol: Not Started Google Icon */
   --on-hold-clr: #ffa500; /* Symbol: Pause Circle Google Icon */
@@ -73,21 +75,13 @@ body {
 
   min-height: 100vh; /* Viewport Height */
   min-height: 100dvh; /* Dynamic Viewport Height */
-}
-#default-website-body {
+
   grid-template-columns: auto 1fr; /* Set columns for sidebar and main */
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "navbar navbar"
     "sidebar main"
     "sidebar footer";
-}
-#intro-to-website-body {
-  grid-template-rows: auto 1fr auto;
-  grid-template-areas:
-    "navbar"
-    "main"
-    "footer";
 }
 
 /*--------------------- Navbar ---------------------*/
@@ -106,6 +100,9 @@ nav {
   color: var(--text-clr);
   user-select: none;
   z-index: 999;
+}
+nav #welcome-page {
+  text-align: center;
 }
 nav ul {
   width: 100%;
@@ -402,22 +399,28 @@ main {
 }
 #project-section #project-status,
 #project-section a,
+#project-section li .date,
 #project-section .close {
   display: flex;
   margin-bottom: 5px;
   padding: 5px 10px;
   align-items: center;
+  text-align: center;
   justify-content: center;
 }
 #project-section li a {
   background-color: var(--accent-clr);
   color: var(--base-clr);
   border: 1px solid var(--accent-clr);
-  border-right: none;
-  border-radius: 0 5px 5px 0;
+  border-right-color: var(--base-clr);
 
   flex: 1;
   margin-right: 0;
+}
+#project-section li .date {
+  background-color: var(--accent-clr);
+  color: var(--base-clr);
+  border-radius: 0 5px 5px 0;
 }
 #project-section #project-status {
   display: flex;
@@ -503,7 +506,7 @@ main {
   display: none;
 }
 #project-section .smooth-borders {
-  border-radius: 0%;
+  border-radius: 0% !important;
 }
 
 /*----------- Project Creation Box -----------*/
@@ -527,35 +530,51 @@ main {
 #project-form {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   margin-top: 25px;
-  gap: 0;
+}
+#project-form #filter-projects,
+#project-form #project-column-info {
+  align-self: center;
 }
 #project-form button,
-#project-form input {
-  margin: 10px 25px;
+#project-form textarea,
+#project-form #filter-projects,
+#project-form #project-column-info {
+  margin: 10px 0 10px 0;
   padding: 5px 10px;
   border: 2px solid var(--accent-clr);
   background-color: var(--base-clr);
 }
-#project-form input {
-  margin-right: 0;
+#project-form textarea {
+  padding: 5px 5px 0 5px;
+  resize: none;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
-#project-form input:focus {
+#project-form textarea:focus {
   outline: none;
 }
-#project-form input::placeholder {
+#project-form textarea::placeholder {
   font-style: italic;
   font-size: 12px;
 }
 #project-form button {
-  display: flex;
-  margin-left: 0;
   border-left: none;
 }
-#project-form button:hover {
+#project-form #filter-projects,
+#project-form #project-column-info {
+  border-right: none;
+}
+#project-form button,
+#project-form #filter-projects,
+#project-form #project-column-info {
   cursor: pointer;
-  box-shadow: 0 0 20px var(--creating-clr); /* Glowing effect */
   transition: all 0.3s ease;
+}
+#project-form button:hover {
+  box-shadow: 0 0 20px var(--creating-clr); /* Glowing effect */
 }
 #project-form svg {
   fill: var(--icon-clr);
@@ -565,6 +584,14 @@ main {
 #project-form button:hover svg {
   fill: var(--creating-clr);
 }
+#project-form #project-column-info:hover svg {
+  fill: var(--info-clr);
+}
+#project-form #filter-projects:hover svg {
+  fill: var(--filter-clr);
+}
+
+/*--------------------- Project Detail Page ---------------------*/
 
 /*----------- Project Details' Forms -----------*/
 
@@ -572,20 +599,24 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 10px 5px 10px;
   margin-top: 5px;
-  padding: 5px 10px 5px 10px;
-  gap: 10px;
 }
 #project-details form textarea {
   border: 2px solid var(--accent-clr);
   background-color: var(--base-clr);
   font-style: italic;
   padding: 5px 5px 0 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 
   resize: none;
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
+}
+#project-details form select {
+  margin-top: 5px;
 }
 #project-details form textarea:focus,
 #project-details form select:focus {
@@ -609,11 +640,19 @@ main {
   cursor: pointer;
 }
 #project-details p {
-  margin-bottom: 10px;
-  font-weight: bold;
+  display: flex;
+  gap: 5px;
+  padding: 5px;
+  background-color: var(--accent-clr);
+  color: var(--base-clr);
+  border: 1px solid var(--accent-clr);
+  border-radius: 0.25em;
+}
+#project-details p svg {
+  fill: var(--base-clr);
 }
 #project-details #header-project-details {
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 #project-details .top-section,
 #project-details .bottom-section {
@@ -636,9 +675,6 @@ main {
 #project-details #deadline-sub-section {
   text-wrap: wrap;
   text-align: center;
-}
-#project-details #deadline-sub-section p {
-  font-weight: bold;
 }
 #project-details #deadline-form {
   gap: 10px;
@@ -695,6 +731,7 @@ main {
   display: flex;
   align-items: flex-end; /* Aligns svg on the bottom next to p text */
   gap: 5px;
+  margin-top: 5px;
   border: 1px solid var(--accent-clr);
   padding: 5px;
   border-radius: 0.25em;
@@ -722,13 +759,22 @@ main {
 #address-sub-section .div-address,
 #address-sub-section #address-buttons {
   display: flex;
-  gap: 5px;
+  align-self: center;
+}
+#address-sub-section .div-address {
+  flex-direction: column;
+}
+#address-sub-section #address-submit {
+  margin-right: 3.5px;
 }
 
 /*----------- Subcontractors Section -----------*/
 
 /*----- List: Subcontractors ------*/
 
+#subcontractors-sub-section h3 {
+  margin-bottom: 15px;
+}
 #subcontractors-sub-section .table-wrapper {
   display: flex;
   max-width: 85%;
@@ -736,16 +782,42 @@ main {
   overflow: auto;
 }
 #subcontractors-sub-section table {
-  border-top: none;
-  border-collapse: collapse;
   width: 100%;
+}
+#subcontractors-sub-section tr {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  border: 1px solid var(--accent-clr);
+  border-radius: 0.25em;
 }
 #subcontractors-sub-section th,
 #subcontractors-sub-section td {
-  border: 0.5px solid var(--accent-clr);
-
-  padding: 5px;
+  display: flex;
+  flex: 1;
+  padding: 5px 10px 5px 10px;
+  align-items: center;
+  justify-content: center;
   white-space: nowrap;
+}
+#subcontractors-sub-section td {
+  background-color: var(--accent-clr);
+  color: var(--base-clr);
+}
+#subcontractors-sub-section th:first-child,
+#subcontractors-sub-section td:first-child {
+  justify-content: flex-start;
+}
+#subcontractors-sub-section th:last-child,
+#subcontractors-sub-section td:last-child {
+  justify-content: flex-end;
+}
+#subcontractors-sub-section th svg {
+  fill: var(--accent-clr);
+  margin-left: 5px;
+}
+#subcontractors-sub-section form textarea {
+  margin-top: 10px;
 }
 
 /*----------- Tasks Section -----------*/
@@ -1068,6 +1140,12 @@ a:hover {
   #header-project-specifics {
     text-wrap: wrap;
     text-align: center;
+  }
+  #project-section a {
+    border-radius: 5px;
+  }
+  #project-section .mobile-remove {
+    display: none !important;
   }
 }
 

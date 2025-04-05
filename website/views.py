@@ -96,6 +96,8 @@ def delete_project():
     
     return jsonify({}) # Return empty response
 
+# ----------- Project Filter -----------
+
 # ----------- Project Deadline Update -----------
 
 # Route /update_deadline is needed for the html code, form --> action, to direct changes to
