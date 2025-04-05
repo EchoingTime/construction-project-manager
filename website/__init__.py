@@ -9,10 +9,9 @@ from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy # Readying Database
 from os import path
 from flask_login import LoginManager # Manages the login aspects
-from flask_migrate import Migrate #updates the db to have a new column w/o losing data
+from flask_migrate import Migrate #updates the db to have a new column w/o losing data\
 
 migrate=Migrate()
-
 db = SQLAlchemy() # Database object
 DB_NAME = "database.db"
 
@@ -24,6 +23,7 @@ def create_app(): # Initialize Flask
     # Need a file to store this in, SQL Light 3 will store this database in the website folder
     db.init_app(app) # Initalizes the database. Takes the database and tells it which app we will use with the database
     migrate.init_app(app,db)
+
     from .views import views # Got blueprints imported
     from .auth import auth
     from .file_upload import file_upload
@@ -48,6 +48,9 @@ def create_app(): # Initialize Flask
     @login_manger.unauthorized_handler
     def unauthorized():
         return redirect(url_for('auth.login'))
+
+    from .context_processors import unread_message_count
+    app.context_processor(lambda: {'unread_message_count': unread_message_count()})
 
     return app # Secret key is done
 

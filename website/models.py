@@ -22,6 +22,8 @@ class User(db.Model, UserMixin): # Define schema, the columns
     role = db.Column(db.String(150))
     projects = db.relationship('Project') # Tells Flask and sqlAlchemy to do their magic, and when creating a project, 
     # add to the user's project relationship, that project id
+    messages_sent = db.relationship('Message', foreign_keys='Message.sender_id', backref='sender', lazy=True)
+    messages_received = db.relationship('Message', foreign_keys='Message.receiver_id', backref='receiver', lazy=True)
 
 # --------------------- Project Table ---------------------
 
@@ -62,6 +64,7 @@ class Message(db.Model): #Model to handle the messages
     receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     message_text = db.Column(db.Text, nullable = False)
     timestamp = db.Column(db.DateTime, default = db.func.current_timestamp())
+    is_read = db.Column(db.Boolean, default=False)
 
 #--------------------- Subcontractor Table ------------------
 

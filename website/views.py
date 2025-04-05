@@ -174,9 +174,16 @@ def add_subcontractor(project_id):
 @views.route('/inbox')
 @login_required
 def inbox():
-    user_id = current_user.id 
+    user_id = current_user.id
     messages = Message.query.join(User, Message.sender_id == User.id).filter(Message.receiver_id == user_id).add_columns(Message.id, Message.message_text, Message.timestamp, User.email.label('sender_name')).order_by(Message.timestamp.desc()).all()
-    return render_template("inbox.html", messages=messages)
+    unread_messages = Message.query.filter_by(receiver_id=user_id, is_read=False).all()
+
+    for message in unread_messages:
+        message.is_read = True
+    db.session.commit()
+
+    unread_count = len(unread_messages)
+    return render_template("inbox.html", messages=messages, unread_count=unread_count)
 
 # ----------- Sending Messages -----------
 
