@@ -13,6 +13,7 @@
   /* Text Colors */
   --text-clr: #1e1e1e; /* Dark text */
   --text-faded-clr: #3a3a3a; /* Forms */
+  --text-inactive-clr: #aaa;
   --hover-text-clr: #e0e6ed; /* Hover effects on text */
   --tertiary-text-clr: #000000; /* Tertiary text */
   /* Icon Colors */
@@ -25,7 +26,9 @@
   --secondary-border-bg-clr: #0066cc21; /* Secondary Transparent border */
   --form-bg-clr: #c1c1c160; /* Form background */
   /* Interactive Elements */
-  --hover-clr: #3a7ca5; /* Hover effects on links, buttons */
+  --hover-clr: #3a7ca5c7; /* Hover effects on links, buttons */
+  --hover-fade-clr: #3a7ca55a; /* Faded */
+  --hover-bright-clr: #3a7ca5; /* Bright */
   --icon-hover-clr: #e0e6ed; /* Hover effects on icons */
   /* Status Colors */
   --success-text-clr: #121813; /* Success states */
@@ -36,7 +39,7 @@
   --error-background-clr: #c62b3d68;
   --faded-error-background-clr: #c62b3d22;
   --error-border-clr: #870413;
-  --active-clr: #5e63ff; /* Active states */
+  --active-clr: #2e8dbd; /* Active states */
   --deleting-clr: #ff2e46ca;
   --creating-clr: #28da51ca;
   --info-clr: #2196f3;
@@ -506,6 +509,7 @@ main {
   display: none;
 }
 #project-section .smooth-borders {
+  border-right: none;
   border-radius: 0% !important;
 }
 
@@ -636,7 +640,7 @@ main {
 }
 #project-details button:hover {
   background-color: var(--hover-clr);
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease;
   cursor: pointer;
 }
 #project-details p {
@@ -1021,6 +1025,97 @@ a:hover {
 }
 
 /*--------------------- Calendar ---------------------*/
+
+#calendar-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#calendar-section .wrapper {
+  width: 450px;
+  border: 1px solid var(--accent-clr);
+  border-radius: 0.25em;
+}
+#calendar-section .wrapper header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 30px 10px;
+}
+#calendar-section .current-date {
+  font-size: 1.45rem;
+  font-weight: 500;
+}
+#calendar-section .icons {
+  margin-top: auto;
+}
+#calendar-section svg:hover {
+  cursor: pointer;
+  background-color: var(--hover-clr);
+  border-radius: 0.25em;
+  fill: var(--icon-hover-clr);
+  transition: all 0.2s ease-in-out;
+}
+#calendar-section svg:last-child {
+  margin-right: -10px;
+}
+.calendar {
+  padding: 20px;
+}
+.calendar ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  text-align: center;
+}
+.calendar .days {
+  margin-bottom: 20px;
+}
+.calendar .weeks li {
+  font-weight: 500;
+}
+.calendar ul li {
+  position: relative;
+  width: calc(100% / 7);
+}
+.calendar .days li {
+  z-index: 1;
+  cursor: pointer;
+  margin-top: 30px;
+}
+.days li.inactive {
+  color: var(--text-inactive-clr);
+}
+.days li.active {
+  color: var(--base-clr);
+}
+.calendar .days li::before {
+  position: absolute;
+  content: "";
+  height: 40px;
+  width: 40px;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.days li:hover::before {
+  background: var(--hover-clr);
+  box-shadow: 0 0 10px var(--hover-bright-clr);
+}
+.days li.inactive:hover::before {
+  background: var(--);
+}
+.days li:hover {
+  color: var(--base-clr);
+}
+.days li.inactive:hover {
+  color: var(--text-inactive-clr);
+}
+.days li.active::before {
+  background: var(--active-clr);
+}
 
 /*--------------------- Responsiveness ---------------------*/
 

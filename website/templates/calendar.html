@@ -6,15 +6,77 @@
 {% block title %}Calendar - Construction Project Manager{% endblock %}
 <!--------------------- Main Page Content (PAGE SPECIFICS) --------------------->
 {% block content %}
-<section class="main-content-section">
+<section class="main-content-section" id="calendar-section">
   <div class="wrapper">
     <header>
       <p class="current-date">April 2025</p>
       <div class="icons">
-        <span class="material-symbols-rounded"></span>
-        <span class="material-symbols-rounded"></span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24px"
+          viewBox="0 -960 960 960"
+          width="24px"
+        >
+          <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24px"
+          viewBox="0 -960 960 960"
+          width="24px"
+        >
+          <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
+        </svg>
       </div>
     </header>
+    <div class="calendar">
+      <ul class="weeks">
+        <li>Sun</li>
+        <li>Mon</li>
+        <li>Tue</li>
+        <li>Wed</li>
+        <li>Thu</li>
+        <li>Fri</li>
+        <li>Sat</li>
+      </ul>
+      <ul class="days">
+        <li class="inactive">30</li>
+        <li class="inactive">31</li>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li class="active">5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li>10</li>
+        <li>11</li>
+        <li>12</li>
+        <li>13</li>
+        <li>14</li>
+        <li>15</li>
+        <li>16</li>
+        <li>17</li>
+        <li>18</li>
+        <li>19</li>
+        <li>20</li>
+        <li>21</li>
+        <li>22</li>
+        <li>23</li>
+        <li>24</li>
+        <li>25</li>
+        <li>26</li>
+        <li>27</li>
+        <li>28</li>
+        <li>29</li>
+        <li>30</li>
+        <li class="inactive">1</li>
+        <li class="inactive">2</li>
+        <li class="inactive">3</li>
+      </ul>
+    </div>
   </div>
 </section>
 {% endblock %}

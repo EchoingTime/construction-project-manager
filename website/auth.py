@@ -22,6 +22,7 @@ def login():
         password = request.form.get('password')
 
         user = User.query.filter_by(email=email).first() # Looking for a specific entry in the database filtered by email
+        
         if user: # Found the user
             if check_password_hash(user.password, password):
                 flash('Logged in successfully!', category='success')
@@ -38,7 +39,8 @@ def login():
             else:
                 flash('Incorrect password.', category='error')
         else:
-            flash('Email does not exist.', category='error')
+            flash('Account does not exist.', category='error')
+            
     return render_template("login.html", user=current_user)
 
 # --------------------- Logout Function ---------------------
