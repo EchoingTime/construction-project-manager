@@ -264,6 +264,7 @@ function closeSubMenus() {
 function toggleEdit() {
   const deleteSvg = document.querySelectorAll("#delete-svg");
   const borderToSmooth = document.querySelectorAll(".date, #project-link");
+  const mediaQuery = window.matchMedia("(max-width: 800px)");
   const leftBorderRadius = document.querySelectorAll("#project-link");
   const editIcon = document.querySelector("#edit-project");
 
@@ -281,9 +282,11 @@ function toggleEdit() {
   borderToSmooth.forEach((el) => {
     el.classList.toggle("smooth-borders");
   });
-  leftBorderRadius.forEach((el) => {
-    el.classList.toggle("left-radius");
-  });
+  if (mediaQuery.matches) {
+    leftBorderRadius.forEach((el) => {
+      el.classList.toggle("left-radius");
+    });
+  }
 }
 
 /*--------------------- Delete Projects ---------------------*/
