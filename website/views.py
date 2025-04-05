@@ -233,8 +233,10 @@ def update_address(project_id):
 
   #  return render_template("homeSub.html", user=current_user, assigned_projects=assigned_projects, subcontractor=subcontractor)
 
+# --------------------- Calendar ---------------------
 
-
-
-    
+@views.route('/calendar')
+@login_required
+def calendar():
+    return render_template("calendar.html", user=current_user)
     

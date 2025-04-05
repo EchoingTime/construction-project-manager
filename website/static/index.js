@@ -290,3 +290,5 @@ allInputs.forEach((input) => {
     }
   });
 });
+
+/*--------------------- Dynamic Calendar ---------------------*/

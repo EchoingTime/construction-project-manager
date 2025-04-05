@@ -103,6 +103,7 @@ After making a change to models.py (adding a new table or modifying an existing 
 
 - “An Idea for a Simple Responsive Spreadsheet | CSS-Tricks.” CSS-Tricks, 28 Nov. 2017, css-tricks.com/idea-simple-responsive-spreadsheet/.
 - 2025.Coding2GO. “Login & Signup with HTML, CSS, JavaScript (Form Validation).” YouTube, 13 July 2024, www.youtube.com/watch?v=bVl5_UdcAy0.
+- CodingNepal. “Create a Dynamic Calendar in HTML CSS & JavaScript | Calendar in JavaScript.” YouTube, 22 Sept. 2022, www.youtube.com/watch?v=Z1BGAivZRlE. Accessed 5 Apr. 2025.
 - “How to Create a Responsive Navigation Bar (for Beginners).” Www.youtube.com, www.youtube.com/watch?v=U8smiWQ8Seg.
 - OpenAI. “ChatGPT.” ChatGPT, OpenAI, chatgpt.com/.
 - “Python Website Full Tutorial - Flask, Authentication, Databases & More.” Www.youtube.com, www.youtube.com/watch?v=dam0GPOAvVI. Accessed 20 June 2021.
