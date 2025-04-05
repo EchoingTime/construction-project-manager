@@ -6,10 +6,11 @@ including rendering the home page, handling project creation, and deleting proje
 
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Project, Message, User, Subcontractor, Assignment
+from .models import File, Project, Message, User, Subcontractor, Assignment
 from . import db
 from datetime import datetime
 import json
+
 
 views = Blueprint('views', __name__)
 
@@ -239,4 +240,39 @@ def update_address(project_id):
 @login_required
 def calendar():
     return render_template("calendar.html", user=current_user)
-    
+
+# --------------------- invoice ---------------------
+
+@views.route('/upload_invoice/<int:project_id>', methods=['POST'])
+@login_required
+def upload_invoice(project_id):
+    if 'invoice' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['invoice']
+    if file.filename == '':
+        flash('No selected file')
+        return redirect(request.url)
+    if file:
+        new_file = File(
+            filename=file.filename,
+            data=file.read(),
+            project_id=project_id,
+            is_invoice=True
+        )
+        db.session.add(new_file)
+        db.session.commit()
+
+        # Send message to contractor
+        contractor = User.query.filter_by(role='contractor').first()
+        if contractor:
+            new_message = Message(
+                sender_id=current_user.id,
+                receiver_id=contractor.id,
+                message_text=f'Invoice uploaded for project {project_id}: {file.filename}'
+            )
+            db.session.add(new_message)
+            db.session.commit()
+
+        flash('Invoice successfully uploaded and sent to contractor')
+        return redirect(url_for('views.view_project', project_id=project_id))

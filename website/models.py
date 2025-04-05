@@ -86,10 +86,11 @@ class Assignment(db.Model): #helper table for Subcontractor-Project Relationship
 #--------------------- File Table ----------------------
 
 class File(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    filename = db.Column(db.String(150), nullable=False)
-    data = db.Column(db.LargeBinary, nullable=False)
-    upload_date = db.Column(db.DateTime, default=db.func.current_timestamp())
-    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
-    project = db.relationship('Project', back_populates='files')
-    pass
+        id = db.Column(db.Integer, primary_key=True)
+        filename = db.Column(db.String(150), nullable=False)
+        data = db.Column(db.LargeBinary, nullable=False)
+        upload_date = db.Column(db.DateTime, default=db.func.current_timestamp())
+        project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
+        project = db.relationship('Project', back_populates='files')
+        is_invoice = db.Column(db.Boolean, default=False)  # New column to distinguish invoices
+        pass
