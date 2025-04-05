@@ -289,11 +289,15 @@
             >
               {% if project.deadline is none %}
               <p>Assign Project Deadline</p>
+              {% if user.role != 'subcontractor' %}
               <div class="div-dead">
                 <input type="date" name="deadline" required />
                 <button type="submit">Assign</button>
               </div>
+              {% endif %}
+              
               {% else %}
+
               <p>{{ project.deadline }}</p>
               <div class="div-dead">
                 <input
@@ -301,8 +305,10 @@
                   name="deadline"
                   value="{{ project.deadline }}"
                 />
+                {% if user.role != 'subcontractor' %}
                 <button type="submit">Reassign</button>
               </div>
+              {% endif %}
               {% endif %}
             </form>
           </section>
@@ -378,6 +384,7 @@
               method="POST"
               action="{{ url_for('views.update_project_completion_status', project_id=project.id) }}"
             >
+            {% if user.role != 'subcontractor' %}
               <select id="project-status" name="project-status">
                 <option value="" disabled selected hidden>
                   Change Project Status
@@ -394,20 +401,28 @@
                 <option value="Canceled">Canceled</option>
                 {% endif %}
               </select>
+              {% if user.role != 'subcontractor' %}
               <div class="buttons">
                 <button type="submit">Update</button>
                 <button type="reset">Clear</button>
               </div>
+              {% endif %}
+              {% endif %}
             </form>
           </section>
           <!----------- Address Updates ------------>
           <section class="sub-sections" id="address-sub-section">
             <h3>Address</h3>
-            <!----------- Address Update Form ------------>
+            <!----------- Address Update Form ---------->
             <form
               action="{{ url_for('views.update_address', project_id=project.id)}}"
               method="POST"
-            >
+              > <!--subcontractor view for address section-->
+              {% if user.role == 'subcontractor' %}
+              <p>{{ project.address }}</p>
+              <div class="div-address">
+              {% else %}
+
               {% if project.address is none %}
               <p>Assign Project Address</p>
               <div class="div-address">
@@ -419,7 +434,7 @@
                 ></textarea>
                 <button type="submit">Assign Address</button>
               </div>
-              {% else %}
+                {% else %}
               <p>{{ project.address }}</p>
               <div class="div-address">
                 <textarea
@@ -429,13 +444,17 @@
                   value=""
                   required
                 ></textarea>
-                <div id="address-buttons">
+               <div id="address-buttons">
                   <button type="submit">Update Address</button>
                   <button type="reset">Clear</button>
                 </div>
               </div>
+                 {% endif %}
+
+              </div>
               {% endif %}
-            </form>
+            </form>                     
+            
           </section>
         </section>
         <!------ Bottom Section ------>
@@ -471,6 +490,7 @@
               method="POST"
               action="{{ url_for('views.add_subcontractor', project_id=project.id) }}"
             >
+            {% if user.role != 'subcontractor' %}
               <textarea
                 name="subcontractor-email"
                 id="subcontractor-email"
@@ -482,6 +502,7 @@
                 <button type="reset">Clear</button>
               </div>
             </form>
+            {% endif %}
           </section>
           <!------ Tasks sub-section ------>
           <section class="sub-sections" id="task-sub-section">

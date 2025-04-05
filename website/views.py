@@ -21,8 +21,13 @@ def home():
     if current_user.role == "contractor": # Goes to contractor page
         return render_template("home.html", user=current_user)
     elif current_user.role == "subcontractor":
-        #return render_template("homeSub.html", user=current_user)
-        redirect(url_for('views.homeSub'))
+        # Query the subcontractor
+        #subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
+       #assignments = Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
+        #project_ids = [assignment.project_id for assignment in assignments]
+        #assigned_projects = Project.query.filter(Project.id.in_(project_ids)).all()
+        #return render_template("homeSub.html", subcontractor=subcontractor,user=current_user, assigned_projects=assigned_projects)
+        return render_template("homeSub.html", user=current_user)
     else:
         return "Unauthorized", 403
 
@@ -52,10 +57,19 @@ def project():
                 flash('Created New Project', category='success')
             
         # Redirect to the same page (prevents form re-submission via freshing page)
+    #if current_user.role != "subcontractor":
         return redirect(url_for('views.project'))
-
-    # Renders the page consisting of the user's projects
-    return render_template("home.html", user=current_user)
+    
+   
+    if current_user.role != "subcontractor":
+        return render_template("home.html", user=current_user)
+    else:
+        subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
+        assignments = Assignment.query.filter_by(subcontractor_id=subcontractor.id).all() 
+        assigned_projects = db.session.query(Assignment.project_id).filter_by(subcontractor_id=subcontractor.id).all()
+        project_ids = [project[0] for project in assigned_projects]
+        projects = db.session.query(Project).filter(Project.id.in_(project_ids)).all()
+        return render_template("homeSub.html", user=current_user, assignments=assignments, projects=projects)
 
 #------------ Project Viewing ------------
 
@@ -195,22 +209,27 @@ def update_address(project_id):
  
 # ---------------- Subcontractor Projects --------------
 
-@views.route('/subcontractor_projects')
-def subcontractor_projects():
-    subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
+#@views.route('/subcontractor_projects')
+#def subcontractor_projects():
+#    subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
     
-    assignments=Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
-    assigned_projects=[assignment.project for assignment in assignments]
-    return render_template('homeSub.html', assigned_projects=assigned_projects)
+#    assignments=Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
+#    assigned_projects=[assignment.project for assignment in assignments]
+#    return render_template('homeSub.html', assigned_projects=assigned_projects)
 
 # ---------------- Subcontractor Home ------------------
-@views.route("/homeSub")
-def home_sub():
-    subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
-    assignments = Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
-    assigned_projects=[assignment.project for assignment in assigned_projects]
+#@views.route("/home_Sub")
+#def home_sub():
+ #   subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
+    
+ #   if not subcontractor:
+ #       flash('Subcontractor does not exist!', category='error')
+ #       return redirect(url_for('views.home'))
+ #   assignments = Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
+ #   assigned_projects = [assignment.project for assignment in assignments]
+    
 
-    return render_template("homeSub.html", assigned_projects=assigned_projects, user=current_user)
+  #  return render_template("homeSub.html", user=current_user, assigned_projects=assigned_projects, subcontractor=subcontractor)
 
 
 

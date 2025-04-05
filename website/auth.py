@@ -6,7 +6,7 @@ with password hashing for security.
 """
 
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import User, Subcontractor
+from .models import User, Subcontractor, Assignment, Project
 from werkzeug.security import generate_password_hash, check_password_hash # Security
 from . import db # Means from __init__.py import database
 from flask_login import login_user, login_required, logout_user, current_user # Handles logging in\
@@ -26,8 +26,13 @@ def login():
             if check_password_hash(user.password, password):
                 flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
-                if user.role == "subcontractor":    
-                     return render_template("homeSub.html", user=current_user)
+                if user.role == "subcontractor":
+                     subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
+                     assignments = Assignment.query.filter_by(subcontractor_id=subcontractor.id).all() 
+                     assigned_projects = db.session.query(Assignment.project_id).filter_by(subcontractor_id=subcontractor.id).all()
+                     project_ids = [project[0] for project in assigned_projects]
+                     projects = db.session.query(Project).filter(Project.id.in_(project_ids)).all()
+                     return render_template("homeSub.html", user=current_user, subcontractor=subcontractor, assignments=assignments, projects=projects)
                 else:
                     return redirect(url_for('views.project'))
             else:
