@@ -308,3 +308,86 @@ function deleteProject(button) {
 }
 
 /*--------------------- Dynamic Calendar ---------------------*/
+
+document.addEventListener("DOMContentLoaded", function () {
+  const calendar = document.getElementById("calendar-section");
+  if (!calendar) return; // Exit if form does not exist
+
+  const currentDate = document.querySelector(".current-date");
+  const daysTag = document.querySelector(".days");
+  const arrowButtons = document.querySelectorAll(".icons svg");
+
+  // Gets the new date, year and month
+  let date = new Date(),
+    currYr = date.getFullYear(),
+    currMn = date.getMonth();
+
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const renderCalendar = () => {
+    let firstDayofMonth = new Date(currYr, currMn, 1).getDay(); // Gets first day of the month (Mon-Sun)
+    let lastDateofMonth = new Date(currYr, currMn + 1, 0).getDate(); // Gets last date of the month
+    let lastDayofMonth = new Date(currYr, currMn, lastDateofMonth).getDay(); // Gets last day of the month
+    let lastDateofLastMonth = new Date(currYr, currMn, 0).getDate(); // Gets last date of the previous month
+    let liTag = "";
+
+    // Creates li of previous month's last days
+    for (let i = firstDayofMonth; i > 0; i--) {
+      liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
+    }
+
+    // Creates li of all days of the current month
+    for (let i = 1; i <= lastDateofMonth; i++) {
+      // Adds active class to li if the current day, month, and year match up
+      let isToday =
+        i === date.getDate() &&
+        currMn === new Date().getMonth() &&
+        currYr === new Date().getFullYear()
+          ? "active"
+          : "";
+      liTag += `<li class="${isToday}">${i}</li>`;
+    }
+
+    // Creates li of the next month's first days
+    for (let i = lastDayofMonth; i < 6; i++) {
+      liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`;
+    }
+
+    currentDate.innerText = `${months[currMn]} ${currYr}`;
+    daysTag.innerHTML = liTag;
+  };
+
+  renderCalendar();
+
+  arrowButtons.forEach((icon) => {
+    icon.addEventListener("click", () => {
+      // Adds a click event on both svgs
+      currMn = icon.id === "prev" ? currMn - 1 : currMn + 1;
+
+      // If current month is less than zero or greater than eleven
+      if (currMn < 0 || currMn > 11) {
+        // Creates a new date of current year and month and passes it as the date value
+        date = new Date(currYr, currMn);
+        currYr = date.getFullYear(); // Updates current year with new date year
+        currMn = date.getMonth(); // Updates current month with new date month
+      } else {
+        // Else pass the new Date as the date value
+        date = new Date();
+      }
+      renderCalendar();
+    });
+  });
+});

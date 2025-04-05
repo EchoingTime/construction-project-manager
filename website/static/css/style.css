@@ -1107,7 +1107,7 @@ a:hover {
   box-shadow: 0 0 10px var(--hover-bright-clr);
 }
 .days li.inactive:hover::before {
-  background: var(--);
+  background: var(--hover-fade-clr);
 }
 .days li:hover {
   color: var(--base-clr);
