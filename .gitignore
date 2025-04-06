@@ -8,3 +8,4 @@ venv/
 # IDEs - (JetBrains)
 .idea/
 website/__pycache__/
+migrations/__pycache__/
