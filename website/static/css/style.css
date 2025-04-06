@@ -397,6 +397,10 @@ main {
   padding: 0 5px 5px 5px; /* | Top | Right | Bottom | Left */
   list-style: none;
 }
+#project-section #no-projects {
+  margin-top: 5px;
+  font-weight: bold;
+}
 #project-section li {
   display: flex;
 }

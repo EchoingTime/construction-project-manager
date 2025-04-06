@@ -32,7 +32,11 @@ allowing contractors to view, add, and delete projects.
     </h2>
   </section>
   <ul>
-    {% for project in user.projects %}
+    {% if not user.projects %}
+    <p id="no-projects">
+      There are no projects yet available, create one below.
+    </p>
+    {% else %} {% for project in user.projects %}
     <li>
       <p id="project-status" class="mobile-remove">
         {% if project.progress == "Not Yet Started" %}
@@ -126,7 +130,7 @@ allowing contractors to view, add, and delete projects.
         </span>
       </button>
     </li>
-    {% endfor %}
+    {% endfor %} {% endif %}
   </ul>
   <form method="POST" id="project-form">
     <div id="project-column-info">
