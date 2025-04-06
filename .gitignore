@@ -4,7 +4,7 @@
 venv/
 
 # Python
-__pycache__/
 
 # IDEs - (JetBrains)
-.idea/ .idea/
+.idea/
+website/__pycache__/
