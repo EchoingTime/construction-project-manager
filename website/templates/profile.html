@@ -1,0 +1,20 @@
+<!--
+@File Name: home.html
+@Description: This file renders the home page of the web application. 
+It displays a list of projects belonging to the current logged-in contractor, 
+allowing contractors to view, add, and delete projects.
+-->
+
+<!--------------------- Base Template Extension --------------------->
+{% extends 'base.html' %}
+<!--------------------- HTML Title --------------------->
+{% block title %}{{user.first_name}}'s Profile - Construction Project Manager{%
+endblock %}
+<!--------------------- Main Page Content (PAGE SPECIFICS) --------------------->
+{% block content %}
+<!-- Place new content inside this block content -->
+<section class="main-content-section" id="profile-section">
+  <h2>Profile Settings</h2>
+  <p>Welcome {{user.first_name}}, your account details are below</p>
+</section>
+{% endblock %}

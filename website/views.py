@@ -11,7 +11,6 @@ from . import db
 from datetime import datetime
 import json
 
-
 views = Blueprint('views', __name__)
 
 # --------------------- Home Pages ---------------------
@@ -249,7 +248,7 @@ def update_address(project_id):
 def calendar():
     return render_template("calendar.html", user=current_user)
 
-# --------------------- invoice ---------------------
+# --------------------- Invoice ---------------------
 
 @views.route('/upload_invoice/<int:project_id>', methods=['POST'])
 @login_required
@@ -321,3 +320,10 @@ def add_task(project_id):
 
     flash('Task successfully added!', category='success')
     return redirect(url_for('views.view_project', project_id=project_id))
+
+# --------------------- Profile ---------------------
+
+@views.route('/profile')
+@login_required
+def profile():
+    return render_template("profile.html", user=current_user)

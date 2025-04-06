@@ -349,7 +349,8 @@ main {
   transition: margin 0.3s ease;
 }
 .main-content-section {
-  width: 100%;
+  width: 85%;
+  height: 100%;
   padding: 25px;
   border-radius: 1em;
 }
@@ -368,10 +369,22 @@ main {
   width: 50%;
 }
 
+/*--------------------- Profile Page ---------------------*/
+
+#profile-section {
+  justify-content: flex-start;
+}
+#profile-section h2 {
+  margin-bottom: 15px;
+}
+#profile-section p {
+  margin-bottom: 10px;
+}
+
 /*--------------------- Project Page Overview ---------------------*/
 
 #project-section {
-  width: 85%;
+  justify-content: flex-start;
 }
 
 /*----------- Header Section -----------*/
