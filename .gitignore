@@ -3,9 +3,10 @@
 # Virtual Environments
 venv/
 
-# Python
-
 # IDEs - (JetBrains)
 .idea/
+
+# Python
 website/__pycache__/
 migrations/__pycache__/
+website/database.db
