@@ -6,7 +6,7 @@ including rendering the home page, handling project creation, and deleting proje
 
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_login import login_required, current_user
-from .models import File, Project, Message, User, Subcontractor, Assignment
+from .models import File, Project, Message, User, Subcontractor, Assignment, Task
 from . import db
 from datetime import datetime
 import json
@@ -79,7 +79,8 @@ def project():
 def view_project(project_id):
     project = Project.query.get(project_id)
     subcontractors = [assignment.subcontractor for assignment in project.subcontractors]
-    return render_template("project.html", project=project, subcontractors=subcontractors, user=current_user)
+    tasks = Task.query.filter_by(project_id=project_id).all()
+    return render_template("project.html", project=project, subcontractors=subcontractors, user=current_user, tasks=tasks)
 
 # ----------- Project Deletion -----------
 
@@ -283,3 +284,40 @@ def upload_invoice(project_id):
 
         flash('Invoice successfully uploaded and sent to contractor')
         return redirect(url_for('views.view_project', project_id=project_id))
+
+# --------------------- Add Task ---------------------
+
+@views.route('/add_task/<int:project_id>', methods=['POST'])
+@login_required
+def add_task(project_id):
+    # Get the project
+    project = Project.query.get(project_id)
+    if not project:
+        flash('Project not found!', category='error')
+        return redirect(url_for('views.home'))
+
+    # Get form data
+    task_name = request.form.get('task-name')
+    task_description = request.form.get('task-description')  # New description field
+    task_deadline = request.form.get('task-deadline')
+    task_completion = request.form.get('task-completion')  # Replaces "status"
+
+    # Validate form data
+    if not task_name or not task_deadline or not task_completion:
+        flash('All fields except description are required to create a task!', category='error')
+        return redirect(url_for('views.view_project', project_id=project_id))
+
+    # Create a new task
+    new_task = Task(
+        project_id=project_id,
+        name=task_name,
+        description=task_description,  # Add description
+        deadline=datetime.strptime(task_deadline, "%Y-%m-%d").date(),
+        completion=task_completion,  # Replace "status" with "completion"
+        date_created=datetime.now()
+    )
+    db.session.add(new_task)
+    db.session.commit()
+
+    flash('Task successfully added!', category='success')
+    return redirect(url_for('views.view_project', project_id=project_id))
