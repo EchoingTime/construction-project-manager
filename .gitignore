@@ -9,4 +9,6 @@ venv/
 # Python
 website/__pycache__/
 migrations/__pycache__/
+
+# Database
 website/database.db
