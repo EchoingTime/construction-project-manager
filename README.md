@@ -7,10 +7,6 @@
 - Patrick Sawicki
 - Joe Wagner
 
-## Deletions when final product is ready
-
-- .vscode folder : Includes settings.json for ignoring workplace spellings
-
 ## Description:
 
 This is a web application built using Flask and other modern technologies to manage construction projects.
