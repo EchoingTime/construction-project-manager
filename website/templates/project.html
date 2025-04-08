@@ -214,7 +214,7 @@ not remove, and add tasks and upload files.
       <h3>Subcontractors</h3>
       <div class="table-wrapper">
         {% if subcontractors|length == 0 %}
-        <p>No Subcontractor's Assigned</p>
+        <p>No Subcontractors Assigned</p>
         {% else %}
         <table>
           <thead>
@@ -293,48 +293,66 @@ not remove, and add tasks and upload files.
     <!------ Tasks sub-section ------>
     <section class="sub-sections" id="task-sub-section">
       <h3>Tasks</h3>
+      <div class="table-wrapper">
+        {% if tasks|length == 0 %}
+        <p>No Tasks Assigned</p>
+        {% else %}
+        <table>
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Description</th>
+              <th>Deadline</th>
+              <th>Completion</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for task in tasks %}
+            <tr>
+              <td>{{ task.name }}</td>
+              <td>{{ task.description or "No description provided" }}</td>
+              <td>{{ task.deadline }}</td>
+              <td>{{ task.completion }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% endif %}
+      </div>
       <form
         method="POST"
         action="{{ url_for('views.add_task', project_id=project.id) }}"
       >
-        <h4>Add a New Task</h4>
-        <label for="task-name">Task Name:</label>
-        <input type="text" name="task-name" id="task-name" required /><br />
-        <label for="task-description">Description:</label>
-        <textarea
-          name="task-description"
-          id="task-description"
-          rows="3"
-        ></textarea
-        ><br />
-        <label for="task-deadline">Deadline:</label>
-        <input
-          type="date"
-          name="task-deadline"
-          id="task-deadline"
-          required
-        /><br />
-        <label for="task-completion">Completion:</label>
-        <select name="task-completion" id="task-completion" required>
-          <option value="Not Started">Not Started</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Completed">Completed</option></select
-        ><br />
+        <h4>Add a Task Below</h4>
+        <div id="task-div">
+          <label for="task-name">Task Name:</label>
+          <input
+            type="text"
+            name="task-name"
+            id="task-name"
+            placeholder="Enter Task Name"
+          />
+          <label for="task-description">Description:</label>
+          <textarea
+            name="task-description"
+            id="task-description"
+            rows="3"
+            placeholder="Type Task Description here (optional)..."
+          ></textarea>
+          <label for="task-deadline">Deadline:</label>
+          <input type="date" name="task-deadline" id="task-deadline" required />
+          <label for="task-completion">Completion:</label>
+          <select name="task-completion" id="task-completion" required>
+            <option value="" disabled selected hidden>
+              Change Task Status
+            </option>
+            <option value="Not Started">Not Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
         <button type="submit">Add Task</button>
       </form>
-      <ul>
-        {% for task in tasks %}
-        <li>
-          <strong>Task:</strong> {{ task.name }} <br />
-          <strong>Description:</strong> {{ task.description or "No description
-          provided" }} <br />
-          <strong>Deadline:</strong> {{ task.deadline }} <br />
-          <strong>Completion:</strong> {{ task.completion }}
-        </li>
-        {% else %}
-        <p>No tasks assigned yet.</p>
-        {% endfor %}
-      </ul>
     </section>
     <section class="sub-sections" id="file-invoice-section">
       <!------ File Upload sub-section ------>

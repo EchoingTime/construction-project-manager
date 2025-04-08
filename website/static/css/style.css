@@ -653,6 +653,19 @@ h2 {
 #project-details form select:hover {
   border-color: var(--hover-clr);
 }
+#project-details input {
+  padding-left: 5px;
+  color: var(--text-faded-clr);
+  background-color: var(--base-clr);
+  font-style: italic;
+  border: 2px solid var(--accent-clr);
+}
+#project-details input:focus {
+  outline: none;
+}
+#project-details input:hover {
+  border-color: var(--hover-clr);
+}
 #project-details button {
   padding: 5px;
   color: var(--base-clr);
@@ -695,6 +708,10 @@ h2 {
   border: none;
   padding-top: 5px;
 }
+textarea {
+  scrollbar-width: thin;
+  scrollbar-color: var(--base-clr) var(--accent-clr);
+}
 
 /*----------- Deadline Section -----------*/
 
@@ -709,22 +726,6 @@ h2 {
   display: flex;
   flex-direction: row;
   gap: 5px;
-}
-.div-dead input {
-  padding-left: 5px;
-  color: var(--text-faded-clr);
-  background-color: var(--base-clr);
-  font-style: italic;
-  border: 2px solid var(--accent-clr);
-}
-.div-dead input:focus {
-  outline: none;
-}
-.div-dead input:hover {
-  border-color: var(--hover-clr);
-}
-#project-details .div-dead button:hover {
-  background-color: var(--hover-clr);
 }
 
 /*----------- Completion Status Section -----------*/
@@ -801,24 +802,24 @@ h2 {
 #subcontractors-sub-section h3 {
   margin-bottom: 15px;
 }
-#subcontractors-sub-section .table-wrapper {
+.table-wrapper {
   display: flex;
   max-width: 85%;
   max-height: 250px;
   overflow: auto;
 }
-#subcontractors-sub-section table {
+table {
   width: 100%;
 }
-#subcontractors-sub-section tr {
+tr {
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
   border: 1px solid var(--accent-clr);
   border-radius: 0.25em;
 }
-#subcontractors-sub-section th,
-#subcontractors-sub-section td {
+th,
+td {
   display: flex;
   flex: 1;
   padding: 5px 10px 5px 10px;
@@ -826,19 +827,19 @@ h2 {
   justify-content: center;
   white-space: nowrap;
 }
-#subcontractors-sub-section td {
+td {
   background-color: var(--accent-clr);
   color: var(--base-clr);
 }
-#subcontractors-sub-section th:first-child,
-#subcontractors-sub-section td:first-child {
+th:first-child,
+td:first-child {
   justify-content: flex-start;
 }
-#subcontractors-sub-section th:last-child,
-#subcontractors-sub-section td:last-child {
+th:last-child,
+td:last-child {
   justify-content: flex-end;
 }
-#subcontractors-sub-section th svg {
+th svg {
   fill: var(--accent-clr);
   margin-left: 5px;
 }
@@ -847,6 +848,27 @@ h2 {
 }
 
 /*----------- Tasks Section -----------*/
+
+#task-div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+#task-sub-section h4 {
+  margin-bottom: 10px;
+}
+#task-sub-section input,
+#task-sub-section #task-description,
+#task-sub-section select {
+  padding: 5px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+#task-sub-section #task-description {
+  padding-bottom: 0;
+  text-wrap: wrap;
+  overflow-y: auto;
+}
 
 /*----------- File + Invoice Merge Section -----------*/
 
