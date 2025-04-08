@@ -845,11 +845,81 @@ main {
 
 /*----------- Tasks Section -----------*/
 
-/*----------- Fileload Section -----------*/
+/*----------- File + Invoice Merge Section -----------*/
 
-#project-details #file-upload-sub-section {
+#file-invoice-section {
   display: flex;
-  border-color: red;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+
+  gap: 10px;
+  width: 100%;
+  border: none;
+}
+.file-invoice-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.file-invoice-div h3 {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  margin-bottom: 0 !important;
+}
+.file-invoice-div label {
+  display: flex;
+  cursor: pointer;
+  border-radius: 0.25em;
+  background-color: var(--accent-clr);
+  border: 1px solid var(--accent-clr);
+}
+.file-invoice-div label svg {
+  fill: var(--base-clr);
+}
+.file-name {
+  user-select: none;
+  font-style: italic;
+  text-decoration: underline;
+}
+.file-invoice-div label:hover {
+  background-color: var(--hover-clr);
+  transition: all 0.3s ease-in-out;
+}
+.hidden-input {
+  display: none;
+}
+#file-invoice-section button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  color: var(--accent-clr);
+  font-weight: bold;
+  height: 100%;
+  text-align: center;
+  padding: 1.25px 0 1.25px 5px;
+}
+#file-invoice-section button svg {
+  fill: var(--accent-clr);
+}
+
+/*----------- File Upload Section -----------*/
+
+#file-upload-sub-section {
+  width: 0;
+  flex: 1;
+  display: flex;
+  margin: 0;
+}
+
+/*----------- Invoice Section -----------*/
+
+#invoice-upload-sub-section {
+  flex: 1;
   margin: 0;
 }
 
@@ -1264,37 +1334,4 @@ a:hover {
   #project-section .mobile-remove {
     display: none !important;
   }
-}
-
-/* CSS for the file upload section */
-form#file-upload-form {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-top: 20px;
-}
-
-form#file-upload-form label {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-form#file-upload-form input[type="file"] {
-  margin-bottom: 10px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-form#file-upload-form button[type="submit"] {
-  background-color: #4caf50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-form#file-upload-form button[type="submit"]:hover {
-  background-color: #45a049;
 }

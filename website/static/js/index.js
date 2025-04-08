@@ -307,6 +307,29 @@ function deleteProject(button) {
   }
 }
 
+/*--------------------- Project Details - File Select Work Around [Chat Assisted] ---------------------*/
+
+document.addEventListener("DOMContentLoaded", function () {
+  const sectionExists = document.getElementById("invoice-upload-sub-section");
+  if (!sectionExists) return; // Exit if section does not exist
+
+  const inputFile = document.getElementById("file");
+  const inputInvoice = document.getElementById("invoice");
+  const fileName = document.getElementById("file-name");
+  const invoiceFileName = document.getElementById("invoice-file-name");
+
+  inputFile.addEventListener("change", () => {
+    fileName.textContent =
+      inputFile.files.length > 0 ? inputFile.files[0].name : "No File Selected";
+  });
+  inputInvoice.addEventListener("change", () => {
+    invoiceFileName.textContent =
+      inputInvoice.files.length > 0
+        ? inputInvoice.files[0].name
+        : "No file chosen";
+  });
+});
+
 /*--------------------- Dynamic Calendar ---------------------*/
 
 document.addEventListener("DOMContentLoaded", function () {

@@ -336,31 +336,104 @@ not remove, and add tasks and upload files.
         {% endfor %}
       </ul>
     </section>
-    <!------ File Upload sub-section ------>
-    <section class="sub-sections" id="file-upload-sub-section">
-      <form
-        action="{{ url_for('file_upload.upload_file', project_id=project.id) }}"
-        method="post"
-        enctype="multipart/form-data"
-      >
-        <h3>Files</h3>
-        <label for="file">Choose file:</label>
-        <input type="file" name="file" id="file" required />
-        <button type="submit">Upload</button>
-      </form>
-    </section>
-    <!------ Invoice sub-section ------>
-    <section class="sub-sections" id="invoice-upload-sub-section">
-      <form
-        action="{{ url_for('views.upload_invoice', project_id=project.id) }}"
-        method="post"
-        enctype="multipart/form-data"
-      >
-        <h3>Invoices</h3>
-        <label for="invoice">Choose invoice:</label>
-        <input type="file" name="invoice" id="invoice" required />
-        <button type="submit">Upload Invoice</button>
-      </form>
+    <section class="sub-sections" id="file-invoice-section">
+      <!------ File Upload sub-section ------>
+      <section class="sub-sections" id="file-upload-sub-section">
+        <form
+          action="{{ url_for('file_upload.upload_file', project_id=project.id) }}"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <div class="file-invoice-div">
+            <h3>
+              Files
+              <label for="file"
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="20px"
+                  viewBox="0 -960 960 960"
+                  width="20px"
+                >
+                  <path
+                    d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"
+                  />
+                </svg>
+              </label>
+            </h3>
+            <!-- Note: input type file acted strangely, made label act as input-->
+            <input
+              type="file"
+              class="hidden-input"
+              name="file"
+              id="file"
+              required
+            />
+            <span class="file-name" id="file-name">No File Selected</span>
+            <button type="submit">
+              Upload
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+              >
+                <path
+                  d="M440-200h80v-167l64 64 56-57-160-160-160 160 57 56 63-63v167ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"
+                />
+              </svg>
+            </button>
+          </div>
+        </form>
+      </section>
+      <!------ Invoice sub-section ------>
+      <section class="sub-sections" id="invoice-upload-sub-section">
+        <form
+          action="{{ url_for('views.upload_invoice', project_id=project.id) }}"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <div class="file-invoice-div">
+            <h3>
+              Invoices
+              <label for="invoice"
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="20px"
+                  viewBox="0 -960 960 960"
+                  width="20px"
+                >
+                  <path
+                    d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"
+                  />
+                </svg>
+              </label>
+            </h3>
+            <input
+              type="file"
+              class="hidden-input"
+              name="invoice"
+              id="invoice"
+              required
+            />
+            <span class="file-name" id="invoice-file-name"
+              >No File Selected</span
+            >
+            <button type="submit">
+              Upload
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+              >
+                <path
+                  d="M440-200h80v-167l64 64 56-57-160-160-160 160 57 56 63-63v167ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"
+                />
+              </svg>
+            </button>
+          </div>
+        </form>
+      </section>
     </section>
   </section>
 </section>
