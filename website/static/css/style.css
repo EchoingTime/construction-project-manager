@@ -61,14 +61,9 @@
   padding: 0;
   box-sizing: border-box; /* Ensures padding and border are included in total sizing */
 }
-
 html {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 16px;
-}
-
-svg {
-  fill: var(--icon-clr);
 }
 
 /*--------------------- Page Layouts ---------------------*/
@@ -368,8 +363,15 @@ main {
   border-radius: 0.5em;
   width: 100%;
 }
-h2 {
+h1,
+h2,
+h3,
+h4 {
+  user-select: none;
   text-align: center;
+}
+svg {
+  fill: var(--icon-clr);
 }
 
 /*--------------------- Profile Page ---------------------*/
@@ -621,6 +623,13 @@ h2 {
 
 /*----------- Project Details' Forms -----------*/
 
+#project-details #project-details-div {
+  display: flex;
+  gap: 5px;
+}
+#project-details #edit-project {
+  cursor: pointer;
+}
 #project-details form {
   display: flex;
   flex-direction: column;
@@ -950,6 +959,7 @@ footer {
   border-top: 1px solid var(--line-clr);
   color: var(--text-clr);
   font-weight: bold;
+  user-select: none;
 }
 
 /*--------------------- Alert Box ---------------------*/
