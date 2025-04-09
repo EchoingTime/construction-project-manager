@@ -48,13 +48,17 @@ class Project(db.Model): # Database model: An object blueprint/layout that will 
 # --------------------- Task Table ---------------------
 
 class Task(db.Model): # Model to allow contractors to assign tasks
+    __tablename__ = 'task'
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     name = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.Text, nullable=True)
-    deadline = db.Column(db.Date, nullable=True) # Task Deadline
-    completion = db.Column(Enum('Completed', 'In Progress', 'Canceled', name='completion_status'), nullable=False, default='In Progress')
+    description = db.Column(db.String(255), nullable=True)
+    deadline = db.Column(db.Date, nullable=False)
+    completion = db.Column(db.String(50), nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False) # Foreign Key
+    subcontractor_id = db.Column(db.Integer, db.ForeignKey('subcontractor.id'), nullable=True)  # Correct ForeignKey
+
+    subcontractor = db.relationship('Subcontractor', backref='tasks')  # Relationship
 
 # --------------------- Message Table ---------------------
 
@@ -69,11 +73,16 @@ class Message(db.Model): #Model to handle the messages
 #--------------------- Subcontractor Table ------------------
 
 class Subcontractor(db.Model):
+    __tablename__ = 'subcontractor'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150))
     email = db.Column(db.String(150), unique=True, nullable=False)
     trade = db.Column(db.String(150))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id', name = "fk_subcon"))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', name="fk_subcon"))
+
+    # Method to get tasks assigned to this subcontractor
+    def get_assigned_tasks(self):
+        return Task.query.filter_by(subcontractor_id=self.id).all()
 
 #--------------------- Assignment Table ----------------------
 

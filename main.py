@@ -4,7 +4,7 @@
 @Running:
     - Open Visual Studio Code's terminal
     - Run the following commands (may need to write python3 instead):
-        - python -m venv venv
+        - set FLASK_APP=main.py
         - (Mac/Linux): source venv/bin/activate
         - (Windows): venv\Scripts\activate
         - pip install -r requirements.txt (to update: pip freeze > requirements.txt)

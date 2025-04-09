@@ -4,7 +4,7 @@
 including rendering the home page, handling project creation, and deleting projects.
 """
 
-from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
+from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, session
 from flask_login import login_required, current_user
 from .models import File, Project, Message, User, Subcontractor, Assignment, Task
 from . import db
@@ -300,6 +300,7 @@ def add_task(project_id):
     task_description = request.form.get('task-description')  # New description field
     task_deadline = request.form.get('task-deadline')
     task_completion = request.form.get('task-completion')  # Replaces "status"
+    subcontractor_id = request.form.get('task-subcontractor')  # Get subcontractor ID
 
     # Validate form data
     if not task_name or not task_deadline or not task_completion:
@@ -313,7 +314,8 @@ def add_task(project_id):
         description=task_description,  # Add description
         deadline=datetime.strptime(task_deadline, "%Y-%m-%d").date(),
         completion=task_completion,  # Replace "status" with "completion"
-        date_created=datetime.now()
+        date_created=datetime.now(),
+        subcontractor_id=subcontractor_id  # Add subcontractor ID
     )
     db.session.add(new_task)
     db.session.commit()
@@ -327,3 +329,27 @@ def add_task(project_id):
 @login_required
 def profile():
     return render_template("profile.html", user=current_user)
+
+# --------------------- Assigned Tasks ---------------------
+
+@views.route('/assigned_tasks')
+@login_required
+def assigned_tasks():
+    # Ensure the current user is a subcontractor
+    subcontractor = Subcontractor.query.filter_by(user_id=current_user.id).first()
+    if not subcontractor:
+        return "You are not authorized to view this page.", 403
+
+    # Get tasks assigned to the subcontractor
+    tasks = subcontractor.get_assigned_tasks()
+    return render_template('assigned_tasks.html', tasks=tasks)
+
+# --------------------- Project Tasks ---------------------
+
+@views.route('/project/<int:project_id>/tasks')
+@login_required
+def view_project_tasks(project_id):
+    # Fetch the project and its associated tasks
+    project = Project.query.get_or_404(project_id)
+    tasks = Task.query.filter_by(project_id=project_id).all()
+    return render_template('project_tasks.html', project=project, tasks=tasks)
