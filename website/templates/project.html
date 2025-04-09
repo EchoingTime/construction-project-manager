@@ -375,6 +375,7 @@ not remove, and add tasks and upload files.
               <td>{{ task.description or "No description provided" }}</td>
               <td>{{ task.deadline }}</td>
               <td>{{ task.completion }}</td>
+              <td>{{ task.subcontractor.name if task.subcontractor else "Unassigned" }}</td>
             </tr>
             {% endfor %}
           </tbody>
@@ -393,6 +394,7 @@ not remove, and add tasks and upload files.
             name="task-name"
             id="task-name"
             placeholder="Enter Task Name"
+            required
           />
           <label for="task-description">Description:</label>
           <textarea
@@ -411,6 +413,15 @@ not remove, and add tasks and upload files.
             <option value="Not Started">Not Started</option>
             <option value="In Progress">In Progress</option>
             <option value="Completed">Completed</option>
+          </select>
+          <label for="task-subcontractor">Assign Subcontractor:</label>
+          <select name="task-subcontractor" id="task-subcontractor" required>
+            <option value="" disabled selected hidden>
+              Select Subcontractor
+            </option>
+            {% for subcontractor in subcontractors %}
+            <option value="{{ subcontractor.id }}">{{ subcontractor.name }}</option>
+            {% endfor %}
           </select>
         </div>
         <button type="submit">Add Task</button>
