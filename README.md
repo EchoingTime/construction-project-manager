@@ -52,9 +52,8 @@ pip install -r requirements.txt
 
 ## Testing Accounts:
 
-- test@test.com | test123
-- test2@test.com | test123
-- subcon@test.com | subpass
+- Contractor: test@con.com | test123
+- Subcontractor: test@sub.com | test123
 
 ## Database Modifications:
 
