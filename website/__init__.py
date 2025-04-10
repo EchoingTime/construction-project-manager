@@ -7,9 +7,9 @@ and handles database creation for the application.
 
 from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy # Readying Database
-from os import path
 from flask_login import LoginManager # Manages the login aspects
-from flask_migrate import Migrate #updates the db to have a new column w/o losing data\
+from flask_migrate import Migrate # Updates the db to have a new column w/o losing data
+from os import path
 
 migrate=Migrate()
 db = SQLAlchemy() # Database object
@@ -32,10 +32,10 @@ def create_app(): # Initialize Flask
     app.register_blueprint(auth, url_prefix='/') # Slash means no prefix
     app.register_blueprint(file_upload, url_prefix='/')
 
-    from .models import User, Project # Must specify User and Project objects here
+    from .models import User # Must specify user here
 
-    #with app.app_context(): # SQLAlchemny will not overwrite existing files
-   #     db.create_all()
+    # With app.app_context(): # SQLAlchemny will not overwrite existing files
+    # db.create_all()
 
     login_manger = LoginManager()
     login_manger.login_view = 'auth.login' # Not logged in? Where do we go...
@@ -56,5 +56,8 @@ def create_app(): # Initialize Flask
 
 def create_database(app):
     if not path.exists('website/' + DB_NAME):
-        db.create_all(app=app)
-        print('Created Database!')
+        with app.app_context():
+        # Must import all models before creating tables
+            from .models import User, Project, Task, Subcontractor, Message, Assignment, File
+            db.create_all()
+            print('Created Database!')

@@ -9,17 +9,16 @@
         - (Windows): venv\Scripts\activate
         - pip install -r requirements.txt (to update: pip freeze > requirements.txt)
         - python main.py 
-    - Testing Account: test@test.com | test123          
-    - Test Message Account: test2@test.com | test123        
-    - Test Subcontractor Account: subcon@test.com | subpass 
-    - Additional Subcontractor test Account : tester@test.com | testpass
+    - Testing Accounts 
+        - Contractor Testing Account: test@con.com | test123          
+        - Subcontractor Testing Account: test@sub.com | test123        
     - Control + C to stop the server
-    (test accounts 1 and 2 are *default* contractors because they were made before the user table had a "role" field)
 """
 
-from website import create_app
+from website import create_app, create_database
 
 app = create_app()
+create_database(app) # Constructs the database
 
 if __name__ == '__main__':
     app.run(debug=True)

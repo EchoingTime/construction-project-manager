@@ -5,163 +5,23 @@ It displays a list of projects belonging to the current logged-in subcontractor,
 allowing viewing of projects assigned to them.
 -->
 
-
-<!--
-<section class="main-content-section">
-  <section id="project-header">
-    <h2>
-      Overview of Construction Projects
-      <svg
-        onclick="toggleEdit()"
-        xmlns="http://www.w3.org/2000/svg"
-        height="24px"
-        viewBox="0 -960 960 960"
-        width="24px"
-        id="edit-project"
-      >
-        <path
-          d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"
-        />
-      </svg>
-    </h2>
-  </section>
-  <ul>
-    {% for project in projects %}
-    <li>
-      <p id="project-status" class="mobile-remove">
-        {% if project.progress == "Not Yet Started" %}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24px"
-          viewBox="0 -960 960 960"
-          width="24px"
-          id="not-yet-started-svg"
-        >
-          <path
-            d="M320-320h80v-320h-80v320Zm160 0 240-160-240-160v320Zm0 240q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-          />
-        </svg>
-        {% elif project.progress == "On Hold" %}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24px"
-          viewBox="0 -960 960 960"
-          width="24px"
-          id="on-hold-svg"
-        >
-          <path
-            d="M360-320h80v-320h-80v320Zm160 0h80v-320h-80v320ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-          />
-        </svg>
-        {% elif project.progress == "In Progress" %}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24px"
-          viewBox="0 -960 960 960"
-          width="24px"
-          id="in-progress-svg"
-        >
-          <path
-            d="M204-318q-22-38-33-78t-11-82q0-134 93-228t227-94h7l-64-64 56-56 160 160-160 160-56-56 64-64h-7q-100 0-170 70.5T240-478q0 26 6 51t18 49l-60 60ZM481-40 321-200l160-160 56 56-64 64h7q100 0 170-70.5T720-482q0-26-6-51t-18-49l60-60q22 38 33 78t11 82q0 134-93 228t-227 94h-7l64 64-56 56Z"
-          />
-        </svg>
-        {% elif project.progress == "Completed" %}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24px"
-          viewBox="0 -960 960 960"
-          width="24px"
-          id="completed-svg"
-        >
-          <path
-            d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-          />
-        </svg>
-        {% elif project.progress == "Canceled" %}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24px"
-          viewBox="0 -960 960 960"
-          width="24px"
-          id="canceled-svg"
-        >
-          <path
-            d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q54 0 104-17.5t92-50.5L228-676q-33 42-50.5 92T160-480q0 134 93 227t227 93Zm252-124q33-42 50.5-92T800-480q0-134-93-227t-227-93q-54 0-104 17.5T284-732l448 448Z"
-          />
-        </svg>
-        {% else %} Progress Status Icon Error {% endif %}
-      </p>
-
-      <a
-        id="project-link"
-        href="{{ url_for('views.view_project', project_id=project.id)}}"
-        >{{ project.project_name}}</a
-      >
-      <button
-        type="button"
-        class="close hidden-svg"
-        id="delete-svg"
-        data-id="{{ project.id }}"
-        data-name="{{ project.project_name }}"
-        onClick="deleteProject(this)"
-      >
-        <span aria-hidden="true"
-          ><svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24px"
-            viewBox="0 -960 960 960"
-            width="24px"
-          >
-            <path
-              d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
-            />
-          </svg>
-        </span>
-      </button>
-    </li>
-    {% endfor %}
-  </ul>
-</section>
-
-
-
-<!--
-@File Name: home.html
-@Description: This file renders the home page of the web application. 
-It displays a list of projects belonging to the current logged-in contractor, 
-allowing contractors to view, add, and delete projects.
--->
-
 <!--------------------- Base Template Extension --------------------->
 {% extends 'base.html' %}
 <!--------------------- HTML Title --------------------->
-{% block title %}Subcontractor Home Page - Construction Project Manager{% endblock
-%}
+{% block title %}Subcontractor Home Page - Construction Project Manager{%
+endblock %}
 <!--------------------- Main Page Content (PAGE SPECIFICS) --------------------->
 {% block content %}
 <!-- Place new content inside this block content -->
 <section class="main-content-section" id="project-section">
   <section id="project-header">
-    <h2>
-      Overview of Construction Projects
-      <svg
-        onclick="toggleEdit()"
-        xmlns="http://www.w3.org/2000/svg"
-        height="24px"
-        viewBox="0 -960 960 960"
-        width="18px"
-        id="edit-project"
-      >
-        <path
-          d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"
-        />
-      </svg>
-    </h2>
+    <h2>Assigned Construction Projects</h2>
   </section>
   <ul>
     {% if not projects %}
     <p id="no-projects">
-      There are no projects yet available, create one below.
+      Hello {{user.first_name}}, you are not assigned any projects yet!<br />Please
+      contact a contractor if you are awaiting a project assignment.
     </p>
     {% else %} {% for project in projects %}
     <li>
@@ -259,6 +119,5 @@ allowing contractors to view, add, and delete projects.
     </li>
     {% endfor %} {% endif %}
   </ul>
-  
 </section>
 {% endblock %}

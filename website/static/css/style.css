@@ -373,6 +373,11 @@ h4 {
 svg {
   fill: var(--icon-clr);
 }
+textarea,
+.table-wrapper {
+  scrollbar-width: thin;
+  scrollbar-color: var(--base-clr) var(--accent-clr);
+}
 
 /*--------------------- Profile Page ---------------------*/
 
@@ -717,10 +722,6 @@ svg {
   border: none;
   padding-top: 5px;
 }
-textarea {
-  scrollbar-width: thin;
-  scrollbar-color: var(--base-clr) var(--accent-clr);
-}
 
 /*----------- Deadline Section -----------*/
 
@@ -799,6 +800,9 @@ textarea {
 }
 #address-sub-section .div-address {
   flex-direction: column;
+}
+#address-sub-section p {
+  text-align: center;
 }
 #address-sub-section #address-submit {
   margin-right: 3.5px;
