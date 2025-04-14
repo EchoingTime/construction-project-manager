@@ -7,49 +7,44 @@
 
 :root {
   /* Primary Colors */
-  --base-clr: #f4f7fb; /* Background */
+  --base-clr: #f4f7fb; /* Default Page Background */
   --line-clr: #11121a; /* Lines and borders */
-  --accent-clr: #2a2a2a; /* Buttons, links, or highlights */
+  --accent-clr: #2a2a2a; /* Buttons, links, and highlights */
   /* Text Colors */
-  --text-clr: #1e1e1e; /* Dark text */
-  --text-faded-clr: #3a3a3a; /* Forms */
+  --text-clr: #1e1e1e;
+  --text-faded-clr: #3a3a3a;
   --text-inactive-clr: #aaa;
-  --hover-text-clr: #e0e6ed; /* Hover effects on text */
-  --tertiary-text-clr: #000000; /* Tertiary text */
   /* Icon Colors */
-  --icon-clr: #131313; /* Icons */
+  --icon-clr: #131313;
   --icon-form-clr: #e0e6ed;
   /* Background Variants */
-  --transparent-bg-clr: #343a402d; /* Transparent background */
-  --transparent-border-clr: #343a4012; /* Transparent border */
-  --secondary-tp-bg-clr: #0066cc23; /* Secondary Transparent background */
-  --secondary-border-bg-clr: #0066cc21; /* Secondary Transparent border */
-  --form-bg-clr: #c1c1c160; /* Form background */
+  --transparent-bg-clr: #343a402d;
+  --transparent-border-clr: #343a4012;
+  --form-bg-clr: #c1c1c160;
   /* Interactive Elements */
-  --hover-clr: #3a7ca5c7; /* Hover effects on links, buttons */
-  --hover-fade-clr: #3a7ca55a; /* Faded */
-  --hover-bright-clr: #3a7ca5; /* Bright */
-  --icon-hover-clr: #e0e6ed; /* Hover effects on icons */
+  --hover-clr: #0056b3;
+  --icon-hover-clr: #e0e6ed;
+  --hover-text-clr: #e0e6ed;
   /* Status Colors */
-  --success-text-clr: #121813; /* Success states */
+  --success-text-clr: #121813;
   --success-background-clr: #28a74668;
   --faded-success-background-clr: #28a74622;
   --success-border-clr: #005714;
-  --error-text-clr: #4d1a20; /* Error states, warnings */
+  --error-text-clr: #4d1a20;
   --error-background-clr: #c62b3d68;
   --faded-error-background-clr: #c62b3d22;
   --error-border-clr: #870413;
-  --active-clr: #2e8dbd; /* Active states */
+  --active-clr: #2e8dbd;
   --deleting-clr: #ff2e46ca;
   --creating-clr: #28da51ca;
   --info-clr: #2196f3;
   --filter-clr: #8c90f4;
   /* Progress Status Colors */
-  --not-yet-started-clr: #007bff; /* Symbol: Not Started Google Icon */
-  --on-hold-clr: #ffa500; /* Symbol: Pause Circle Google Icon */
-  --in-progress-clr: #ffff00; /* Symbol: Auto Renew Google Icon */
-  --completed-clr: #00ff00; /* Symbol: Check Circle Google Icon */
-  --canceled-clr: #ff0000; /* Symbol: Block Google Icon */
+  --not-yet-started-clr: #007bff; /* Not Started Google Icon */
+  --on-hold-clr: #ffa500; /* Pause Circle Google Icon */
+  --in-progress-clr: #ffff00; /* Auto Renew Google Icon */
+  --completed-clr: #00ff00; /* Check Circle Google Icon */
+  --canceled-clr: #ff0000; /* Block Google Icon */
 }
 
 /*--------------------- Global Styles ---------------------*/
@@ -346,8 +341,6 @@ main {
 .main-content-section {
   width: 95%;
   height: 100%;
-  padding: 25px;
-  border-radius: 1em;
 }
 .main-content-section,
 .sub-sections {
@@ -355,13 +348,12 @@ main {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  border: 1px solid var(--line-clr);
-  margin-bottom: 20px;
 }
 .sub-sections {
   padding: 10px;
   border-radius: 0.5em;
   width: 100%;
+  border: 1px solid var(--accent-clr);
 }
 h1,
 h2,
@@ -1140,97 +1132,121 @@ a:hover {
   color: var(--error-text-clr);
 }
 
-/*--------------------- Calendar ---------------------*/
+/*--------------------- Calendar (ChatGPT Basic Reconstruction) ---------------------*/
 
-#calendar-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Calendar Container */
+#calendar-section .calendar {
+  background: #fff;
+  padding: 20px 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
-#calendar-section .wrapper {
-  width: 450px;
-  border: 1px solid var(--accent-clr);
-  border-radius: 0.25em;
-}
-#calendar-section .wrapper header {
+/* Month Navigation */
+#calendar-section .month {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 25px 30px 10px;
-}
-#calendar-section .current-date {
-  font-size: 1.45rem;
-  font-weight: 500;
-}
-#calendar-section .icons {
-  margin-top: auto;
-}
-#calendar-section svg:hover {
-  cursor: pointer;
-  background-color: var(--hover-clr);
-  border-radius: 0.25em;
-  fill: var(--icon-hover-clr);
-  transition: all 0.2s ease-in-out;
-}
-#calendar-section svg:last-child {
-  margin-right: -10px;
-}
-.calendar {
-  padding: 20px;
-}
-.calendar ul {
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  text-align: center;
-}
-.calendar .days {
+  align-items: center;
   margin-bottom: 20px;
 }
-.calendar .weeks li {
-  font-weight: 500;
-}
-.calendar ul li {
-  position: relative;
-  width: calc(100% / 7);
-}
-.calendar .days li {
-  z-index: 1;
+#calendar-section .month svg {
   cursor: pointer;
-  margin-top: 30px;
+  fill: var(--icon-clr);
+  transition: transform 0.2s ease;
 }
-.days li.inactive {
-  color: var(--text-inactive-clr);
+#calendar-section .month svg:hover {
+  transform: scale(1.1);
 }
-.days li.active {
-  color: var(--base-clr);
+#calendar-section .date {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-clr);
 }
-.calendar .days li::before {
-  position: absolute;
-  content: "";
-  height: 40px;
-  width: 40px;
-  top: 50%;
-  left: 50%;
-  z-index: -1;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
+/* Weekdays Header */
+#calendar-section .weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 10px;
+  color: var(--text-clr);
 }
-.days li:hover::before {
-  background: var(--hover-clr);
-  box-shadow: 0 0 10px var(--hover-bright-clr);
+/* Days Grid */
+#calendar-section .days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  text-align: center;
 }
-.days li.inactive:hover::before {
-  background: var(--hover-fade-clr);
+#calendar-section .days div {
+  height: 70px; /* Increased height */
+  padding: 8px;
+  border-radius: 8px;
+  background-color: var(--form-bg-clr);
+  color: var(--text-clr);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 0.95rem;
 }
-.days li:hover {
-  color: var(--base-clr);
+#calendar-section .days div:hover {
+  background-color: var(--hover-clr);
+  color: var(--hover-text-clr);
 }
-.days li.inactive:hover {
-  color: var(--text-inactive-clr);
+#calendar-section .days .today {
+  background-color: var(--active-clr);
+  color: #fff;
+  font-weight: bold;
 }
-.days li.active::before {
-  background: var(--active-clr);
+/* Faded appearance for out-of-month days */
+#calendar-section .prev-date,
+#calendar-section .next-date {
+  color: var(--icon-clr);
+  opacity: 0.5;
+  pointer-events: auto;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+/* Subtle hover for faded days */
+#calendar-section .prev-date:hover,
+#calendar-section .next-date:hover {
+  opacity: 0.25;
+}
+/* Go To & Today Buttons */
+#calendar-section .goto-today {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#calendar-section .goto {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#calendar-section .date-input {
+  padding: 6px 10px;
+  border: 1px solid var(--accent-clr);
+  border-radius: 6px;
+  width: 90px;
+  font-size: 0.9rem;
+}
+#calendar-section .goto-btn,
+#calendar-section .today-btn {
+  background-color: var(--accent-clr);
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 0.9rem;
+}
+#calendar-section .goto-btn:hover,
+#calendar-section .today-btn:hover {
+  background-color: var(--hover-clr);
 }
 
 /*--------------------- Responsiveness ---------------------*/
@@ -1307,9 +1323,9 @@ a:hover {
     width: 100%;
     height: 60px;
 
-    background-color: var(--secondary-tp-bg-clr);
+    background-color: var(--transparent-bg-clr);
     backdrop-filter: blur(10px);
-    border-top: 1px solid var(--secondary-border-bg-clr);
+    border-top: 1px solid var(--transparent-border-clr);
   }
   #default-asidebar ul li .sub-menu.show > div {
     overflow-x: auto;
@@ -1324,7 +1340,7 @@ a:hover {
     padding: 1em;
     width: auto;
 
-    color: var(--tertiary-text-clr);
+    color: var(--text-clr);
   }
 }
 
@@ -1367,5 +1383,20 @@ a:hover {
   #project-details .top-section,
   #file-invoice-section {
     flex-direction: column;
+  }
+}
+
+/*------ Calendar Responsiveness ------*/
+
+@media (max-width: 800px) {
+  #calendar-section .calendar {
+    width: 100%;
+    padding: 15px;
+  }
+  #calendar-section .date {
+    font-size: 1rem;
+  }
+  #calendar-section .date-input {
+    width: 80px;
   }
 }

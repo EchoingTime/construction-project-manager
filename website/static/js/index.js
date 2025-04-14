@@ -338,16 +338,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("DOMContentLoaded", function () {
   const calendar = document.getElementById("calendar-section");
-  if (!calendar) return; // Exit if form does not exist
+  if (!calendar) return; // Exit if calendar page does not exist
 
-  const currentDate = document.querySelector(".current-date");
-  const daysTag = document.querySelector(".days");
-  const arrowButtons = document.querySelectorAll(".icons svg");
+  // DOM Elements
+  const calendarEl = document.querySelector(".calendar");
+  const dateEl = document.querySelector(".date");
+  const daysContainer = document.querySelector(".days");
+  const prevBtn = document.querySelector(".prev");
+  const nextBtn = document.querySelector(".next");
+  const todayBtn = document.querySelector(".today-btn");
+  const gotoBtn = document.querySelector(".goto-btn");
+  const dateInput = document.querySelector(".date-input");
 
-  // Gets the new date, year and month
-  let date = new Date(),
-    currYr = date.getFullYear(),
-    currMn = date.getMonth();
+  // Date State
+  let today = new Date();
+  let currentMonth = today.getMonth();
+  let currentYear = today.getFullYear();
+  let activeDay = null;
 
   const months = [
     "January",
@@ -364,57 +371,161 @@ document.addEventListener("DOMContentLoaded", function () {
     "December",
   ];
 
-  const renderCalendar = () => {
-    let firstDayofMonth = new Date(currYr, currMn, 1).getDay(); // Gets first day of the month (Mon-Sun)
-    let lastDateofMonth = new Date(currYr, currMn + 1, 0).getDate(); // Gets last date of the month
-    let lastDayofMonth = new Date(currYr, currMn, lastDateofMonth).getDay(); // Gets last day of the month
-    let lastDateofLastMonth = new Date(currYr, currMn, 0).getDate(); // Gets last date of the previous month
-    let liTag = "";
+  // Render Calendar
+  function renderCalendar() {
+    const firstDay = new Date(currentYear, currentMonth, 1);
+    const lastDay = new Date(currentYear, currentMonth + 1, 0);
+    const prevMonthLastDay = new Date(currentYear, currentMonth, 0);
 
-    // Creates li of previous month's last days
-    for (let i = firstDayofMonth; i > 0; i--) {
-      liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
+    const prevDaysCount = firstDay.getDay();
+    const nextDaysCount = 6 - lastDay.getDay();
+    const lastDate = lastDay.getDate();
+    const prevLastDate = prevMonthLastDay.getDate();
+
+    // Set Header
+    dateEl.textContent = `${months[currentMonth]} ${currentYear}`;
+
+    // Generate Days
+    let daysHTML = "";
+
+    // Previous month days
+    for (let i = prevDaysCount; i > 0; i--) {
+      daysHTML += `<div class="day prev-date">${prevLastDate - i + 1}</div>`;
     }
 
-    // Creates li of all days of the current month
-    for (let i = 1; i <= lastDateofMonth; i++) {
-      // Adds active class to li if the current day, month, and year match up
-      let isToday =
-        i === date.getDate() &&
-        currMn === new Date().getMonth() &&
-        currYr === new Date().getFullYear()
-          ? "active"
-          : "";
-      liTag += `<li class="${isToday}">${i}</li>`;
+    // Current month days
+    for (let i = 1; i <= lastDate; i++) {
+      const isToday =
+        i === today.getDate() &&
+        currentMonth === today.getMonth() &&
+        currentYear === today.getFullYear();
+
+      const activeClass = isToday ? "today active" : "";
+      if (isToday) activeDay = i;
+
+      daysHTML += `<div class="day ${activeClass}" data-day="${i}">${i}</div>`;
     }
 
-    // Creates li of the next month's first days
-    for (let i = lastDayofMonth; i < 6; i++) {
-      liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`;
+    // Next month days
+    for (let i = 1; i <= nextDaysCount; i++) {
+      daysHTML += `<div class="day next-date">${i}</div>`;
     }
 
-    currentDate.innerText = `${months[currMn]} ${currYr}`;
-    daysTag.innerHTML = liTag;
-  };
+    daysContainer.innerHTML = daysHTML;
+    attachDayClickListeners();
+  }
 
+  // Navigate Months
+  function changeMonth(direction) {
+    currentMonth += direction;
+
+    if (currentMonth < 0) {
+      currentMonth = 11;
+      currentYear--;
+    } else if (currentMonth > 11) {
+      currentMonth = 0;
+      currentYear++;
+    }
+
+    renderCalendar();
+  }
+
+  // Handle Day Selection
+  function attachDayClickListeners() {
+    document.querySelectorAll(".day").forEach((dayEl) => {
+      dayEl.addEventListener("click", () => {
+        const dayNumber = Number(dayEl.textContent);
+        const isPrev = dayEl.classList.contains("prev-date");
+        const isNext = dayEl.classList.contains("next-date");
+
+        if (isPrev) {
+          changeMonth(-1);
+          setTimeout(() => selectDay(dayNumber), 50);
+        } else if (isNext) {
+          changeMonth(1);
+          setTimeout(() => selectDay(dayNumber), 50);
+        } else {
+          selectDay(dayNumber);
+        }
+      });
+    });
+  }
+
+  function selectDay(dayNumber) {
+    activeDay = dayNumber;
+
+    document.querySelectorAll(".day").forEach((dayEl) => {
+      dayEl.classList.remove("active");
+      if (
+        !dayEl.classList.contains("prev-date") &&
+        !dayEl.classList.contains("next-date") &&
+        Number(dayEl.textContent) === dayNumber
+      ) {
+        dayEl.classList.add("active");
+      }
+    });
+  }
+
+  // Reset to Today
+  todayBtn.addEventListener("click", () => {
+    today = new Date();
+    currentMonth = today.getMonth();
+    currentYear = today.getFullYear();
+    renderCalendar();
+  });
+
+  // Format and Validate Input
+  dateInput.addEventListener("input", (e) => {
+    let value = e.target.value.replace(/[^0-9]/g, "");
+    if (value.length > 2) value = value.slice(0, 2) + "/" + value.slice(2);
+    e.target.value = value.slice(0, 7);
+  });
+
+  // Go To Entered Date
+  gotoBtn.addEventListener("click", () => {
+    const [mm, yyyy] = dateInput.value.split("/");
+
+    if (
+      mm &&
+      yyyy &&
+      !isNaN(mm) &&
+      !isNaN(yyyy) &&
+      mm >= 1 &&
+      mm <= 12 &&
+      yyyy.length === 4
+    ) {
+      currentMonth = parseInt(mm) - 1;
+      currentYear = parseInt(yyyy);
+      renderCalendar();
+    } else {
+      alert("Entered an invalid date!");
+    }
+  });
+
+  // Init
   renderCalendar();
 
-  arrowButtons.forEach((icon) => {
-    icon.addEventListener("click", () => {
-      // Adds a click event on both svgs
-      currMn = icon.id === "prev" ? currMn - 1 : currMn + 1;
+  // Hook up prev and next buttons
+  prevBtn.addEventListener("click", () => changeMonth(-1));
+  nextBtn.addEventListener("click", () => changeMonth(1));
 
-      // If current month is less than zero or greater than eleven
-      if (currMn < 0 || currMn > 11) {
-        // Creates a new date of current year and month and passes it as the date value
-        date = new Date(currYr, currMn);
-        currYr = date.getFullYear(); // Updates current year with new date year
-        currMn = date.getMonth(); // Updates current month with new date month
-      } else {
-        // Else pass the new Date as the date value
-        date = new Date();
-      }
-      renderCalendar();
-    });
+  // Keyboard Navigation
+  document.addEventListener("keydown", (e) => {
+    switch (e.key) {
+      case "ArrowLeft":
+        changeMonth(-1);
+        break;
+      case "ArrowRight":
+        changeMonth(1);
+        break;
+      case "t":
+      case "T":
+        todayBtn.click();
+        break;
+      case "g":
+      case "G":
+        dateInput.focus();
+        break;
+    }
   });
 });
