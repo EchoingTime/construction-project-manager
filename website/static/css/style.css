@@ -1400,3 +1400,32 @@ a:hover {
     width: 80px;
   }
 }
+
+/*--------------------- Project Page Tabs ---------------------*/
+.tab-buttons {
+  display: flex;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.tab-buttons button {
+  background: none;
+  border: none;
+  padding: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.tab-buttons button.active {
+  border-bottom: 3px solid #007bff;
+  color: #007bff;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+

@@ -32,167 +32,32 @@ not remove, and add tasks and upload files.
     {% endif %}
   </div>
   <!------ Top Section ------>
-  <section class="sub-sections top-section">
-    <!------ Deadline sub-section ------>
-    <section class="sub-sections" id="deadline-sub-section">
-      <h3>Project Deadline</h3>
-      <!-- Form is needed to send update -->
-      <form
-        id="deadline-form"
-        method="POST"
-        action="{{ url_for('views.update_deadline', project_id=project.id) }}"
-      >
-        {% if project.deadline is none %}
-        <p>No Deadline Assigned</p>
-        {% if user.role != 'subcontractor' %}
-        <div class="div-dead">
-          <input type="date" name="deadline" required />
-          <button type="submit">Assign</button>
-        </div>
-        {% endif %} {% else %}
-        <p>
-          {{ project.deadline }}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24px"
-            viewBox="0 -960 960 960"
-            width="24px"
-          >
-            <path
-              d="M580-240q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Z"
-            />
-          </svg>
-        </p>
-        <div class="div-dead">
-          <input type="date" name="deadline" value="{{ project.deadline }}" />
+  <div class="tab-buttons">
+    <button class="tab-btn active" data-tab="information">Information</button>
+    <button class="tab-btn" data-tab="subcontractors">Subcontractors</button>
+    <button class="tab-btn" data-tab="files">Files</button>
+  </div>
+  <div id="information" class="tab-content active">
+    <section class="sub-sections top-section">
+      <!------ Deadline sub-section ------>
+      <section class="sub-sections" id="deadline-sub-section">
+        <h3>Project Deadline</h3>
+        <!-- Form is needed to send update -->
+        <form
+          id="deadline-form"
+          method="POST"
+          action="{{ url_for('views.update_deadline', project_id=project.id) }}"
+        >
+          {% if project.deadline is none %}
+          <p>No Deadline Assigned</p>
           {% if user.role != 'subcontractor' %}
-          <button type="submit">Reassign</button>
-        </div>
-        {% endif %} {% endif %}
-      </form>
-    </section>
-    <!------ Completion sub-section ------>
-    <section class="sub-sections" id="completion-status-sub-section">
-      <h3>Completion Status</h3>
-      <p id="displaying-completion-status">
-        {{ project.progress }} {% if project.progress == "Not Yet Started" %}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24px"
-          viewBox="0 -960 960 960"
-          width="24px"
-          id="not-yet-started-svg"
-        >
-          <path
-            d="M320-320h80v-320h-80v320Zm160 0 240-160-240-160v320Zm0 240q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-          />
-        </svg>
-        {% elif project.progress == "On Hold" %}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24px"
-          viewBox="0 -960 960 960"
-          width="24px"
-          id="on-hold-svg"
-        >
-          <path
-            d="M360-320h80v-320h-80v320Zm160 0h80v-320h-80v320ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-          />
-        </svg>
-        {% elif project.progress == "In Progress" %}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24px"
-          viewBox="0 -960 960 960"
-          width="24px"
-          id="in-progress-svg"
-        >
-          <path
-            d="M204-318q-22-38-33-78t-11-82q0-134 93-228t227-94h7l-64-64 56-56 160 160-160 160-56-56 64-64h-7q-100 0-170 70.5T240-478q0 26 6 51t18 49l-60 60ZM481-40 321-200l160-160 56 56-64 64h7q100 0 170-70.5T720-482q0-26-6-51t-18-49l60-60q22 38 33 78t11 82q0 134-93 228t-227 94h-7l64 64-56 56Z"
-          />
-        </svg>
-        {% elif project.progress == "Completed" %}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24px"
-          viewBox="0 -960 960 960"
-          width="24px"
-          id="completed-svg"
-        >
-          <path
-            d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-          />
-        </svg>
-        {% elif project.progress == "Canceled" %}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24px"
-          viewBox="0 -960 960 960"
-          width="24px"
-          id="canceled-svg"
-        >
-          <path
-            d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q54 0 104-17.5t92-50.5L228-676q-33 42-50.5 92T160-480q0 134 93 227t227 93Zm252-124q33-42 50.5-92T800-480q0-134-93-227t-227-93q-54 0-104 17.5T284-732l448 448Z"
-          />
-        </svg>
-        {% else %} Progress Status Icon Error {% endif %}
-      </p>
-      <form
-        id="completion-form"
-        method="POST"
-        action="{{ url_for('views.update_project_completion_status', project_id=project.id) }}"
-      >
-        {% if user.role != 'subcontractor' %}
-        <select id="project-status" name="project-status">
-          <option value="" disabled selected hidden>
-            Change Project Status
-          </option>
-          {% if project.progress != 'Not Yet Started' %}
-          <option value="Not Yet Started">Not Yet Started</option>
-          {% endif %} {% if project.progress != 'On Hold' %}
-          <option value="On Hold">On Hold</option>
-          {% endif %} {% if project.progress != 'In Progress' %}
-          <option value="In Progress">In Progress</option>
-          {% endif %} {% if project.progress != 'Completed' %}
-          <option value="Completed">Completed</option>
-          {% endif %} {% if project.progress != 'Canceled' %}
-          <option value="Canceled">Canceled</option>
-          {% endif %}
-        </select>
-        {% if user.role != 'subcontractor' %}
-        <div class="buttons">
-          <button type="submit">Update</button>
-          <button type="reset">Clear</button>
-        </div>
-        {% endif %} {% endif %}
-      </form>
-    </section>
-    <!----------- Address Updates ------------>
-    <section class="sub-sections" id="address-sub-section">
-      <h3>Address</h3>
-      <!----------- Address Update Form ---------->
-      <form
-        action="{{ url_for('views.update_address', project_id=project.id)}}"
-        method="POST"
-      >
-        <!--subcontractor view for address section-->
-        {% if user.role == 'subcontractor' %}
-        <p>{{ project.address }}</p>
-        <div class="div-address">
-          {% else %} {% if project.address is none %}
-          <p>No Address Assigned</p>
-          <div class="div-address">
-            <textarea
-              name="project_address"
-              id="project_address"
-              placeholder="Enter Address"
-              required
-            ></textarea>
-            <button type="submit">Assign Address</button>
+          <div class="div-dead">
+            <input type="date" name="deadline" required />
+            <button type="submit">Assign</button>
           </div>
-          {% else %}
+          {% endif %} {% else %}
           <p>
-            {{ project.address }}
+            {{ project.deadline }}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24px"
@@ -200,255 +65,399 @@ not remove, and add tasks and upload files.
               width="24px"
             >
               <path
-                d="M480-480q33 0 56.5-23.5T560-560q0-33-23.5-56.5T480-640q-33 0-56.5 23.5T400-560q0 33 23.5 56.5T480-480Zm0 294q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Zm0-480Z"
+                d="M580-240q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Z"
               />
             </svg>
           </p>
+          <div class="div-dead">
+            <input type="date" name="deadline" value="{{ project.deadline }}" />
+            {% if user.role != 'subcontractor' %}
+            <button type="submit">Reassign</button>
+          </div>
+          {% endif %} {% endif %}
+        </form>
+      </section>
+      <!------ Completion sub-section ------>
+      <section class="sub-sections" id="completion-status-sub-section">
+        <h3>Completion Status</h3>
+        <p id="displaying-completion-status">
+          {{ project.progress }} {% if project.progress == "Not Yet Started" %}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            id="not-yet-started-svg"
+          >
+            <path
+              d="M320-320h80v-320h-80v320Zm160 0 240-160-240-160v320Zm0 240q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
+            />
+          </svg>
+          {% elif project.progress == "On Hold" %}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            id="on-hold-svg"
+          >
+            <path
+              d="M360-320h80v-320h-80v320Zm160 0h80v-320h-80v320ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
+            />
+          </svg>
+          {% elif project.progress == "In Progress" %}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            id="in-progress-svg"
+          >
+            <path
+              d="M204-318q-22-38-33-78t-11-82q0-134 93-228t227-94h7l-64-64 56-56 160 160-160 160-56-56 64-64h-7q-100 0-170 70.5T240-478q0 26 6 51t18 49l-60 60ZM481-40 321-200l160-160 56 56-64 64h7q100 0 170-70.5T720-482q0-26-6-51t-18-49l60-60q22 38 33 78t11 82q0 134-93 228t-227 94h-7l64 64-56 56Z"
+            />
+          </svg>
+          {% elif project.progress == "Completed" %}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            id="completed-svg"
+          >
+            <path
+              d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
+            />
+          </svg>
+          {% elif project.progress == "Canceled" %}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            id="canceled-svg"
+          >
+            <path
+              d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q54 0 104-17.5t92-50.5L228-676q-33 42-50.5 92T160-480q0 134 93 227t227 93Zm252-124q33-42 50.5-92T800-480q0-134-93-227t-227-93q-54 0-104 17.5T284-732l448 448Z"
+            />
+          </svg>
+          {% else %} Progress Status Icon Error {% endif %}
+        </p>
+        <form
+          id="completion-form"
+          method="POST"
+          action="{{ url_for('views.update_project_completion_status', project_id=project.id) }}"
+        >
+          {% if user.role != 'subcontractor' %}
+          <select id="project-status" name="project-status">
+            <option value="" disabled selected hidden>
+              Change Project Status
+            </option>
+            {% if project.progress != 'Not Yet Started' %}
+            <option value="Not Yet Started">Not Yet Started</option>
+            {% endif %} {% if project.progress != 'On Hold' %}
+            <option value="On Hold">On Hold</option>
+            {% endif %} {% if project.progress != 'In Progress' %}
+            <option value="In Progress">In Progress</option>
+            {% endif %} {% if project.progress != 'Completed' %}
+            <option value="Completed">Completed</option>
+            {% endif %} {% if project.progress != 'Canceled' %}
+            <option value="Canceled">Canceled</option>
+            {% endif %}
+          </select>
+          {% if user.role != 'subcontractor' %}
+          <div class="buttons">
+            <button type="submit">Update</button>
+            <button type="reset">Clear</button>
+          </div>
+          {% endif %} {% endif %}
+        </form>
+      </section>
+      <!----------- Address Updates ------------>
+      <section class="sub-sections" id="address-sub-section">
+        <h3>Address</h3>
+        <!----------- Address Update Form ---------->
+        <form
+          action="{{ url_for('views.update_address', project_id=project.id)}}"
+          method="POST"
+        >
+          <!--subcontractor view for address section-->
+          {% if user.role == 'subcontractor' %}
+          <p>{{ project.address }}</p>
           <div class="div-address">
-            <textarea
-              name="project_address"
-              id="project_address"
-              placeholder="Enter Address"
-              value=""
-              required
-            ></textarea>
-            <div id="address-buttons">
-              <button type="submit" id="address-submit">Update Address</button>
-              <button type="reset">Clear</button>
+            {% else %} {% if project.address is none %}
+            <p>No Address Assigned</p>
+            <div class="div-address">
+              <textarea
+                name="project_address"
+                id="project_address"
+                placeholder="Enter Address"
+                required
+              ></textarea>
+              <button type="submit">Assign Address</button>
             </div>
+            {% else %}
+            <p>
+              {{ project.address }}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+              >
+                <path
+                  d="M480-480q33 0 56.5-23.5T560-560q0-33-23.5-56.5T480-640q-33 0-56.5 23.5T400-560q0 33 23.5 56.5T480-480Zm0 294q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Zm0-480Z"
+                />
+              </svg>
+            </p>
+            <div class="div-address">
+              <textarea
+                name="project_address"
+                id="project_address"
+                placeholder="Enter Address"
+                value=""
+                required
+              ></textarea>
+              <div id="address-buttons">
+                <button type="submit" id="address-submit">Update Address</button>
+                <button type="reset">Clear</button>
+              </div>
+            </div>
+            {% endif %}
           </div>
           {% endif %}
-        </div>
-        {% endif %}
-      </form>
+        </form>
+      </section>
     </section>
-  </section>
-  <!------ Bottom Section ------>
-  <section class="sub-sections bottom-section">
-    <!------ Subcontractor sub-section ------>
-    <section class="sub-sections" id="subcontractors-sub-section">
-      <h3>Subcontractors</h3>
-      <div class="table-wrapper">
-        {% if subcontractors|length == 0 %}
-        <p>No Subcontractors Assigned</p>
-        {% else %}
-        <table>
-          <thead>
-            <tr>
-              <th>
-                Name
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                >
-                  <path
-                    d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"
-                  />
-                </svg>
-              </th>
-              <th>
-                Email
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                >
-                  <path
-                    d="M560-520h280v-200H560v200Zm140-50-100-70v-40l100 70 100-70v40l-100 70ZM80-120q-33 0-56.5-23.5T0-200v-560q0-33 23.5-56.5T80-840h800q33 0 56.5 23.5T960-760v560q0 33-23.5 56.5T880-120H80Zm556-80h244v-560H80v560h4q42-75 116-117.5T360-360q86 0 160 42.5T636-200ZM360-400q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM182-200h356q-34-38-80.5-59T360-280q-51 0-97 21t-81 59Zm178-280q-17 0-28.5-11.5T320-520q0-17 11.5-28.5T360-560q17 0 28.5 11.5T400-520q0 17-11.5 28.5T360-480Zm120 0Z"
-                  />
-                </svg>
-              </th>
-              <th>
-                Trade
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                >
-                  <path
-                    d="M160-120q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720h160v-80q0-33 23.5-56.5T400-880h160q33 0 56.5 23.5T640-800v80h160q33 0 56.5 23.5T880-640v440q0 33-23.5 56.5T800-120H160Zm0-80h640v-440H160v440Zm240-520h160v-80H400v80ZM160-200v-440 440Z"
-                  />
-                </svg>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for subcontractor in subcontractors %}
-            <tr>
-              <td>{{ subcontractor.name }}</td>
-              <td>{{ subcontractor.email}}</td>
-              <td>{{ subcontractor.trade }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        {% endif %}
-      </div>
-      <form
-        method="POST"
-        action="{{ url_for('views.add_subcontractor', project_id=project.id) }}"
-      >
-        {% if user.role != 'subcontractor' %}
-        <textarea
-          name="subcontractor-email"
-          id="subcontractor-email"
-          placeholder="Enter Email"
-          required
-        ></textarea>
-        <div id="subcon-buttons">
-          <button type="submit">Add Subcontractor</button>
-          <button type="reset">Clear</button>
+  </div>
+  <div id="subcontractors" class="tab-content">
+    <section class="sub-sections bottom-section">
+      <!------ Subcontractor sub-section ------>
+      <section class="sub-sections" id="subcontractors-sub-section">
+        <h3>Subcontractors</h3>
+        <div class="table-wrapper">
+          {% if subcontractors|length == 0 %}
+          <p>No Subcontractors Assigned</p>
+          {% else %}
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  Name
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                  >
+                    <path
+                      d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"
+                    />
+                  </svg>
+                </th>
+                <th>
+                  Email
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                  >
+                    <path
+                      d="M560-520h280v-200H560v200Zm140-50-100-70v-40l100 70 100-70v40l-100 70ZM80-120q-33 0-56.5-23.5T0-200v-560q0-33 23.5-56.5T80-840h800q33 0 56.5 23.5T960-760v560q0 33-23.5 56.5T880-120H80Zm556-80h244v-560H80v560h4q42-75 116-117.5T360-360q86 0 160 42.5T636-200ZM360-400q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM182-200h356q-34-38-80.5-59T360-280q-51 0-97 21t-81 59Zm178-280q-17 0-28.5-11.5T320-520q0-17 11.5-28.5T360-560q17 0 28.5 11.5T400-520q0 17-11.5 28.5T360-480Zm120 0Z"
+                    />
+                  </svg>
+                </th>
+                <th>
+                  Trade
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                  >
+                    <path
+                      d="M160-120q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720h160v-80q0-33 23.5-56.5T400-880h160q33 0 56.5 23.5T640-800v80h160q33 0 56.5 23.5T880-640v440q0 33-23.5 56.5T800-120H160Zm0-80h640v-440H160v440Zm240-520h160v-80H400v80ZM160-200v-440 440Z"
+                    />
+                  </svg>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for subcontractor in subcontractors %}
+              <tr>
+                <td>{{ subcontractor.name }}</td>
+                <td>{{ subcontractor.email}}</td>
+                <td>{{ subcontractor.trade }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% endif %}
         </div>
-      </form>
-      {% endif %}
-    </section>
-    <!------ Tasks sub-section ------>
-    <section class="sub-sections" id="task-sub-section">
-      <h3>Tasks</h3>
-      <div class="table-wrapper">
-        {% if tasks|length == 0 %}
-        <p>No Tasks Assigned</p>
-        {% else %}
-        <table>
-          <thead>
-            <tr>
-              <th>
-                Task
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                >
-                  <path
-                    d="m438-240 226-226-58-58-169 169-84-84-57 57 142 142ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"
-                  />
-                </svg>
-              </th>
-              <th>
-                Description
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                >
-                  <path
-                    d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"
-                  />
-                </svg>
-              </th>
-              <th>
-                Deadline
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                >
-                  <path
-                    d="M580-240q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Z"
-                  />
-                </svg>
-              </th>
-              <th>
-                Completion
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                >
-                  <path
-                    d="M720-120q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6Zm-20-80h40v-160h-40v160Zm-540 0v-15 15-440 440Zm0 80q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720h160v-80q0-33 23.5-56.5T400-880h160q33 0 56.5 23.5T640-800v80h160q33 0 56.5 23.5T880-640v171q-18-13-38-22.5T800-508v-132H160v440h283q3 21 9 41t15 39H160Zm240-600h160v-80H400v80ZM720-40q-83 0-141.5-58.5T520-240q0-83 58.5-141.5T720-440q83 0 141.5 58.5T920-240q0 83-58.5 141.5T720-40Z"
-                  />
-                </svg>
-              </th>
-              <th>
-                Subcontractor
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                >
-                  <path
-                    d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"
-                  />
-                </svg>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for task in tasks %}
-            <tr>
-              <td>{{ task.name }}</td>
-              <td>{{ task.description or "No description provided" }}</td>
-              <td>{{ task.deadline }}</td>
-              <td>{{ task.completion }}</td>
-              <td>
-                {{ task.subcontractor.name if task.subcontractor else
-                "Unassigned" }}
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        {% endif %}
-      </div>
-      {% if user.role != 'subcontractor' %}
-      <form
-        method="POST"
-        action="{{ url_for('views.add_task', project_id=project.id) }}"
-      >
-        <h4>Add a Task Below</h4>
-        <div id="task-div">
-          <label for="task-name">Task Name:</label>
-          <input
-            type="text"
-            name="task-name"
-            id="task-name"
-            placeholder="Enter Task Name"
-            required
-          />
-          <label for="task-description">Description:</label>
+        <form
+          method="POST"
+          action="{{ url_for('views.add_subcontractor', project_id=project.id) }}"
+        >
+          {% if user.role != 'subcontractor' %}
           <textarea
-            name="task-description"
-            id="task-description"
-            rows="3"
-            placeholder="Type Task Description here (optional)..."
+            name="subcontractor-email"
+            id="subcontractor-email"
+            placeholder="Enter Email"
+            required
           ></textarea>
-          <label for="task-deadline">Deadline:</label>
-          <input type="date" name="task-deadline" id="task-deadline" required />
-          <label for="task-completion">Completion:</label>
-          <select name="task-completion" id="task-completion" required>
-            <option value="" disabled selected hidden>
-              Change Task Status
-            </option>
-            <option value="Not Started">Not Started</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
-          </select>
-          <label for="task-subcontractor">Assign Subcontractor:</label>
-          <select name="task-subcontractor" id="task-subcontractor" required>
-            <option value="" disabled selected hidden>
-              Select Subcontractor
-            </option>
-            {% for subcontractor in subcontractors %}
-            <option value="{{ subcontractor.id }}">
-              {{ subcontractor.name }}
-            </option>
-            {% endfor %}
-          </select>
+          <div id="subcon-buttons">
+            <button type="submit">Add Subcontractor</button>
+            <button type="reset">Clear</button>
+          </div>
+        </form>
+        {% endif %}
+      </section>
+      <!------ Tasks sub-section ------>
+      <section class="sub-sections" id="task-sub-section">
+        <h3>Tasks</h3>
+        <div class="table-wrapper">
+          {% if tasks|length == 0 %}
+          <p>No Tasks Assigned</p>
+          {% else %}
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  Task
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                  >
+                    <path
+                      d="m438-240 226-226-58-58-169 169-84-84-57 57 142 142ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"
+                    />
+                  </svg>
+                </th>
+                <th>
+                  Description
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                  >
+                    <path
+                      d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"
+                    />
+                  </svg>
+                </th>
+                <th>
+                  Deadline
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                  >
+                    <path
+                      d="M580-240q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Z"
+                    />
+                  </svg>
+                </th>
+                <th>
+                  Completion
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                  >
+                    <path
+                      d="M720-120q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6Zm-20-80h40v-160h-40v160Zm-540 0v-15 15-440 440Zm0 80q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720h160v-80q0-33 23.5-56.5T400-880h160q33 0 56.5 23.5T640-800v80h160q33 0 56.5 23.5T880-640v171q-18-13-38-22.5T800-508v-132H160v440h283q3 21 9 41t15 39H160Zm240-600h160v-80H400v80ZM720-40q-83 0-141.5-58.5T520-240q0-83 58.5-141.5T720-440q83 0 141.5 58.5T920-240q0 83-58.5 141.5T720-40Z"
+                    />
+                  </svg>
+                </th>
+                <th>
+                  Subcontractor
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                  >
+                    <path
+                      d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"
+                    />
+                  </svg>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for task in tasks %}
+              <tr>
+                <td>{{ task.name }}</td>
+                <td>{{ task.description or "No description provided" }}</td>
+                <td>{{ task.deadline }}</td>
+                <td>{{ task.completion }}</td>
+                <td>
+                  {{ task.subcontractor.name if task.subcontractor else
+                  "Unassigned" }}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% endif %}
         </div>
-        <button type="submit">Add Task</button>
-      </form>
-      {% endif %}
-    </section>
+        {% if user.role != 'subcontractor' %}
+        <form
+          method="POST"
+          action="{{ url_for('views.add_task', project_id=project.id) }}"
+        >
+          <h4>Add a Task Below</h4>
+          <div id="task-div">
+            <label for="task-name">Task Name:</label>
+            <input
+              type="text"
+              name="task-name"
+              id="task-name"
+              placeholder="Enter Task Name"
+              required
+            />
+            <label for="task-description">Description:</label>
+            <textarea
+              name="task-description"
+              id="task-description"
+              rows="3"
+              placeholder="Type Task Description here (optional)..."
+            ></textarea>
+            <label for="task-deadline">Deadline:</label>
+            <input type="date" name="task-deadline" id="task-deadline" required />
+            <label for="task-completion">Completion:</label>
+            <select name="task-completion" id="task-completion" required>
+              <option value="" disabled selected hidden>
+                Change Task Status
+              </option>
+              <option value="Not Started">Not Started</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+            </select>
+            <label for="task-subcontractor">Assign Subcontractor:</label>
+            <select name="task-subcontractor" id="task-subcontractor" required>
+              <option value="" disabled selected hidden>
+                Select Subcontractor
+              </option>
+              {% for subcontractor in subcontractors %}
+              <option value="{{ subcontractor.id }}">
+                {{ subcontractor.name }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+          <button type="submit">Add Task</button>
+        </form>
+        {% endif %}
+      </section>
+  </div>
+  <div id="files" class="tab-content">
     <section class="sub-sections" id="file-invoice-section">
       <!------ File Upload sub-section ------>
       <section class="sub-sections" id="file-upload-sub-section">
@@ -551,3 +560,5 @@ not remove, and add tasks and upload files.
   </section>
 </section>
 {% endblock %}
+  </div>
+  
