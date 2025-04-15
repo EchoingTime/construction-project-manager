@@ -334,6 +334,33 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+/*--------------------- Project Details - Tab ---------------------*/
+
+document.addEventListener("DOMContentLoaded", function () {
+  const sectionExists = document.getElementById("project-details");
+  if (!sectionExists) return; // Exit if section does not exist
+
+  const buttons = document.querySelectorAll(".tab-btn");
+  const contents = document.querySelectorAll(".tab-content");
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      // Remove active classes
+      buttons.forEach((btn) => btn.classList.remove("active"));
+      contents.forEach((content) => content.classList.remove("active"));
+
+      // Add active class to clicked button and corresponding content
+      button.classList.add("active");
+      const targetTab = document.getElementById(button.dataset.tab);
+      if (targetTab) {
+        targetTab.classList.add("active");
+      } else {
+        console.error("No matching tab content found for:", button.dataset.tab);
+      }
+    });
+  });
+});
+
 /*--------------------- Dynamic Calendar ---------------------*/
 
 document.addEventListener("DOMContentLoaded", function () {

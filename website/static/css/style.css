@@ -771,11 +771,21 @@ textarea,
 #project-details p svg {
   fill: var(--base-clr);
 }
+#project-details .sub-sections {
+  padding: 2em;
+}
 #project-details #information-section,
 #project-details #subcontractors-section,
 #project-details #file-invoice-section {
   display: flex;
-  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 10px;
+}
+#project-details #subcontractors-section {
+  flex-direction: column;
 }
 
 /*---------------- Deadline Section ----------------*/
@@ -1397,8 +1407,8 @@ footer {
 /*----------- Projects Details -----------*/
 
 @media (max-width: 1050px) {
-  #project-details .top-section,
-  #file-invoice-section {
+  #project-details #information-section,
+  #project-details #file-invoice-section {
     flex-direction: column;
   }
 }
