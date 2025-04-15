@@ -691,9 +691,13 @@ textarea,
 
 /*---------------- Project Details' Forms ----------------*/
 
+#project-details {
+  display: flex;
+  justify-content: flex-start;
+}
 #project-details #project-details-div {
   display: flex;
-  gap: 5px;
+  padding: 16px;
 }
 #project-details #edit-project {
   cursor: pointer;
@@ -767,23 +771,11 @@ textarea,
 #project-details p svg {
   fill: var(--base-clr);
 }
-#project-details #header-project-details {
-  margin-bottom: 15px;
-}
-#project-details .top-section,
-#project-details .bottom-section {
-  width: 100%;
-  gap: 10px;
-}
-#project-details .top-section {
+#project-details #information-section,
+#project-details #subcontractors-section,
+#project-details #file-invoice-section {
+  display: flex;
   flex-direction: row;
-  border: none;
-  margin: 0;
-  padding-bottom: 0;
-}
-#project-details .bottom-section {
-  border: none;
-  padding-top: 5px;
 }
 
 /*---------------- Deadline Section ----------------*/
