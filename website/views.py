@@ -9,6 +9,7 @@ from flask_login import login_required, current_user
 from .models import File, Project, Message, User, Subcontractor, Assignment, Task
 from . import db
 from datetime import datetime
+from flask_mail import Mail, Message  
 import json
 
 views = Blueprint('views', __name__)
