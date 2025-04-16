@@ -9,7 +9,9 @@ from flask_login import login_required, current_user
 from .models import File, Project, Message, User, Subcontractor, Assignment, Task
 from . import db
 from datetime import datetime
-from flask_mail import Mail, Message  
+from flask_mail import Mail, Message
+from website import mail
+from flask import current_app
 import json
 
 views = Blueprint('views', __name__)
@@ -354,3 +356,22 @@ def view_project_tasks(project_id):
     project = Project.query.get_or_404(project_id)
     tasks = Task.query.filter_by(project_id=project_id).all()
     return render_template('project_tasks.html', project=project, tasks=tasks)
+
+# --------------------- Send Email Ping ---------------------
+
+@views.route('/send_ping/<int:project_id>', methods=['POST'])
+def send_ping(project_id):
+    project = Project.query.get(project_id)
+    contractor = User.query.get(project.user_id)
+
+    reason = request.form['reason']
+    msg = Message(subject=f"[Ping] {reason} {current_user.first_name} on {project.project_name}",
+                  sender=current_app.config['MAIL_USERNAME'],
+                  recipients=[contractor.email],
+                  body=(f"You've received a ping from {current_user.first_name}"
+                        f"(email: {current_user.email})\n\n"
+                        f"Project: {project.project_name}\n"
+                        f"Reason: {reason}\n\n"))
+    mail.send(msg)
+    return redirect(url_for('views.view_project', project_id=project_id))
+

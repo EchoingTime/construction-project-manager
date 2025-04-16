@@ -16,9 +16,12 @@
 """
 
 from website import create_app, create_database
+from flask_mail import Mail
 
 app = create_app()
 create_database(app) # Constructs the database
+app.config.from_object('config.Config') # Configures the app with the settings in config.py
+mail = Mail(app)
 
 if __name__ == '__main__':
     app.run(debug=True)

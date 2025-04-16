@@ -22,6 +22,10 @@ not remove, and add tasks and upload files.
     <button class="tab-btn active" data-tab="information">Information</button>
     <button class="tab-btn" data-tab="subcontractors">Subcontractors</button>
     <button class="tab-btn" data-tab="files">Files</button>
+    {% if user.role == 'subcontractor' %}
+    <button class="tab-btn" data-tab="messages">Message</button>
+    {% endif %}
+    
   </div>
   <!------------ Information Div ------------>
   <div id="information" class="tab-content active">
@@ -557,6 +561,21 @@ not remove, and add tasks and upload files.
         </form>
       </section>
     </section>
+  </div>
+  <!------------ Message Div ------------>
+  <div id=messages class="tab-content">
+    <h3>Message</h3>
+    <form method="POST" action="{{url_for('views.send_ping',project_id=project.id)}}">
+      <label for="reason">Reason for ping:</label>
+      <select name="reason" id="reason" required>
+        <option value="" disabled selected hidden>Select Reason</option>
+        <option value="Task Question">Task Question</option>
+        <option value="Deadline Issue">Deadline Issue</option>
+        <option value="Invoice Issue">Invoice Issue</option>
+        <option value="Other">Other</option>
+      </select>
+      <button type="submit">Ping Contractor</button>
+    </form>
   </div>
 </section>
 {% endblock %}

@@ -9,11 +9,13 @@ from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy # Readying Database
 from flask_login import LoginManager # Manages the login aspects
 from flask_migrate import Migrate # Updates the db to have a new column w/o losing data
+from flask_mail import Mail # For sending emails
 from os import path
 
 migrate=Migrate()
 db = SQLAlchemy() # Database object
 DB_NAME = "database.db"
+mail=Mail() # Initialize Flask-Mail
 
 def create_app(): # Initialize Flask
     app = Flask(__name__)
