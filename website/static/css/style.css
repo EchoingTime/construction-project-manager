@@ -3,7 +3,7 @@
 @Description: This file contains the CSS style for the front-end of the web application.
 */
 
-/*--------------------- Root Variables ---------------------*/
+/*-------------------------- Root Variables --------------------------*/
 
 :root {
   /* Primary Colors */
@@ -47,7 +47,7 @@
   --canceled-clr: #ff0000; /* Block Google Icon */
 }
 
-/*--------------------- Global Styles ---------------------*/
+/*-------------------------- Global Styles --------------------------*/
 
 *,
 *::before,
@@ -61,7 +61,7 @@ html {
   font-size: 16px;
 }
 
-/*--------------------- Page Layouts ---------------------*/
+/*-------------------------- Page Layouts --------------------------*/
 
 body {
   display: grid;
@@ -77,7 +77,7 @@ body {
     "sidebar footer";
 }
 
-/*--------------------- Navbar ---------------------*/
+/*-------------------------- Navbar --------------------------*/
 
 nav {
   grid-area: navbar;
@@ -141,7 +141,7 @@ nav li:first-child {
   fill: var(--icon-clr);
 }
 
-/*----------- Nav Sidebar -----------*/
+/*---------------- Nav Sidebar ----------------*/
 
 .nav-sidebar {
   position: fixed;
@@ -180,7 +180,7 @@ nav li:first-child {
   fill: var(--icon-clr);
 }
 
-/*--------------------- SideBar ---------------------*/
+/*-------------------------- SideBar --------------------------*/
 
 aside {
   grid-area: sidebar;
@@ -203,7 +203,7 @@ aside {
   z-index: 998;
 }
 
-/*----------- Default SideBar -----------*/
+/*---------------- Default SideBar ----------------*/
 
 #default-asidebar {
   padding: 5px 1em;
@@ -322,7 +322,53 @@ aside {
   fill: var(--icon-hover-clr);
 }
 
-/*--------------------- Main Content  ---------------------*/
+/*-------------------------- Alert Box --------------------------*/
+
+.alert-container {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 20px;
+  width: 100%;
+}
+.alert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+  padding-right: 40px;
+  border: 2.5px solid transparent;
+  border-radius: 1em;
+  position: relative;
+}
+.alert-error {
+  font-weight: bold;
+  color: var(--error-text-clr);
+  background-color: var(--error-background-clr);
+  border-color: var(--error-border-clr);
+}
+.alert-success {
+  font-weight: bold;
+  color: var(--success-text-clr);
+  background-color: var(--success-background-clr);
+  border-color: var(--success-border-clr);
+}
+.alert .close {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  border: none;
+  background-color: transparent;
+}
+#error-close {
+  fill: var(--error-border-clr);
+}
+#success-close {
+  fill: var(--success-border-clr);
+}
+
+/*-------------------------- Main Content  --------------------------*/
 
 main {
   grid-area: main;
@@ -371,7 +417,7 @@ textarea,
   scrollbar-color: var(--base-clr) var(--accent-clr);
 }
 
-/*--------------------- Profile Page ---------------------*/
+/*-------------------------- Profile Page --------------------------*/
 
 #profile-section {
   justify-content: flex-start;
@@ -383,13 +429,13 @@ textarea,
   margin-bottom: 10px;
 }
 
-/*--------------------- Project Page Overview ---------------------*/
+/*-------------------------- Project Page Overview --------------------------*/
 
 #project-section {
   justify-content: flex-start;
 }
 
-/*----------- Header Section -----------*/
+/*---------------- Header Section ----------------*/
 
 #project-header {
   display: flex;
@@ -406,7 +452,7 @@ textarea,
   cursor: pointer;
 }
 
-/*----------- List of Projects -----------*/
+/*---------------- List of Projects ----------------*/
 
 #project-section ul {
   padding: 0 5px 5px 5px; /* | Top | Right | Bottom | Left */
@@ -522,7 +568,7 @@ textarea,
   border-right-color: var(--canceled-clr) !important;
 }
 
-/*----------- Editing Project -----------*/
+/*---------------- Editing Project ----------------*/
 
 #project-section .hidden-svg {
   display: none;
@@ -534,7 +580,7 @@ textarea,
   border-radius: 5px 0 0 5px !important;
 }
 
-/*----------- Project Creation Box -----------*/
+/*---------------- Project Creation Box ----------------*/
 
 #deadline-sub-section,
 #completion-status-sub-section,
@@ -616,13 +662,42 @@ textarea,
   fill: var(--filter-clr);
 }
 
-/*--------------------- Project Detail Page ---------------------*/
+/*-------------------------- Project Detail Page --------------------------*/
 
-/*----------- Project Details' Forms -----------*/
+/*-------------------------- Project Page Tabs --------------------------*/
 
+.tab-buttons {
+  display: flex;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+.tab-buttons button {
+  background: none;
+  border: none;
+  padding: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+.tab-buttons button.active {
+  border-bottom: 3px solid #007bff;
+  color: #007bff;
+}
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}
+
+/*---------------- Project Details' Forms ----------------*/
+
+#project-details {
+  display: flex;
+  justify-content: flex-start;
+}
 #project-details #project-details-div {
   display: flex;
-  gap: 5px;
+  padding: 16px;
 }
 #project-details #edit-project {
   cursor: pointer;
@@ -696,26 +771,24 @@ textarea,
 #project-details p svg {
   fill: var(--base-clr);
 }
-#project-details #header-project-details {
-  margin-bottom: 15px;
+#project-details .sub-sections {
+  padding: 2em;
 }
-#project-details .top-section,
-#project-details .bottom-section {
+#project-details #information-section,
+#project-details #subcontractors-section,
+#project-details #file-invoice-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
+  height: 100%;
   gap: 10px;
 }
-#project-details .top-section {
-  flex-direction: row;
-  border: none;
-  margin: 0;
-  padding-bottom: 0;
-}
-#project-details .bottom-section {
-  border: none;
-  padding-top: 5px;
+#project-details #subcontractors-section {
+  flex-direction: column;
 }
 
-/*----------- Deadline Section -----------*/
+/*---------------- Deadline Section ----------------*/
 
 #project-details #deadline-sub-section {
   text-wrap: wrap;
@@ -730,7 +803,7 @@ textarea,
   gap: 5px;
 }
 
-/*----------- Completion Status Section -----------*/
+/*---------------- Completion Status Section ----------------*/
 
 #project-details h3 {
   margin-top: 10px;
@@ -783,7 +856,7 @@ textarea,
   fill: var(--canceled-clr);
 }
 
-/*----------- Address Section -----------*/
+/*---------------- Address Section ----------------*/
 
 #address-sub-section .div-address,
 #address-sub-section #address-buttons {
@@ -800,9 +873,9 @@ textarea,
   margin-right: 3.5px;
 }
 
-/*----------- Subcontractors Section -----------*/
+/*---------------- Subcontractors Section ----------------*/
 
-/*----- List: Subcontractors ------*/
+/*---------- List: Subcontractors -----------*/
 
 #subcontractors-sub-section h3 {
   margin-bottom: 15px;
@@ -852,7 +925,7 @@ th svg {
   margin-top: 10px;
 }
 
-/*----------- Tasks Section -----------*/
+/*---------------- Tasks Section ----------------*/
 
 #task-div {
   width: 100%;
@@ -875,7 +948,7 @@ th svg {
   overflow-y: auto;
 }
 
-/*----------- File + Invoice Merge Section -----------*/
+/*---------------- File + Invoice Merge Section ----------------*/
 
 #file-invoice-section {
   display: flex;
@@ -941,70 +1014,7 @@ th svg {
   fill: var(--accent-clr);
 }
 
-/*--------------------- Footer ---------------------*/
-
-footer {
-  grid-area: footer;
-
-  display: flex;
-  justify-content: center;
-  padding: 0.5em;
-  font-size: 14px;
-
-  background-color: var(--base-clr);
-  border-top: 1px solid var(--line-clr);
-  color: var(--text-clr);
-  font-weight: bold;
-  user-select: none;
-}
-
-/*--------------------- Alert Box ---------------------*/
-
-.alert-container {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin-bottom: 20px;
-  width: 100%;
-}
-.alert {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1em;
-  padding-right: 40px;
-  border: 2.5px solid transparent;
-  border-radius: 1em;
-  position: relative;
-}
-.alert-error {
-  font-weight: bold;
-  color: var(--error-text-clr);
-  background-color: var(--error-background-clr);
-  border-color: var(--error-border-clr);
-}
-.alert-success {
-  font-weight: bold;
-  color: var(--success-text-clr);
-  background-color: var(--success-background-clr);
-  border-color: var(--success-border-clr);
-}
-.alert .close {
-  cursor: pointer;
-  position: absolute;
-  right: 10px;
-  border: none;
-  background-color: transparent;
-}
-#error-close {
-  fill: var(--error-border-clr);
-}
-#success-close {
-  fill: var(--success-border-clr);
-}
-
-/*--------------------- Forms (Login & Registry) ---------------------*/
+/*-------------------------- Forms (Login & Registry) --------------------------*/
 
 h1 {
   font-size: 2.5rem;
@@ -1132,7 +1142,7 @@ a:hover {
   color: var(--error-text-clr);
 }
 
-/*--------------------- Calendar (ChatGPT Basic Reconstruction) ---------------------*/
+/*-------------------------- Calendar (ChatGPT Basic Reconstruction) --------------------------*/
 
 /* Calendar Container */
 #calendar-section .calendar {
@@ -1249,9 +1259,26 @@ a:hover {
   background-color: var(--hover-clr);
 }
 
-/*--------------------- Responsiveness ---------------------*/
+/*-------------------------- Footer --------------------------*/
 
-/*----------- Navbar -----------*/
+footer {
+  grid-area: footer;
+
+  display: flex;
+  justify-content: center;
+  padding: 0.5em;
+  font-size: 14px;
+
+  background-color: var(--base-clr);
+  border-top: 1px solid var(--line-clr);
+  color: var(--text-clr);
+  font-weight: bold;
+  user-select: none;
+}
+
+/*-------------------------- Responsiveness --------------------------*/
+
+/*---------------- Navbar ----------------*/
 
 @media (max-width: 800px) {
   .hideOnMobile {
@@ -1262,7 +1289,7 @@ a:hover {
   }
 }
 
-/*----------- Nav Sidebar -----------*/
+/*---------------- Nav Sidebar ----------------*/
 
 @media (max-width: 400px) {
   .nav-sidebar {
@@ -1270,7 +1297,7 @@ a:hover {
   }
 }
 
-/*----------- Sidebar -----------*/
+/*---------------- Sidebar ----------------*/
 
 @media (max-width: 800px) {
   #default-asidebar {
@@ -1344,7 +1371,7 @@ a:hover {
   }
 }
 
-/*----------- Page Content -----------*/
+/*---------------- Page Content ----------------*/
 
 @media (max-width: 800px) {
   body {
@@ -1361,7 +1388,7 @@ a:hover {
     margin-bottom: 0px;
   }
 
-  /*------ Projects Overview ------*/
+  /*----------- Projects Overview -----------*/
 
   #project-header,
   #header-project-specifics {
@@ -1377,16 +1404,16 @@ a:hover {
   }
 }
 
-/*------ Projects Details ------*/
+/*----------- Projects Details -----------*/
 
 @media (max-width: 1050px) {
-  #project-details .top-section,
-  #file-invoice-section {
+  #project-details #information-section,
+  #project-details #file-invoice-section {
     flex-direction: column;
   }
 }
 
-/*------ Calendar Responsiveness ------*/
+/*----------- Calendar Responsiveness -----------*/
 
 @media (max-width: 800px) {
   #calendar-section .calendar {
@@ -1400,32 +1427,3 @@ a:hover {
     width: 80px;
   }
 }
-
-/*--------------------- Project Page Tabs ---------------------*/
-.tab-buttons {
-  display: flex;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid #ccc;
-}
-
-.tab-buttons button {
-  background: none;
-  border: none;
-  padding: 1rem;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.tab-buttons button.active {
-  border-bottom: 3px solid #007bff;
-  color: #007bff;
-}
-
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
-}
-

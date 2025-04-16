@@ -15,30 +15,18 @@ not remove, and add tasks and upload files.
 <section class="main-content-section" id="project-details">
   <!----------- Main Page Content ----------->
   <div id="project-details-div">
-    <h2 id="header-project-details">{{ project.project_name }}</h2>
-    {% if user.role != 'subcontractor' %}
-    <svg
-      onclick="toggleEdit()"
-      xmlns="http://www.w3.org/2000/svg"
-      height="24px"
-      viewBox="0 -960 960 960"
-      width="18px"
-      id="edit-project"
-    >
-      <path
-        d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"
-      />
-    </svg>
-    {% endif %}
+    <h2>{{ project.project_name }}</h2>
   </div>
-  <!------ Top Section ------>
+  <!------ Tab Section ------>
   <div class="tab-buttons">
     <button class="tab-btn active" data-tab="information">Information</button>
     <button class="tab-btn" data-tab="subcontractors">Subcontractors</button>
     <button class="tab-btn" data-tab="files">Files</button>
   </div>
+  <!------------ Information Div ------------>
   <div id="information" class="tab-content active">
-    <section class="sub-sections top-section">
+    <!--------- Information Section --------->
+    <section id="information-section">
       <!------ Deadline sub-section ------>
       <section class="sub-sections" id="deadline-sub-section">
         <h3>Project Deadline</h3>
@@ -219,7 +207,9 @@ not remove, and add tasks and upload files.
                 required
               ></textarea>
               <div id="address-buttons">
-                <button type="submit" id="address-submit">Update Address</button>
+                <button type="submit" id="address-submit">
+                  Update Address
+                </button>
                 <button type="reset">Clear</button>
               </div>
             </div>
@@ -230,8 +220,10 @@ not remove, and add tasks and upload files.
       </section>
     </section>
   </div>
+  <!------------ Subcontractors Div ------------>
   <div id="subcontractors" class="tab-content">
-    <section class="sub-sections bottom-section">
+    <!--------- Subcontractors Section --------->
+    <section id="subcontractors-section">
       <!------ Subcontractor sub-section ------>
       <section class="sub-sections" id="subcontractors-sub-section">
         <h3>Subcontractors</h3>
@@ -295,11 +287,11 @@ not remove, and add tasks and upload files.
           </table>
           {% endif %}
         </div>
+        {% if user.role != 'subcontractor' %}
         <form
           method="POST"
           action="{{ url_for('views.add_subcontractor', project_id=project.id) }}"
         >
-          {% if user.role != 'subcontractor' %}
           <textarea
             name="subcontractor-email"
             id="subcontractor-email"
@@ -430,7 +422,12 @@ not remove, and add tasks and upload files.
               placeholder="Type Task Description here (optional)..."
             ></textarea>
             <label for="task-deadline">Deadline:</label>
-            <input type="date" name="task-deadline" id="task-deadline" required />
+            <input
+              type="date"
+              name="task-deadline"
+              id="task-deadline"
+              required
+            />
             <label for="task-completion">Completion:</label>
             <select name="task-completion" id="task-completion" required>
               <option value="" disabled selected hidden>
@@ -456,9 +453,12 @@ not remove, and add tasks and upload files.
         </form>
         {% endif %}
       </section>
+    </section>
   </div>
+  <!------------ Files & Invoice Div ------------>
   <div id="files" class="tab-content">
-    <section class="sub-sections" id="file-invoice-section">
+    <!------------ Files & Invoice Section ------------>
+    <section id="file-invoice-section" class="sub-sections">
       <!------ File Upload sub-section ------>
       <section class="sub-sections" id="file-upload-sub-section">
         <form
@@ -557,8 +557,6 @@ not remove, and add tasks and upload files.
         </form>
       </section>
     </section>
-  </section>
+  </div>
 </section>
 {% endblock %}
-  </div>
-  
