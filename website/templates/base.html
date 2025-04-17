@@ -151,7 +151,7 @@ web application.
     </aside>
     {% endif %}
     <!--------------------- Main (HTML Specifics After Message Container) --------------------->
-    <main class="{{ page_class }}">
+    <main>
       <!----------- Message Flashing Container ----------->
       <section class="alert-container" id="toggle-flash-container">
         {% with messages = get_flashed_messages(with_categories=true) %} {% if

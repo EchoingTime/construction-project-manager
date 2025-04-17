@@ -57,7 +57,7 @@
   box-sizing: border-box; /* Ensures padding and border are included in total sizing */
 }
 html {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 16px;
 }
 
@@ -68,7 +68,7 @@ body {
 
   min-height: 100vh; /* Viewport Height */
   grid-template-columns: auto 1fr; /* Set columns for sidebar and main */
-  grid-template-areas: 'sidebar main';
+  grid-template-areas: "sidebar main";
   background-color: var(--base-clr);
 
   /* Prevent "bounce" after scrolling to the top or bottom of page */
@@ -80,7 +80,7 @@ body {
 aside {
   grid-area: sidebar;
 
-  position: fixed;
+  position: sticky;
   top: 0;
   width: 250px;
   height: 100%;
@@ -261,12 +261,6 @@ aside #toggle-btn:hover svg {
 
 /*-------------------------- Main Content  --------------------------*/
 
-main:not(.login-or-registry-page) {
-  /* Added <main class="{{ page_class }}"> to base.html
-  and page_class="login-or-registry-page" to auth.py's 
-  login and registry views */
-  margin-left: 250px;
-}
 main {
   grid-area: main;
 
