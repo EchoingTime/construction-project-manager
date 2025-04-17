@@ -57,7 +57,7 @@
   box-sizing: border-box; /* Ensures padding and border are included in total sizing */
 }
 html {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 16px;
 }
 
@@ -70,114 +70,8 @@ body {
   min-height: 100dvh; /* Dynamic Viewport Height */
 
   grid-template-columns: auto 1fr; /* Set columns for sidebar and main */
-  grid-template-rows: auto 1fr auto;
-  grid-template-areas:
-    "navbar navbar"
-    "sidebar main"
-    "sidebar footer";
-}
-
-/*-------------------------- Navbar --------------------------*/
-
-nav {
-  grid-area: navbar;
-
-  position: sticky;
-  top: 0;
-  height: 65px;
-
-  display: flex;
-
+  grid-template-areas: 'sidebar main';
   background-color: var(--base-clr);
-  border-bottom: 1px solid var(--line-clr);
-  color: var(--text-clr);
-  user-select: none;
-  z-index: 999;
-}
-nav #welcome-page {
-  text-align: center;
-}
-nav ul {
-  width: 100%;
-
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-
-  list-style: none;
-}
-nav li {
-  height: 65px;
-}
-nav a,
-.nav-title {
-  display: flex;
-  align-items: center;
-
-  height: 100%;
-  padding: 0 15px;
-
-  color: var(--text-clr);
-  text-decoration: none;
-}
-.nav-title {
-  font-weight: 600;
-}
-nav svg {
-  margin-right: 5px;
-}
-nav a:hover {
-  background-color: var(--hover-clr);
-  color: var(--hover-text-clr);
-  text-decoration: none;
-}
-nav a:hover svg {
-  fill: var(--hover-text-clr);
-}
-nav li:first-child {
-  margin-right: auto;
-}
-.menu-button svg {
-  fill: var(--icon-clr);
-}
-
-/*---------------- Nav Sidebar ----------------*/
-
-.nav-sidebar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 999;
-
-  width: 100px;
-  height: 100vh;
-
-  background-color: var(--transparent-bg-clr);
-  backdrop-filter: blur(10px);
-  box-shadow: -10px 0px 10px var(--transparent-border-clr);
-
-  display: none;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-.nav-sidebar li {
-  width: 100%;
-}
-.nav-sidebar a {
-  width: 100%;
-
-  color: var(--text-clr);
-}
-.nav-sidebar a:hover {
-  background-color: var(--hover-clr);
-  color: var(--hover-text-clr);
-}
-.menu-button {
-  display: none;
-}
-.nav-sidebar svg {
-  fill: var(--icon-clr);
 }
 
 /*-------------------------- SideBar --------------------------*/
@@ -186,9 +80,9 @@ aside {
   grid-area: sidebar;
 
   position: sticky; /* Sticks to position within parent container when scrolling */
-  top: 65px; /* Sidebar sticks beneath navbar when scrolling */
   height: calc(100vh - 65px);
   width: 250px;
+  height: 100%;
 
   align-self: start; /* Sidebar stays aligned to the top of the container */
   overflow: hidden; /* For when the sidebar is closed */
@@ -201,39 +95,33 @@ aside {
   border-right: 1px solid var(--line-clr);
   color: var(--text-clr);
   z-index: 998;
+  user-select: none; /* Disables the option to copy text */
 }
-
-/*---------------- Default SideBar ----------------*/
-
-#default-asidebar {
-  padding: 5px 1em;
-  user-select: none;
-}
-#default-asidebar.close {
+aside.close {
   width: 60px;
   padding: 5px;
 }
-#default-asidebar ul {
+aside ul {
   list-style: none; /* Removes Bullets */
 }
-#default-asidebar > ul > li:first-child {
+aside > ul > li:first-child {
   display: flex;
   justify-content: flex-end;
 
   margin-bottom: 16px;
 }
-#default-asidebar > ul > li:first-child .logo {
+aside > ul > li:first-child .logo {
   font-weight: 600;
 }
-#default-asidebar ul li.active a {
+aside ul li.active a {
   color: var(--active-clr); /* Current Page text will be highlighted */
 }
-#default-asidebar ul li.active svg {
+aside ul li.active svg {
   fill: var(--active-clr);
 }
-#default-asidebar a,
-#default-asidebar .dropdown-btn,
-#default-asidebar .logo {
+aside a,
+aside .dropdown-btn,
+aside .logo {
   display: flex;
   align-items: center; /* Align items vertically */
 
@@ -242,9 +130,8 @@ aside {
   border-radius: 0.5em;
 
   color: var(--text-clr);
-  text-decoration: none;
 }
-#default-asidebar .dropdown-btn {
+aside .dropdown-btn {
   width: 100%;
 
   border: none;
@@ -255,54 +142,57 @@ aside {
 
   cursor: pointer;
 }
-#default-asidebar svg {
+aside svg {
   flex-shrink: 0;
   fill: var(--icon-clr);
 }
-#default-asidebar a span,
-#default-asidebar .dropdown-btn span {
+aside a span,
+aside .dropdown-btn span {
   flex-grow: 1; /* Moves Icons to the right */
 }
-#default-asidebar a:hover,
-#default-asidebar .dropdown-btn:hover {
+aside a:hover {
+  text-decoration: none;
+}
+aside a:hover,
+aside .dropdown-btn:hover {
   background-color: var(--hover-clr);
   color: var(--hover-text-clr);
 }
-#default-asidebar a:hover svg,
-#default-asidebar .dropdown-btn:hover svg {
+aside a:hover svg,
+aside .dropdown-btn:hover svg {
   fill: var(--icon-hover-clr);
 }
-#default-asidebar .active a:hover {
+aside .active a:hover {
   background-color: var(--hover-clr);
   color: var(--hover-text-clr);
 }
-#default-asidebar .active a:hover svg {
+aside .active a:hover svg {
   fill: var(--icon-hover-clr);
 }
-#default-asidebar .sub-menu {
+aside .sub-menu {
   /* Transition only works on grid layouts */
   display: grid;
   grid-template-rows: 0fr;
 
   transition: 300ms ease-in-out;
 }
-#default-asidebar .sub-menu > div {
+aside .sub-menu > div {
   /* Needed to make child elements disappear! */
   overflow: hidden; /* Will hide child elements that do not fit in the container */
 }
-#default-asidebar .sub-menu.show {
+aside .sub-menu.show {
   grid-template-rows: 1fr; /* 1fr is a responsive unit that will adjust automatically */
 }
-#default-asidebar .dropdown-btn .arrow-down-svg {
+aside .dropdown-btn .arrow-down-svg {
   transition: 200ms ease;
 }
-#default-asidebar .rotate svg:last-child {
+aside .rotate svg:last-child {
   rotate: 180deg;
 }
-#default-asidebar .sub-menu a {
+aside .sub-menu a {
   padding-left: 2em;
 }
-#default-asidebar #toggle-btn {
+aside #toggle-btn {
   margin-left: auto;
 
   padding: 1em;
@@ -312,13 +202,13 @@ aside {
 
   cursor: pointer;
 }
-#default-asidebar #toggle-btn svg {
+aside #toggle-btn svg {
   transition: rotate 150ms ease;
 }
-#default-asidebar #toggle-btn:hover {
+aside #toggle-btn:hover {
   background-color: var(--hover-clr);
 }
-#default-asidebar #toggle-btn:hover svg {
+aside #toggle-btn:hover svg {
   fill: var(--icon-hover-clr);
 }
 
@@ -380,7 +270,6 @@ main {
   align-items: center;
   flex-direction: column;
 
-  background-color: var(--base-clr);
   color: var(--text-clr);
   transition: margin 0.3s ease;
 }
@@ -1259,48 +1148,12 @@ a:hover {
   background-color: var(--hover-clr);
 }
 
-/*-------------------------- Footer --------------------------*/
-
-footer {
-  grid-area: footer;
-
-  display: flex;
-  justify-content: center;
-  padding: 0.5em;
-  font-size: 14px;
-
-  background-color: var(--base-clr);
-  border-top: 1px solid var(--line-clr);
-  color: var(--text-clr);
-  font-weight: bold;
-  user-select: none;
-}
-
 /*-------------------------- Responsiveness --------------------------*/
-
-/*---------------- Navbar ----------------*/
-
-@media (max-width: 800px) {
-  .hideOnMobile {
-    display: none;
-  }
-  .menu-button {
-    display: block;
-  }
-}
-
-/*---------------- Nav Sidebar ----------------*/
-
-@media (max-width: 400px) {
-  .nav-sidebar {
-    height: 100%;
-  }
-}
 
 /*---------------- Sidebar ----------------*/
 
 @media (max-width: 800px) {
-  #default-asidebar {
+  aside {
     position: fixed;
     bottom: 0;
     width: 100% !important;
@@ -1311,7 +1164,7 @@ footer {
     padding: 0;
     top: unset; /* Need to unset to apply bottom 0 */
   }
-  #default-asidebar > ul {
+  aside > ul {
     display: grid;
     grid-auto-columns: 60px;
     grid-auto-flow: column; /* Every grid item will be placed in a new grid column */
@@ -1321,11 +1174,11 @@ footer {
 
     padding: 0;
   }
-  #default-asidebar ul li {
+  aside ul li {
     height: 100%;
   }
-  #default-asidebar ul a,
-  #default-asidebar ul .dropdown-btn {
+  aside ul a,
+  aside ul .dropdown-btn {
     display: flex;
     justify-content: center;
 
@@ -1334,12 +1187,12 @@ footer {
     padding: 0;
     border-radius: 0;
   }
-  #default-asidebar ul li span,
-  #default-asidebar ul li:first-child,
-  #default-asidebar .dropdown-btn svg:last-child {
+  aside ul li span,
+  aside ul li:first-child,
+  aside .dropdown-btn svg:last-child {
     display: none;
   }
-  #default-asidebar ul li .sub-menu.show {
+  aside ul li .sub-menu.show {
     position: fixed;
     bottom: 60px;
     left: 0;
@@ -1354,13 +1207,13 @@ footer {
     backdrop-filter: blur(10px);
     border-top: 1px solid var(--transparent-border-clr);
   }
-  #default-asidebar ul li .sub-menu.show > div {
+  aside ul li .sub-menu.show > div {
     overflow-x: auto;
   }
-  #default-asidebar ul li .sub-menu.show li {
+  aside ul li .sub-menu.show li {
     display: inline-flex;
   }
-  #default-asidebar ul li .sub-menu.show a {
+  aside ul li .sub-menu.show a {
     display: flex;
     justify-content: center;
 
@@ -1374,10 +1227,6 @@ footer {
 /*---------------- Page Content ----------------*/
 
 @media (max-width: 800px) {
-  body {
-    grid-template-columns: 1fr;
-    grid-template-areas: "navbar" "main" "footer";
-  }
   main {
     padding: 2em 1em 60px 1em;
   }
