@@ -65,12 +65,10 @@ html {
 
 body {
   display: grid;
-
-  min-height: 100vh; /* Viewport Height */
-  grid-template-columns: auto 1fr; /* Set columns for sidebar and main */
+  grid-template-columns: auto 1fr;
   grid-template-areas: "sidebar main";
+  height: 100vh;
   background-color: var(--base-clr);
-
   /* Prevent "bounce" after scrolling to the top or bottom of page */
   overscroll-behavior: none;
 }
@@ -85,8 +83,7 @@ aside {
   width: 250px;
   height: 100%;
 
-  align-self: start; /* Sidebar stays aligned to the top of the container */
-  overflow: hidden; /* For when the sidebar is closed */
+  overflow: hidden; /* When the sidebar is closed */
   text-wrap: nowrap;
   transition: 300ms ease-in-out; /* Close sidebar smoothly with a transition */
 
@@ -554,7 +551,7 @@ textarea,
 
 /*-------------------------- Project Detail Page --------------------------*/
 
-/*-------------------------- Project Page Tabs --------------------------*/
+/*---------------- Project Page Tabs ----------------*/
 
 .tab-buttons {
   display: flex;
