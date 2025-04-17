@@ -67,11 +67,12 @@ body {
   display: grid;
 
   min-height: 100vh; /* Viewport Height */
-  min-height: 100dvh; /* Dynamic Viewport Height */
-
   grid-template-columns: auto 1fr; /* Set columns for sidebar and main */
   grid-template-areas: 'sidebar main';
   background-color: var(--base-clr);
+
+  /* Prevent "bounce" after scrolling to the top or bottom of page */
+  overscroll-behavior: none;
 }
 
 /*-------------------------- SideBar --------------------------*/
@@ -79,8 +80,8 @@ body {
 aside {
   grid-area: sidebar;
 
-  position: sticky; /* Sticks to position within parent container when scrolling */
-  height: calc(100vh - 65px);
+  position: fixed;
+  top: 0;
   width: 250px;
   height: 100%;
 
@@ -260,6 +261,12 @@ aside #toggle-btn:hover svg {
 
 /*-------------------------- Main Content  --------------------------*/
 
+main:not(.login-or-registry-page) {
+  /* Added <main class="{{ page_class }}"> to base.html
+  and page_class="login-or-registry-page" to auth.py's 
+  login and registry views */
+  margin-left: 250px;
+}
 main {
   grid-area: main;
 

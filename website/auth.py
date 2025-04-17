@@ -41,7 +41,7 @@ def login():
         else:
             flash('Account does not exist.', category='error')
             
-    return render_template("login.html", user=current_user)
+    return render_template("login.html", user=current_user, page_class="login-or-registry-page")
 
 # --------------------- Logout Function ---------------------
 
@@ -89,4 +89,4 @@ def sign_up():
                 db.session.commit()
             return redirect(url_for('views.home')) # Redirect to home page
 
-    return render_template("registry.html", user=current_user)
+    return render_template("registry.html", user=current_user, page_class="login-or-registry-page")
