@@ -8,9 +8,22 @@
 const toggleButton = document.getElementById('toggle-btn');
 const sidebar = document.getElementById('sidebar');
 
+// Will apply a saved sidebar state on page load (Assisted by ChatGPT)
+document.addEventListener('DOMContentLoaded', () => {
+  const isSidebarClosed = localStorage.getItem('sidebarClosed') === 'true';
+  if (isSidebarClosed) {
+    sidebar.classList.add('close');
+    toggleButton.classList.add('rotate');
+  }
+});
+
 function toggleSidebar() {
   sidebar.classList.toggle('close');
   toggleButton.classList.toggle('rotate');
+
+  // Saving the sidebar state to localStorage
+  const isClosed = sidebar.classList.contains('close');
+  localStorage.setItem('sidebarClosed', isClosed);
 
   closeSubMenus();
 }
@@ -26,6 +39,9 @@ function toggleSubMenu(button) {
     sidebar.classList.toggle('close');
     toggleButton.classList.toggle('rotate');
   }
+
+  // Saving the state again if sidebar is reopened via the submenu
+  localStorage.setItem('sidebarClosed', false);
 }
 
 function closeSubMenus() {
