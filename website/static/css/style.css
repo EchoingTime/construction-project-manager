@@ -40,11 +40,17 @@
   --info-clr: #2196f3;
   --filter-clr: #8c90f4;
   /* Progress Status Colors */
-  --not-yet-started-clr: #007bff; /* Not Started Google Icon */
-  --on-hold-clr: #ffa500; /* Pause Circle Google Icon */
-  --in-progress-clr: #ffff00; /* Auto Renew Google Icon */
-  --completed-clr: #00ff00; /* Check Circle Google Icon */
-  --canceled-clr: #ff0000; /* Block Google Icon */
+  --not-yet-started-clr: #e0e0e0;
+  --on-hold-clr: #f0ad4e;
+  --in-progress-clr: #5bc0de;
+  --completed-clr: #5cb85c;
+  --canceled-clr: #d9534f;
+  /* Additions */
+  --link-hover-color: #007bff;
+  --row-bg: linear-gradient(145deg, #ffffff, #f6f6f6);
+  --row-alt-bg: linear-gradient(145deg, #f1f5f9, #e5eaf2);
+  --row-border: #e0e0e0;
+  --hover-bg: #e0f0ff;
 }
 
 /*-------------------------- Global Styles --------------------------*/
@@ -71,6 +77,9 @@ body {
   background-color: var(--base-clr);
   /* Prevent "bounce" after scrolling to the top or bottom of page */
   overscroll-behavior: none;
+  /* Avoids hard-coding multiple breakpoints. This will allow the browser
+  to pick a size that scales between a min and max as the viewport grows */
+  font-size: clamp(0.875rem, 1.5vw, 1.125rem);
 }
 
 /*-------------------------- SideBar --------------------------*/
@@ -288,20 +297,8 @@ main {
   width: 100%;
   border: 1px solid var(--accent-clr);
 }
-h1,
-h2,
-h3,
-h4 {
-  user-select: none;
+h2 {
   text-align: center;
-}
-svg {
-  fill: var(--icon-clr);
-}
-textarea,
-.table-wrapper {
-  scrollbar-width: thin;
-  scrollbar-color: var(--base-clr) var(--accent-clr);
 }
 
 /*-------------------------- Profile Page --------------------------*/
@@ -318,235 +315,246 @@ textarea,
 
 /*-------------------------- Project Page Overview --------------------------*/
 
-#project-section {
-  justify-content: flex-start;
-}
-
-/*---------------- Header Section ----------------*/
-
+/* Header fix with underline */
 #project-header {
   display: flex;
-  justify-items: center;
-  margin-bottom: 5px;
-  padding: 1em;
-  text-wrap: nowrap;
-}
-#project-header #edit-project {
-  margin-left: 5px;
-  fill: var(--accent-clr);
-}
-#project-header svg:hover {
-  cursor: pointer;
-}
-
-/*---------------- List of Projects ----------------*/
-
-#project-section ul {
-  padding: 0 5px 5px 5px; /* | Top | Right | Bottom | Left */
-  list-style: none;
-}
-#project-section #no-projects {
-  margin-top: 5px;
-  font-weight: bold;
-}
-#project-section li {
-  display: flex;
-}
-#project-section #project-status,
-#project-section a,
-#project-section li .date,
-#project-section .close {
-  display: flex;
-  margin-bottom: 5px;
-  padding: 5px 10px;
+  justify-content: space-between;
   align-items: center;
-  text-align: center;
-  justify-content: center;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #ddd;
 }
-#project-section li a {
-  background-color: var(--accent-clr);
-  color: var(--base-clr);
-  border: 1px solid var(--accent-clr);
-  border-right-color: var(--base-clr);
+#project-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
 
-  flex: 1;
-  margin-right: 0;
+/* Scrollable wrapper */
+#project-section .table-wrapper {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 6px;
 }
-#project-section li .date {
-  background-color: var(--accent-clr);
-  color: var(--base-clr);
-  border-radius: 0 5px 5px 0;
-}
-#project-section #project-status {
-  display: flex;
-  background-color: var(--accent-clr);
-  color: var(--base-clr);
 
-  border-radius: 5px 0 0 5px;
-  margin-right: 0;
-  border: 1px solid var(--accent-clr);
-
-  border-right-color: var(--base-clr);
+/* Scrollbar styling */
+#project-section .table-wrapper::-webkit-scrollbar {
+  width: 6px;
 }
-#project-section li a:hover {
+#project-section .table-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+
+/* Table styling */
+#project-section table {
+  display: table;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 15px;
+  margin-bottom: 0.5rem;
+}
+
+/* Row styling */
+#project-section tr {
+  background: var(--row-bg);
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--row-border);
+  transition: all 0.25s ease-in-out;
+  will-change: transform;
+  /* Lazy-painting off-screen elements to boost performance */
+  content-visibility: auto;
+  contain-intrinsic-size: 80px; /* approximate height */
+}
+#project-section tr:nth-child(even) {
+  background: var(--row-alt-bg);
+}
+
+/* Hover effect */
+#project-section tr:hover {
+  /* translateZ(0) will nudge the GPU to handle it */
+  transform: translateZ(0) translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 120, 255, 0.15);
+  background-color: var(--hover-bg);
+}
+
+#project-section td {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 1rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.95rem;
+  color: #333;
+  border-radius: 15px;
+  background: none;
+  padding: clamp(0.75rem, 1.5vw, 1.5rem);
+}
+
+/* Project title link */
+#project-section td a {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #111;
   text-decoration: none;
-  background-color: var(--hover-clr);
+  transition: color 0.2s ease, transform 0.2s ease;
 }
-#project-section .close {
-  border-radius: 0 5px 5px 0;
-  background-color: var(--accent-clr);
-  border: 1px solid var(--accent-clr);
-  border-left-color: var(--base-clr);
+#project-section td a:hover {
+  color: var(--link-hover-color);
+  transform: scale(1.02);
+  text-shadow: 0 0 1px rgba(0, 123, 255, 0.4);
 }
-#project-section svg {
-  fill: var(--icon-form-clr);
-  transition: all 0.3s ease;
-  width: 16px;
+
+/* Just quick tab access */
+#project-section td a:focus-visible,
+#delete-button:focus-visible {
+  outline: 2px dashed var(--clr-accent);
+  outline-offset: 3px;
 }
-#project-section .close:hover {
+
+/* Info group */
+.project-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 120px;
+}
+
+/* Date styling */
+#project-section .date {
+  margin-bottom: 0.2rem;
+}
+
+/* Status tags */
+#project-status {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+#project-status span {
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+#project-status .not-started {
+  background-color: var(--not-yet-started-clr);
+  color: #444;
+}
+#project-status .on-hold {
+  background-color: var(--on-hold-clr);
+  color: #fff;
+}
+#project-status .in-progress {
+  background-color: var(--in-progress-clr);
+  color: #fff;
+}
+#project-status .completed {
+  background-color: var(--completed-clr);
+  color: #fff;
+}
+#project-status .canceled {
+  background-color: var(--canceled-clr);
+  color: #fff;
+}
+
+/* Delete button using ID */
+#delete-button {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  box-shadow: 0 0 20px var(--deleting-clr); /* Glowing effect */
-  border-left-color: var(--deleting-clr);
-  transition: all 0.3s ease;
+  opacity: 0.4;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
-#project-section .close:hover svg {
-  fill: var(--deleting-clr);
+#delete-button:hover {
+  opacity: 1;
+  transform: scale(1.1);
 }
-#project-status #not-yet-started-svg:hover {
-  fill: var(--not-yet-started-clr);
+#delete-button span svg {
+  width: 18px;
+  height: 18px;
+  fill: #aaa;
+  transition: fill 0.2s ease;
 }
-#project-status #on-hold-svg:hover {
-  fill: var(--on-hold-clr);
+#delete-button:hover span svg {
+  fill: #444;
 }
-#project-status #in-progress-svg:hover {
-  fill: var(--in-progress-clr);
+
+/* Form styling — horizontal layout */
+#project-form {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(to bottom right, #ffffff, #f9fbff);
+  padding: 1rem 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  margin-top: 2rem;
+  flex-wrap: wrap;
 }
-#project-status #completed-svg:hover {
-  fill: var(--completed-clr);
+
+#project-form textarea {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+  resize: none;
 }
-#project-status #canceled-svg:hover {
-  fill: var(--canceled-clr);
+
+#project-form textarea {
+  max-height: 40px;
+  min-height: 40px;
 }
-#project-status:has(#not-yet-started-svg:hover),
-#project-status:has(#on-hold-svg:hover),
-#project-status:has(#in-progress-svg:hover),
-#project-status:has(#completed-svg:hover),
-#project-status:has(#canceled-svg:hover) {
-  transition: all 0.3s ease;
+
+#project-form textarea:focus {
+  border-color: #007bff;
+  outline: none;
 }
-#project-status:has(#not-yet-started-svg:hover) {
-  box-shadow: 0 0 20px var(--not-yet-started-clr);
-  border-right-color: var(--not-yet-started-clr) !important;
+
+#project-form #filter-projects:hover {
+  cursor: pointer;
+  fill: #0056b3;
 }
-#project-status:has(#on-hold-svg:hover) {
-  box-shadow: 0 0 20px var(--on-hold-clr);
-  border-right-color: var(--on-hold-clr) !important;
+
+#project-form button {
+  padding: 0.6rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
-#project-status:has(#in-progress-svg:hover) {
-  box-shadow: 0 0 20px var(--in-progress-clr);
-  border-right-color: var(--in-progress-clr) !important;
+#project-form button svg {
+  width: 16px;
+  height: 16px;
+  fill: white;
 }
-#project-status:has(#completed-svg:hover) {
-  box-shadow: 0 0 20px var(--completed-clr);
-  border-right-color: var(--completed-clr) !important;
-}
-#project-status:has(#canceled-svg:hover) {
-  box-shadow: 0 0 20px var(--canceled-clr);
-  border-right-color: var(--canceled-clr) !important;
+#project-form button:hover {
+  background-color: #0056b3;
 }
 
 /*---------------- Editing Project ----------------*/
 
-#project-section .hidden-svg {
+#project-section .hidden-button {
   display: none;
-}
-#project-section .smooth-borders {
-  border-radius: 0% !important;
-}
-#project-section .left-radius {
-  border-radius: 5px 0 0 5px !important;
-}
-
-/*---------------- Project Creation Box ----------------*/
-
-#deadline-sub-section,
-#completion-status-sub-section,
-#address-sub-section {
-  height: 85%;
-}
-#subcontractors-sub-section,
-#task-sub-section,
-#file-upload-sub-section {
-  width: 100%;
-}
-#project-details h3 {
-  text-align: center;
-  margin-bottom: 10px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid var(--line-clr);
-}
-#project-form {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-top: 25px;
-}
-#project-form #filter-projects,
-#project-form #project-column-info {
-  align-self: center;
-}
-#project-form button,
-#project-form textarea,
-#project-form #filter-projects,
-#project-form #project-column-info {
-  margin: 10px 0 10px 0;
-  padding: 5px 10px;
-  border: 2px solid var(--accent-clr);
-  background-color: var(--base-clr);
-}
-#project-form textarea {
-  padding: 5px 5px 0 5px;
-  resize: none;
-  white-space: nowrap;
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-#project-form textarea:focus {
-  outline: none;
-}
-#project-form textarea::placeholder {
-  font-style: italic;
-  font-size: 12px;
-}
-#project-form button {
-  border-left: none;
-}
-#project-form #filter-projects,
-#project-form #project-column-info {
-  border-right: none;
-}
-#project-form button,
-#project-form #filter-projects,
-#project-form #project-column-info {
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-#project-form button:hover {
-  box-shadow: 0 0 20px var(--creating-clr); /* Glowing effect */
-}
-#project-form svg {
-  fill: var(--icon-clr);
-  width: 20px;
-  transition: all 0.3s ease;
-}
-#project-form button:hover svg {
-  fill: var(--creating-clr);
-}
-#project-form #project-column-info:hover svg {
-  fill: var(--info-clr);
-}
-#project-form #filter-projects:hover svg {
-  fill: var(--filter-clr);
 }
 
 /*-------------------------- Project Detail Page --------------------------*/
@@ -578,327 +586,22 @@ textarea,
 
 /*---------------- Project Details' Forms ----------------*/
 
-#project-details {
-  display: flex;
-  justify-content: flex-start;
-}
-#project-details #project-details-div {
-  display: flex;
-  padding: 16px;
-}
-#project-details #edit-project {
-  cursor: pointer;
-}
-#project-details form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 10px 5px 10px;
-  margin-top: 5px;
-}
-#project-details form textarea {
-  border: 2px solid var(--accent-clr);
-  background-color: var(--base-clr);
-  font-style: italic;
-  padding: 5px 5px 0 5px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-
-  resize: none;
-  white-space: nowrap;
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-#project-details form select {
-  margin-top: 5px;
-}
-#project-details form textarea:focus,
-#project-details form select:focus {
-  outline: none;
-  border-color: var(--active-clr) !important;
-}
-#project-details form textarea:hover,
-#project-details form select:hover {
-  border-color: var(--hover-clr);
-}
-#project-details input {
-  padding-left: 5px;
-  color: var(--text-faded-clr);
-  background-color: var(--base-clr);
-  font-style: italic;
-  border: 2px solid var(--accent-clr);
-}
-#project-details input:focus {
-  outline: none;
-}
-#project-details input:hover {
-  border-color: var(--hover-clr);
-}
-#project-details button {
-  padding: 5px;
-  color: var(--base-clr);
-  background-color: var(--accent-clr);
-  border: 1px solid var(--accent-clr);
-  border-radius: 0.25em;
-}
-#project-details button:hover {
-  background-color: var(--hover-clr);
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-#project-details p {
-  display: flex;
-  gap: 5px;
-  padding: 5px;
-  background-color: var(--accent-clr);
-  color: var(--base-clr);
-  border: 1px solid var(--accent-clr);
-  border-radius: 0.25em;
-}
-#project-details p svg {
-  fill: var(--base-clr);
-}
-#project-details .sub-sections {
-  padding: 2em;
-}
-#project-details #information-section,
-#project-details #subcontractors-section,
-#project-details #file-invoice-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  gap: 10px;
-}
-#project-details #subcontractors-section {
-  flex-direction: column;
-}
-
 /*---------------- Deadline Section ----------------*/
-
-#project-details #deadline-sub-section {
-  text-wrap: wrap;
-  text-align: center;
-}
-#project-details #deadline-form {
-  gap: 10px;
-}
-.div-dead {
-  display: flex;
-  flex-direction: row;
-  gap: 5px;
-}
 
 /*---------------- Completion Status Section ----------------*/
 
-#project-details h3 {
-  margin-top: 10px;
-}
-#project-details select {
-  border: 2px solid var(--accent-clr);
-  padding: 5px;
-  color: var(--text-faded-clr);
-  font-style: italic;
-  background-color: var(--base-clr);
-}
-#project-details select:focus {
-  outline: none;
-  border-color: var(--hover-clr);
-}
-#project-details #completion-form .buttons {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  gap: 5px;
-}
-#project-details #completion-form button {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-#project-details #completion-status-sub-section p {
-  display: flex;
-  align-items: flex-end; /* Aligns svg on the bottom next to p text */
-  gap: 5px;
-  margin-top: 5px;
-  border: 1px solid var(--accent-clr);
-  padding: 5px;
-  border-radius: 0.25em;
-  color: var(--base-clr);
-  background-color: var(--accent-clr);
-}
-#displaying-completion-status #not-yet-started-svg {
-  fill: var(--not-yet-started-clr);
-}
-#displaying-completion-status #on-hold-svg {
-  fill: var(--on-hold-clr);
-}
-#displaying-completion-status #in-progress-svg {
-  fill: var(--in-progress-clr);
-}
-#displaying-completion-status #completed-svg {
-  fill: var(--completed-clr);
-}
-#displaying-completion-status #canceled-svg {
-  fill: var(--canceled-clr);
-}
-
 /*---------------- Address Section ----------------*/
-
-#address-sub-section .div-address,
-#address-sub-section #address-buttons {
-  display: flex;
-  align-self: center;
-}
-#address-sub-section .div-address {
-  flex-direction: column;
-}
-#address-sub-section p {
-  text-align: center;
-}
-#address-sub-section #address-submit {
-  margin-right: 3.5px;
-}
 
 /*---------------- Subcontractors Section ----------------*/
 
 /*---------- List: Subcontractors -----------*/
 
-#subcontractors-sub-section h3 {
-  margin-bottom: 15px;
-}
-.table-wrapper {
-  display: flex;
-  max-width: 85%;
-  max-height: 250px;
-  overflow: auto;
-}
-table {
-  width: 100%;
-}
-tr {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
-  border: 1px solid var(--accent-clr);
-  border-radius: 0.25em;
-}
-th,
-td {
-  display: flex;
-  flex: 1;
-  padding: 5px 10px 5px 10px;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-}
-td {
-  background-color: var(--accent-clr);
-  color: var(--base-clr);
-}
-th:first-child,
-td:first-child {
-  justify-content: flex-start;
-}
-th:last-child,
-td:last-child {
-  justify-content: flex-end;
-}
-th svg {
-  fill: var(--accent-clr);
-  margin-left: 5px;
-}
-#subcontractors-sub-section form textarea {
-  margin-top: 10px;
-}
-
 /*---------------- Tasks Section ----------------*/
-
-#task-div {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-#task-sub-section h4 {
-  margin-bottom: 10px;
-}
-#task-sub-section input,
-#task-sub-section #task-description,
-#task-sub-section select {
-  padding: 5px;
-  margin-top: 5px;
-  margin-bottom: 10px;
-}
-#task-sub-section #task-description {
-  padding-bottom: 0;
-  text-wrap: wrap;
-  overflow-y: auto;
-}
 
 /*---------------- File + Invoice Merge Section ----------------*/
 
-#file-invoice-section {
-  display: flex;
-  flex-direction: row;
-  margin: 0;
-  padding: 0;
-
-  gap: 10px;
-  width: 100%;
-  border: none;
-}
-#file-upload-sub-section,
-#invoice-upload-sub-section {
-  margin: 0;
-}
-.file-invoice-div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
-.file-invoice-div h3 {
-  display: flex;
-  align-items: flex-end;
-  gap: 5px;
-  margin-bottom: 0 !important;
-}
-.file-invoice-div label {
-  display: flex;
-  cursor: pointer;
-  border-radius: 0.25em;
-  background-color: var(--accent-clr);
-  border: 1px solid var(--accent-clr);
-}
-.file-invoice-div label svg {
-  fill: var(--base-clr);
-}
-.file-name {
-  user-select: none;
-  font-style: italic;
-  text-decoration: underline;
-}
-.file-invoice-div label:hover {
-  background-color: var(--hover-clr);
-  transition: all 0.3s ease-in-out;
-}
 .hidden-input {
   display: none;
-}
-#file-invoice-section button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: transparent;
-  color: var(--accent-clr);
-  font-weight: bold;
-  height: 100%;
-  text-align: center;
-  padding: 1.25px 0 1.25px 5px;
-}
-#file-invoice-section button svg {
-  fill: var(--accent-clr);
 }
 
 /*-------------------------- Forms (Login & Registry) --------------------------*/
@@ -1237,17 +940,16 @@ a:hover {
 
   /*----------- Projects Overview -----------*/
 
-  #project-header,
-  #header-project-specifics {
-    text-wrap: wrap;
-    text-align: center;
+  #project-section td {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  #project-section a {
-    border-right: none;
-    border-radius: 5px;
+  #project-status {
+    justify-content: flex-start;
   }
-  #project-section .mobile-remove {
-    display: none !important;
+  #project-form {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
 
