@@ -482,13 +482,13 @@ h2 {
   opacity: 1;
   transform: scale(1.1);
 }
-#delete-button span svg {
+#delete-button span {
   width: 18px;
   height: 18px;
   fill: #aaa;
   transition: fill 0.2s ease;
 }
-#delete-button:hover span svg {
+#delete-button:hover span {
   fill: #444;
 }
 
@@ -525,9 +525,19 @@ h2 {
   outline: none;
 }
 
-#project-form #filter-projects:hover {
+#project-form #filter-projects,
+#project-section #edit-project {
+  transition: transform 0.2s ease;
   cursor: pointer;
+}
+
+#project-form #filter-projects:hover {
+  transform: scale(1.15);
   fill: #0056b3;
+}
+
+#project-section #edit-project:hover {
+  transform: scale(1.15);
 }
 
 #project-form button {
