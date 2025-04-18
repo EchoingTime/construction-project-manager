@@ -564,6 +564,10 @@ h2 {
   justify-content: flex-start;
 }
 
+.hidden-input {
+  display: none;
+}
+
 /*---------------- Project Page Tabs ----------------*/
 
 .tab-buttons {
@@ -587,26 +591,6 @@ h2 {
 }
 .tab-content.active {
   display: block;
-}
-
-/*---------------- Project Details' Forms ----------------*/
-
-/*---------------- Deadline Section ----------------*/
-
-/*---------------- Completion Status Section ----------------*/
-
-/*---------------- Address Section ----------------*/
-
-/*---------------- Subcontractors Section ----------------*/
-
-/*---------- List: Subcontractors -----------*/
-
-/*---------------- Tasks Section ----------------*/
-
-/*---------------- File + Invoice Merge Section ----------------*/
-
-.hidden-input {
-  display: none;
 }
 
 /*-------------------------- Forms (Login & Registry) --------------------------*/
