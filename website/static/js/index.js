@@ -305,6 +305,70 @@ function deleteProject(button) {
   }
 }
 
+/*--------------------- Filtering ---------------------*/
+
+function toggleFilter() {
+  const selectStatus = document.querySelector("#status-filter");
+  const filterIcon = document.querySelector("#filter-projects");
+
+  // Toggling visibility and saving the state
+  const isHidden = selectStatus.classList.toggle("hidden-button");
+  localStorage.setItem("filterDropdownHidden", isHidden);
+
+  // Toggling the icon
+  if (filterIcon.innerHTML.includes("M400")) {
+    filterIcon.innerHTML =
+      '<path d="M791-55 55-791l57-57 736 736-57 57ZM633-440l-80-80h167v80h-87ZM433-640l-80-80h487v80H433Zm-33 400v-80h160v80H400ZM240-440v-80h166v80H240ZM120-640v-80h86v80h-86Z" />';
+  } else {
+    filterIcon.innerHTML =
+      '<path d="M400-240v-80h160v80H400ZM240-440v-80h480v80H240ZM120-640v-80h720v80H120Z" />';
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const filter = document.getElementById("status-filter");
+  const projects = document.querySelectorAll(".project-row");
+
+  // If filter is hidden, restore that
+  const isFilterHidden =
+    localStorage.getItem("filterDropdownHidden") === "true";
+  if (isFilterHidden) {
+    document.querySelector("#status-filter").classList.add("hidden-button");
+  }
+
+  // If saved filter, load it
+  const savedFilter = localStorage.getItem("selectedStatusFilter");
+  if (savedFilter) {
+    filter.value = savedFilter;
+
+    // Display the filtered projects
+    projects.forEach((project) => {
+      const status = project.getAttribute("data-status");
+      if (savedFilter === "All" || status === savedFilter) {
+        project.style.display = "";
+      } else {
+        project.style.display = "none";
+      }
+    });
+  }
+
+  // Listen for user changes to the filter
+  filter.addEventListener("change", () => {
+    const selected = filter.value;
+    /* Will save the filter selection for user */
+    localStorage.setItem("selectedStatusFilter", selected);
+
+    projects.forEach((project) => {
+      const status = project.getAttribute("data-status");
+      if (selected === "All" || status === selected) {
+        project.style.display = "";
+      } else {
+        project.style.display = "none";
+      }
+    });
+  });
+});
+
 /*--------------------- Project Details - File Select Work Around [Chat Assisted] ---------------------*/
 
 document.addEventListener("DOMContentLoaded", function () {

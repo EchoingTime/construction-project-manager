@@ -558,6 +558,20 @@ h2 {
   display: none;
 }
 
+/*---------------- Filtering Project ----------------*/
+
+.filter-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#status-filter {
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
 /*-------------------------- Project Detail Page --------------------------*/
 
 #project-details {
