@@ -25,7 +25,7 @@ endblock %}
         contact a contractor if you are awaiting a project assignment.
       </p>
       {% else %} {% for project in projects %}
-      <tr>
+      <tr class="project-row" data-status="{{ project.progress }}">
         <td>
           <!-- Project title and link -->
           <a
@@ -73,18 +73,28 @@ endblock %}
     </table>
   </div>
   <form method="POST" id="project-form">
-    <div>
+    <div class="filter-wrapper">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="24px"
         viewBox="0 -960 960 960"
         width="24px"
         id="filter-projects"
+        onclick="toggleFilter()"
       >
         <path
-          d="M120-240v-80h240v80H120Zm0-200v-80h480v80H120Zm0-200v-80h720v80H120Z"
+          d="M400-240v-80h160v80H400ZM240-440v-80h480v80H240ZM120-640v-80h720v80H120Z"
         />
       </svg>
+      <!-- Status Filter Dropdown -->
+      <select id="status-filter" class="hidden-button">
+        <option value="All">Show All Projects</option>
+        <option value="Not Yet Started">Not Yet Started</option>
+        <option value="In Progress">In Progress</option>
+        <option value="On Hold">On Hold</option>
+        <option value="Completed">Completed</option>
+        <option value="Canceled">Canceled</option>
+      </select>
     </div>
   </form>
 </section>
