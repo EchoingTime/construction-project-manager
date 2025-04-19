@@ -9,7 +9,7 @@
   /* Primary Colors */
   --base-clr: #f4f7fb; /* Default Page Background */
   --line-clr: #11121a; /* Lines and borders */
-  --accent-clr: #2a2a2a; /* Buttons, links, and highlights */
+  --accent-clr: #2980b9; /* Buttons, links, and highlights */
   /* Text Colors */
   --text-clr: #1e1e1e;
   --text-faded-clr: #3a3a3a;
@@ -309,13 +309,34 @@ h2 {
 /*-------------------------- Profile Page --------------------------*/
 
 #profile-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: flex-start;
+
+  background-color: var(--form-bg-clr);
+  border: 1px solid var(--transparent-border-clr);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
+
 #profile-section h2 {
-  margin-bottom: 15px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-clr);
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--line-clr);
+  padding-bottom: 0.5rem;
+  width: 100%;
 }
+
 #profile-section p {
-  margin-bottom: 10px;
+  font-size: 1rem;
+  color: var(--text-faded-clr);
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
 }
 
 /*-------------------------- Project Page Overview --------------------------*/
@@ -582,7 +603,7 @@ h2 {
   border: 1px solid #ccc;
 }
 
-/*-------------------------- Project Page Overview --------------------------*/
+/*-------------------------- Project Details --------------------------*/
 
 #project-details p {
   font-size: 1rem;
