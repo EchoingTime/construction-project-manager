@@ -35,7 +35,7 @@ def login():
                      projects = db.session.query(Project).filter(Project.id.in_(project_ids)).all()
                      return render_template("homeSub.html", user=current_user, subcontractor=subcontractor, assignments=assignments, projects=projects)
                 else:
-                    return redirect(url_for('views.project'))
+                    return redirect(url_for('views.home'))
             else:
                 flash('Incorrect password.', category='error')
         else:
