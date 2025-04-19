@@ -19,7 +19,7 @@ not remove, and add tasks and upload files.
   </div>
   <!------ Tab Section ------>
   <div class="tab-buttons">
-    <button class="tab-btn active" data-tab="information">Information</button>
+    <button class="tab-btn" data-tab="information">Information</button>
     <button class="tab-btn" data-tab="subcontractors">Subcontractors</button>
     <button class="tab-btn" data-tab="files">Files</button>
     {% if user.role == 'subcontractor' %}
@@ -27,7 +27,7 @@ not remove, and add tasks and upload files.
     {% endif %}
   </div>
   <!------------ Information Div ------------>
-  <div id="information" class="tab-content active">
+  <div id="information" class="tab-content">
     <!--------- Information Section --------->
     <section id="information-section">
       <!------ Deadline sub-section ------>

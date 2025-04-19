@@ -85,7 +85,7 @@ allowing contractors to view, add, and delete projects.
       {% endfor %} {% endif %}
     </table>
   </div>
-  <form method="POST" id="project-form">
+  <form method="POST" action="{{ url_for('views.home') }}" id="project-form">
     <div class="filter-wrapper">
       <svg
         xmlns="http://www.w3.org/2000/svg"

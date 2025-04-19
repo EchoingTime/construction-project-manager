@@ -402,8 +402,29 @@ document.addEventListener("DOMContentLoaded", function () {
   const buttons = document.querySelectorAll(".tab-btn");
   const contents = document.querySelectorAll(".tab-content");
 
+  // Gets the saved tab from localStorage (only if one exists)
+  const savedTab = localStorage.getItem("activeTab");
+
+  // If a tab is saved, restore the state
+  if (savedTab) {
+    const savedBtn = document.querySelector(`.tab-btn[data-tab="${savedTab}"]`);
+    const savedContent = document.getElementById(savedTab);
+
+    if (savedBtn && savedContent) {
+      buttons.forEach((btn) => btn.classList.remove("active"));
+      contents.forEach((content) => content.classList.remove("active"));
+
+      savedBtn.classList.add("active");
+      savedContent.classList.add("active");
+    }
+  }
+
+  // Click handlers
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
+      const targetTabId = button.dataset.tab;
+      localStorage.setItem("activeTab", targetTabId);
+
       // Remove active classes
       buttons.forEach((btn) => btn.classList.remove("active"));
       contents.forEach((content) => content.classList.remove("active"));

@@ -16,39 +16,25 @@ import json
 
 views = Blueprint('views', __name__)
 
-# --------------------- Home Pages ---------------------
+# --------------------- / will send user to views home (beneath this code segment) ---------------------
 
-@views.route('/home')
+@views.route('/')
+def redirect_to_home():
+    return redirect(url_for('views.home'))
+
+# --------------------- Home Pages & Project Creation ---------------------
+
+@views.route('/home', methods=['GET', 'POST'])
 @login_required
 def home():
-    if current_user.role == "contractor": # Goes to contractor page
-        return render_template("home.html", user=current_user)
-    elif current_user.role == "subcontractor":
-        # Query the subcontractor
-        #subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
-       #assignments = Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
-        #project_ids = [assignment.project_id for assignment in assignments]
-        #assigned_projects = Project.query.filter(Project.id.in_(project_ids)).all()
-        #return render_template("homeSub.html", subcontractor=subcontractor,user=current_user, assigned_projects=assigned_projects)
-        return render_template("homeSub.html", user=current_user)
-    else:
-        return "Unauthorized", 403
-
-# --------------------- Project Page ---------------------
-
-# ----------- Project Creation -----------
-
-# ChatGPT Assistance with page refreshing project duplications
-@views.route('/', methods=['GET', 'POST']) # Main page of website
-@login_required # Make sure to include this if a user must be logged in to view a page!
-def project():
-    if request.method == 'POST':
+    # For Handling POST (Project Creation on the Project Overview Page (aka home.html))
+    if request.method == 'POST' and current_user.role == "contractor":
         project = request.form.get('project')
 
-        if len(project) < 1: # If project does not have a title, flash an error while preventing creation
+        if not project or len(project.strip()) < 1:
             flash('Project needs a descriptive title!', category='error')
         else:
-            # Check if project already exists
+            # Check if project already exists for this user
             existing_project = Project.query.filter_by(project_name=project, user_id=current_user.id).first()
             if existing_project:
                 flash("This project already exists!", category='error')
@@ -57,22 +43,22 @@ def project():
                 new_project = Project(project_name=project, user_id=current_user.id)
                 db.session.add(new_project)
                 db.session.commit()
-                flash('Created New Project', category='success')
-            
-        # Redirect to the same page (prevents form re-submission via freshing page)
-    #if current_user.role != "subcontractor":
-        return redirect(url_for('views.project'))
-    
-   
-    if current_user.role != "subcontractor":
+                flash('Created New Project', category='success') 
+        # Redirect to the same page (prevents form re-submission via freshing page - ChatGPT Assist)
+        return redirect(url_for('views.home'))
+
+    # Handles GET (rendering the actual home.html and homeSub.html pages)
+    if current_user.role == "contractor": # Goes to contractor page
         return render_template("home.html", user=current_user)
-    else:
+    elif current_user.role == "subcontractor":
         subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
         assignments = Assignment.query.filter_by(subcontractor_id=subcontractor.id).all() 
         assigned_projects = db.session.query(Assignment.project_id).filter_by(subcontractor_id=subcontractor.id).all()
         project_ids = [project[0] for project in assigned_projects]
         projects = db.session.query(Project).filter(Project.id.in_(project_ids)).all()
         return render_template("homeSub.html", user=current_user, assignments=assignments, projects=projects)
+    else:
+        return "Unauthorized", 403
 
 #------------ Project Viewing ------------
 
@@ -99,8 +85,6 @@ def delete_project():
             db.session.commit()
     
     return jsonify({}) # Return empty response
-
-# ----------- Project Filter -----------
 
 # ----------- Project Deadline Update -----------
 
