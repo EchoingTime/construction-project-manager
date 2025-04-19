@@ -584,79 +584,183 @@ h2 {
 
 /*-------------------------- Project Page Overview --------------------------*/
 
-/* General Heading Styling */
-#project-details h2 {
-  font-size: 2.2em;
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-#project-details h3 {
-  font-size: 1.6em;
-  margin-bottom: 1rem;
-  color: #34495e;
-}
-
 #project-details p {
   font-size: 1rem;
-  margin: 0.8rem 0;
+  margin: 1rem 0; /* Increased margin for better spacing */
   color: #7f8c8d;
+  text-align: center; /* Centered the date text */
 }
 
-/* Section Styling - Shadow Only, No Borders */
 #project-details {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  background-color: #fff;
+  background-color: #f9f9f9; /* Light background */
   border-radius: 10px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  /* Removed border */
 }
 
-/* Tab Section Improvements */
+/* Headings */
+#project-details h2,
+#project-details h3,
+#project-details h4 {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem; /* Increased margin to give more space below headings */
+  text-align: center;
+  color: #2c3e50;
+}
+
+/* Forms */
+#project-details form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Increased gap for more spacing between form elements */
+}
+
+#project-details form .form-group,
+#messages .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* Added more gap for form groups */
+}
+
+#project-details form label,
+#messages label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+#project-details form input[type="text"],
+#project-details form input[type="date"],
+#project-details form textarea,
+#project-details form select,
+#messages textarea,
+#messages select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #dcdde1;
+  border-radius: 8px;
+  background-color: #ffffff; /* Light background for inputs */
+  color: #34495e;
+  transition: all 0.2s ease-in-out;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+#project-details form textarea,
+#messages textarea {
+  resize: none;
+}
+
+#project-details form input:focus,
+#project-details form textarea:focus,
+#project-details form select:focus,
+#messages textarea:focus,
+#messages select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+  outline: none;
+}
+
+/* Buttons */
+#project-details form button {
+  background-color: #2980b9; /* Primary blue color */
+  color: #fff;
+  padding: 0.75rem 1.5rem; /* Increased padding for better button size */
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+#project-details form button:hover {
+  background-color: #3498db; /* Darker blue on hover */
+}
+
+#project-details form button[type="reset"] {
+  background-color: #ecf0f1;
+  color: #2c3e50;
+}
+
+#project-details form button[type="reset"]:hover {
+  background-color: #dcdde1;
+}
+
+/* Button Row */
+#project-details form .button-row {
+  display: flex;
+  gap: 1.5rem; /* Increased gap between buttons */
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+#project-details form .button-row button {
+  flex-shrink: 0;
+}
+
+/* Flex Wrappers */
+.div-dead,
+.div-address,
+#subcon-buttons,
+#address-buttons,
+#project-details .buttons,
+.file-invoice-div {
+  display: flex;
+  gap: 1.5rem; /* Increased gap for better spacing */
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.div-dead,
+.div-address,
+#subcon-buttons,
+#address-buttons {
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Tab Navigation */
 #project-details .tab-buttons {
   display: flex;
   justify-content: space-around;
-  margin-bottom: 1rem;
-  background-color: #f9f9f9;
-  padding: 10px 0;
+  background-color: #ffffff; /* Clean background */
+  margin-bottom: 1.5rem; /* Increased bottom margin for spacing */
+  padding: 0.75rem 2rem; /* Added more padding to the left and right */
   border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
 }
 
 #project-details .tab-btn {
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
-  padding: 12px 24px;
-  cursor: pointer;
+  background-color: #ecf0f1;
+  border: 1px solid #dcdde1;
+  padding: 0.75rem 1.25rem; /* Adjusted padding for more uniform button size */
   font-weight: bold;
-  font-size: 1.1rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 1.05rem;
+  cursor: pointer;
   color: #34495e;
-}
-
-#project-details .tab-btn:first-child {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
-
-#project-details .tab-btn:last-child {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  transition: all 0.3s ease;
 }
 
 #project-details .tab-btn:hover,
 #project-details .tab-btn.active {
   background-color: #007bff;
   color: white;
-  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.5);
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.25);
+}
+
+#project-details .tab-btn:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+#project-details .tab-btn:last-child {
+  border-radius: 0 5px 5px 0;
 }
 
 #project-details .tab-content {
   display: none;
-  padding: 1rem;
+  padding: 1.5rem; /* Increased padding for content */
   border-radius: 8px;
   background-color: #fafafa;
 }
@@ -665,51 +769,28 @@ h2 {
   display: block;
 }
 
-/* Progress Status Colors */
-#project-details .status-not-yet-started {
-  background-color: var(--not-yet-started-clr);
-}
-
-#project-details .status-on-hold {
-  background-color: var(--on-hold-clr);
-}
-
-#project-details .status-in-progress {
-  background-color: var(--in-progress-clr);
-}
-
-#project-details .status-completed {
-  background-color: var(--completed-clr);
-}
-
-#project-details .status-canceled {
-  background-color: var(--canceled-clr);
-}
-
-/* Subsections - Shadow Only */
+/* Section Blocks */
 #project-details .sub-sections {
   margin-bottom: 2rem;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   padding: 1.5rem;
   border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
-  /* Removed border-top */
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
 }
 
 #project-details .sub-sections h3 {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem; /* Increased bottom margin for spacing */
   color: #2980b9;
-  padding-bottom: 5px;
   border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
 }
 
-/* Files & Invoices Section */
+/* File Uploads */
 #project-details .file-invoice-div {
   display: flex;
-  flex-direction: row;
   gap: 2rem;
-  margin-bottom: 1rem;
-  padding: 12px;
+  margin-bottom: 1.5rem; /* Increased bottom margin */
+  padding: 1.25rem; /* Increased padding for better content spacing */
   background-color: #f9f9f9;
   border-radius: 8px;
 }
@@ -719,13 +800,14 @@ h2 {
 }
 
 #project-details .file-invoice-div h3 {
-  font-size: 1.4em;
+  font-size: 1.4rem;
   color: #2980b9;
 }
 
 #project-details .file-invoice-div label {
-  cursor: pointer;
+  font-size: 1rem;
   color: #3498db;
+  cursor: pointer;
   transition: color 0.3s ease;
 }
 
@@ -733,58 +815,39 @@ h2 {
   color: #2980b9;
 }
 
-#project-details .file-invoice-div button {
-  background-color: #3498db;
-  padding: 12px 24px;
-  color: white;
-  font-size: 1rem;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-#project-details .file-invoice-div button:hover {
-  background-color: #2980b9;
-}
-
 #project-details .file-invoice-div .upload-container {
   display: flex;
-  flex-direction: column; /* <-- Change from row to column */
-  align-items: flex-start; /* aligns items to the left inside each section */
-  gap: 0.75rem;
-  margin-top: 1rem;
+  flex-direction: column;
+  gap: 1rem; /* Increased gap for better element spacing */
+  margin-top: 1.5rem; /* Adjusted top margin */
 }
 
 #project-details .file-invoice-div input[type="file"] {
   flex-shrink: 1;
 }
 
-/* Fix: File name positioned at the bottom ("on the floor") */
-#project-details .file-invoice-div .file-name,
+#project-details .file-name,
 #project-details .file-invoice-div #invoice-file-name {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: #7f8c8d;
-  margin-left: 0.5rem;
-  white-space: nowrap;
-  overflow: hidden;
+  max-width: 180px;
   text-overflow: ellipsis;
-  max-width: 150px;
-  align-self: center; /* New */
+  overflow: hidden;
+  white-space: nowrap;
+  align-self: center;
 }
 
-/* Table Styling */
+/* Tables */
 #project-details .table-wrapper {
   overflow-y: auto;
-  margin-top: 1rem;
+  margin-top: 1.5rem; /* Increased top margin */
 }
 
-/* Table Section Updates */
 #project-details table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 1rem;
-  table-layout: fixed; /* Ensures column widths can be defined */
+  border-spacing: 0 1.25rem; /* Adjusted border spacing */
+  table-layout: fixed;
 }
 
 #project-details thead {
@@ -793,18 +856,18 @@ h2 {
 
 #project-details thead th {
   text-align: left;
-  padding: 0.75rem 1rem;
+  padding: 1rem 1.25rem; /* Adjusted padding for header cells */
   color: #2c3e50;
   font-weight: 600;
 }
 
 #project-details thead th.task-col {
-  width: 45%; /* Task column widened */
+  width: 45%;
 }
 
 #project-details tbody tr {
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Darker shadow for distinction */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
@@ -817,15 +880,31 @@ h2 {
 }
 
 #project-details td {
-  padding: 1rem;
-  border: none;
+  padding: 1rem; /* Consistent padding for table cells */
   word-wrap: break-word;
 }
 
-/* Centering Ping Contractor and Reason for Ping */
+/* Progress Status */
+#project-details .status-not-yet-started {
+  background-color: #e74c3c;
+}
+#project-details .status-on-hold {
+  background-color: #f39c12;
+}
+#project-details .status-in-progress {
+  background-color: #3498db;
+}
+#project-details .status-completed {
+  background-color: #2ecc71;
+}
+#project-details .status-canceled {
+  background-color: #7f8c8d;
+}
+
+/* Ping Contractor */
 #project-details .ping-contractor-container {
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 1.5rem; /* Increased top margin */
 }
 
 #project-details .ping-contractor-container button {
@@ -833,14 +912,13 @@ h2 {
   margin: 0 auto;
 }
 
-/* Redesigned Message Section */
+/* Message Section */
 #messages {
   margin-top: 2rem;
-  background-color: #ffffff;
+  background-color: #fff;
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-  width: 100%;
   max-width: 900px;
   margin-left: auto;
   margin-right: auto;
@@ -852,32 +930,32 @@ h2 {
 #messages h3 {
   font-size: 1.8rem;
   color: #2c3e50;
-  margin-bottom: 0.5rem;
   text-align: center;
+  margin-bottom: 1rem; /* Increased bottom margin */
 }
 
 #messages form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem; /* Increased gap between form elements */
 }
 
 #messages label {
   font-size: 1rem;
   font-weight: 600;
   color: #34495e;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem; /* Adjusted margin */
 }
 
 #messages textarea,
 #messages select {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.75rem 1rem;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #fdfdfd;
-  transition: border 0.3s ease;
+  transition: border-color 0.3s ease;
 }
 
 #messages textarea:focus,
@@ -888,7 +966,7 @@ h2 {
 
 #messages button {
   align-self: center;
-  background-color: #007bff;
+  background-color: #2980b9;
   color: white;
   font-size: 1rem;
   padding: 0.75rem 1.5rem;
@@ -899,70 +977,76 @@ h2 {
 }
 
 #messages button:hover {
-  background-color: #0056b3;
+  background-color: #3498db;
 }
 
-/* Responsive */
+/* Responsive Fixes */
 @media (max-width: 768px) {
-  #messages {
-    padding: 1.25rem;
+  .div-dead,
+  .div-address,
+  #subcon-buttons,
+  #address-buttons,
+  .file-invoice-div {
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  #messages button {
+  #project-details form button,
+  #project-details form input,
+  #project-details form select,
+  #project-details form textarea {
     width: 100%;
-    align-self: center;
   }
-}
 
-/* Responsive Layout */
-@media (max-width: 768px) {
   .tab-buttons {
     flex-direction: column;
   }
 
   .tab-btn {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem; /* Adjusted margin */
   }
 
-  .div-dead,
-  .div-address {
-    flex-direction: column;
+  #messages {
+    padding: 1.5rem; /* Increased padding */
   }
 
-  #project-details input[type="date"],
-  #project-details textarea,
-  #project-details select,
-  #project-details input[type="text"] {
+  #messages button {
     width: 100%;
-  }
-
-  #project-details button {
-    width: 100%;
-    max-width: 500px;
-    margin-top: 1rem;
-  }
-
-  #project-details .file-invoice-div {
-    flex-direction: column;
   }
 }
 
 @media (max-width: 480px) {
   #project-details h2 {
-    font-size: 1.8em;
+    font-size: 1.8rem;
   }
 
   #project-details h3 {
-    font-size: 1.3em;
+    font-size: 1.3rem;
   }
 
   #project-details {
-    padding: 1rem;
+    padding: 1.25rem; /* Adjusted padding */
   }
 }
 
 .hidden-input {
   display: none;
+}
+
+/* Custom styles for centering buttons and inputs */
+
+/* Assign Address */
+#project-details .div-address,
+#project-details .div-dead,
+#project-details .buttons {
+  display: flex;
+  justify-content: center; /* Centers the address section */
+  margin: 1.5rem 0; /* Adjusted margin */
+}
+
+/* Outer Tab Section Padding */
+#project-details .tab-buttons {
+  padding: 0.75rem 2rem; /* Added more padding to the left and right */
 }
 
 /*-------------------------- Forms (Login & Registry) --------------------------*/
