@@ -1058,7 +1058,9 @@ h2 {
 /* Assign Address */
 #project-details .div-address,
 #project-details .div-dead,
-#project-details .buttons {
+#project-details .buttons,
+#project-details div #subcon-buttons,
+#task-sub-section button {
   display: flex;
   justify-content: center; /* Centers the address section */
   margin: 1.5rem 0; /* Adjusted margin */
