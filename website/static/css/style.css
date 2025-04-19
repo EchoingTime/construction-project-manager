@@ -635,7 +635,6 @@ h2 {
 #project-details form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* Increased gap for more spacing between form elements */
 }
 
 #project-details form .form-group,
@@ -1063,6 +1062,11 @@ h2 {
   display: flex;
   justify-content: center; /* Centers the address section */
   margin: 1.5rem 0; /* Adjusted margin */
+}
+
+#project-details .div-dead,
+#project-details .div-address {
+  margin-top: 0;
 }
 
 /* Outer Tab Section Padding */
