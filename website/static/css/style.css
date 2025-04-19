@@ -315,7 +315,7 @@ h2 {
   align-items: flex-start;
   justify-content: flex-start;
 
-  background-color: var(--form-bg-clr);
+  background-color: #f9f9f9;
   border: 1px solid var(--transparent-border-clr);
   border-radius: 1rem;
   padding: 2rem;
