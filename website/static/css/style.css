@@ -582,39 +582,387 @@ h2 {
   border: 1px solid #ccc;
 }
 
-/*-------------------------- Project Detail Page --------------------------*/
+/*-------------------------- Project Page Overview --------------------------*/
 
+/* General Heading Styling */
+#project-details h2 {
+  font-size: 2.2em;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+#project-details h3 {
+  font-size: 1.6em;
+  margin-bottom: 1rem;
+  color: #34495e;
+}
+
+#project-details p {
+  font-size: 1rem;
+  margin: 0.8rem 0;
+  color: #7f8c8d;
+}
+
+/* Section Styling - Shadow Only, No Borders */
 #project-details {
-  justify-content: flex-start;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  /* Removed border */
+}
+
+/* Tab Section Improvements */
+#project-details .tab-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+  background-color: #f9f9f9;
+  padding: 10px 0;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#project-details .tab-btn {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  color: #34495e;
+}
+
+#project-details .tab-btn:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+#project-details .tab-btn:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#project-details .tab-btn:hover,
+#project-details .tab-btn.active {
+  background-color: #007bff;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.5);
+}
+
+#project-details .tab-content {
+  display: none;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+#project-details .tab-content.active {
+  display: block;
+}
+
+/* Progress Status Colors */
+#project-details .status-not-yet-started {
+  background-color: var(--not-yet-started-clr);
+}
+
+#project-details .status-on-hold {
+  background-color: var(--on-hold-clr);
+}
+
+#project-details .status-in-progress {
+  background-color: var(--in-progress-clr);
+}
+
+#project-details .status-completed {
+  background-color: var(--completed-clr);
+}
+
+#project-details .status-canceled {
+  background-color: var(--canceled-clr);
+}
+
+/* Subsections - Shadow Only */
+#project-details .sub-sections {
+  margin-bottom: 2rem;
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+  /* Removed border-top */
+}
+
+#project-details .sub-sections h3 {
+  margin-bottom: 0.5rem;
+  color: #2980b9;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Files & Invoices Section */
+#project-details .file-invoice-div {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  margin-bottom: 1rem;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+#project-details .file-invoice-div > div {
+  flex: 1;
+}
+
+#project-details .file-invoice-div h3 {
+  font-size: 1.4em;
+  color: #2980b9;
+}
+
+#project-details .file-invoice-div label {
+  cursor: pointer;
+  color: #3498db;
+  transition: color 0.3s ease;
+}
+
+#project-details .file-invoice-div label:hover {
+  color: #2980b9;
+}
+
+#project-details .file-invoice-div button {
+  background-color: #3498db;
+  padding: 12px 24px;
+  color: white;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#project-details .file-invoice-div button:hover {
+  background-color: #2980b9;
+}
+
+#project-details .file-invoice-div .upload-container {
+  display: flex;
+  flex-direction: column; /* <-- Change from row to column */
+  align-items: flex-start; /* aligns items to the left inside each section */
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+#project-details .file-invoice-div input[type="file"] {
+  flex-shrink: 1;
+}
+
+/* Fix: File name positioned at the bottom ("on the floor") */
+#project-details .file-invoice-div .file-name,
+#project-details .file-invoice-div #invoice-file-name {
+  font-size: 0.95rem;
+  color: #7f8c8d;
+  margin-left: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+  align-self: center; /* New */
+}
+
+/* Table Styling */
+#project-details .table-wrapper {
+  overflow-y: auto;
+  margin-top: 1rem;
+}
+
+/* Table Section Updates */
+#project-details table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 1rem;
+  table-layout: fixed; /* Ensures column widths can be defined */
+}
+
+#project-details thead {
+  background-color: #ecf0f1;
+}
+
+#project-details thead th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+#project-details thead th.task-col {
+  width: 45%; /* Task column widened */
+}
+
+#project-details tbody tr {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Darker shadow for distinction */
+  overflow: hidden;
+}
+
+#project-details tbody tr:nth-child(even) td {
+  background-color: #ffffff;
+}
+
+#project-details tbody tr:nth-child(odd) td {
+  background-color: #f6f8fa;
+}
+
+#project-details td {
+  padding: 1rem;
+  border: none;
+  word-wrap: break-word;
+}
+
+/* Centering Ping Contractor and Reason for Ping */
+#project-details .ping-contractor-container {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+#project-details .ping-contractor-container button {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Redesigned Message Section */
+#messages {
+  margin-top: 2rem;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+#messages h3 {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+#messages form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+#messages label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #34495e;
+  margin-bottom: 0.25rem;
+}
+
+#messages textarea,
+#messages select {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fdfdfd;
+  transition: border 0.3s ease;
+}
+
+#messages textarea:focus,
+#messages select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+#messages button {
+  align-self: center;
+  background-color: #007bff;
+  color: white;
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#messages button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #messages {
+    padding: 1.25rem;
+  }
+
+  #messages button {
+    width: 100%;
+    align-self: center;
+  }
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .tab-buttons {
+    flex-direction: column;
+  }
+
+  .tab-btn {
+    margin-bottom: 0.5rem;
+  }
+
+  .div-dead,
+  .div-address {
+    flex-direction: column;
+  }
+
+  #project-details input[type="date"],
+  #project-details textarea,
+  #project-details select,
+  #project-details input[type="text"] {
+    width: 100%;
+  }
+
+  #project-details button {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 1rem;
+  }
+
+  #project-details .file-invoice-div {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  #project-details h2 {
+    font-size: 1.8em;
+  }
+
+  #project-details h3 {
+    font-size: 1.3em;
+  }
+
+  #project-details {
+    padding: 1rem;
+  }
 }
 
 .hidden-input {
   display: none;
-}
-
-/*---------------- Project Page Tabs ----------------*/
-
-.tab-buttons {
-  display: flex;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid #ccc;
-}
-.tab-buttons button {
-  background: none;
-  border: none;
-  padding: 1rem;
-  cursor: pointer;
-  font-weight: bold;
-}
-.tab-buttons button.active {
-  border-bottom: 3px solid #007bff;
-  color: #007bff;
-}
-.tab-content {
-  display: none;
-}
-.tab-content.active {
-  display: block;
 }
 
 /*-------------------------- Forms (Login & Registry) --------------------------*/
