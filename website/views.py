@@ -365,7 +365,9 @@ def add_task(project_id):
 @views.route('/profile')
 @login_required
 def profile():
-    return render_template("profile.html", user=current_user)
+    # Need to add a reference to get subcontractor info, if user is a subcontractor
+    subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
+    return render_template("profile.html", user=current_user, subcontractor=subcontractor)
 
 # --------------------- Assigned Tasks ---------------------
 

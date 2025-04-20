@@ -1,8 +1,6 @@
 <!--
-@File Name: home.html
-@Description: This file renders the home page of the web application. 
-It displays a list of projects belonging to the current logged-in contractor, 
-allowing contractors to view, add, and delete projects.
+@File Name: profile.html
+@Description: User's profile settings page.
 -->
 
 <!--------------------- Base Template Extension --------------------->
@@ -15,6 +13,14 @@ endblock %}
 <!-- Place new content inside this block content -->
 <section class="main-content-section" id="profile-section">
   <h2>Profile Settings</h2>
-  <p>Welcome {{user.first_name}}, your account details are below</p>
+  <p>Welcome {{user.first_name}}, your account details are below:</p>
+  <ul>
+    <li>First Name: {{user.first_name}}</li>
+    <li>Email: {{user.email}}</li>
+    <li>Role: {{user.role}}</li>
+    {% if user.role == 'subcontractor' %}
+    <li>Trade: {{ subcontractor.trade }}</li>
+    {% endif %}
+  </ul>
 </section>
 {% endblock %}
