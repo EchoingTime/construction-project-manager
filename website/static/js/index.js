@@ -266,9 +266,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /*--------------------- Toggle Edit ---------------------*/
 
-function toggleEdit(editButtonId, sectionId) {
-  const deleteBtn = document.querySelectorAll(`#${sectionId} #delete-button`);
-  const editIcon = document.querySelector(`#${editButtonId}`);
+function toggleEdit() {
+  const editIcon = document.querySelector("#edit-project-name-btn");
+  const hiddenForm = document.querySelector("#edit-project-name-form");
 
   // Toggling between svg states
   if (editIcon.innerHTML.includes("M200-200h57l391")) {
@@ -279,13 +279,7 @@ function toggleEdit(editButtonId, sectionId) {
       '<path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />';
   }
 
-  // Toggle visibility of deleete buttons in their target section
-  const section = document.getElementById(sectionId);
-  if (section) {
-    deleteBtn.forEach((btn) => {
-      btn.classList.toggle("hidden-button");
-    });
-  }
+  hiddenForm.classList.toggle("hidden-form");
 }
 
 /*--------------------- Delete Projects ---------------------*/
@@ -302,6 +296,45 @@ function deleteProject(button) {
       body: JSON.stringify({ projectId: projectId }),
     }).then((_res) => {
       window.location.href = "/";
+    });
+  }
+}
+
+/*--------------------- Delete Subcontractor Assignment ---------------------*/
+
+function deleteSubcontractor(button) {
+  const subcontractorId = button.getAttribute("data-id");
+  const subcontractorName = button.getAttribute("data-name");
+  const result = confirm(
+    "Click 'OK' to delete the subcontractor assignment:\n\n" + subcontractorName
+  );
+  if (result) {
+    fetch("/delete-assignment", {
+      method: "POST",
+      body: JSON.stringify({ subcontractorId: subcontractorId }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((_res) => {
+      location.reload();
+    });
+  }
+}
+
+/*--------------------- Delete Tasks ---------------------*/
+
+function deleteTask(button) {
+  const taskId = button.getAttribute("data-id");
+  const taskName = button.getAttribute("data-name");
+  const result = confirm(
+    "Click 'OK' to delete the following task:\n\n" + taskName
+  );
+  if (result) {
+    fetch("/delete-task", {
+      method: "POST",
+      body: JSON.stringify({ taskId: taskId }), // Send taskId in the request
+    }).then((_res) => {
+      location.reload();
     });
   }
 }

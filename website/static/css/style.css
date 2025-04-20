@@ -345,6 +345,10 @@ h2 {
   justify-content: flex-start;
 }
 
+#project-section p {
+  text-align: center;
+}
+
 #project-header {
   display: flex;
   justify-content: space-between;
@@ -547,7 +551,7 @@ h2 {
 }
 
 #project-form #filter-projects,
-#project-section #edit-project {
+.edit-toggle-btn {
   transition: transform 0.2s ease;
   cursor: pointer;
 }
@@ -557,7 +561,7 @@ h2 {
   fill: #0056b3;
 }
 
-#project-section #edit-project:hover {
+.edit-toggle-btn:hover {
   transform: scale(1.15);
 }
 
@@ -585,8 +589,8 @@ h2 {
 
 /*---------------- Editing Project ----------------*/
 
-#project-section .hidden-button {
-  display: none;
+.hidden-button {
+  display: none !important;
 }
 
 /*---------------- Filtering Project ----------------*/
@@ -604,6 +608,17 @@ h2 {
 }
 
 /*-------------------------- Project Details --------------------------*/
+
+#edit-project-name-form {
+  display: flex;
+  flex-direction: row !important;
+  gap: 1em;
+  margin-top: 1rem;
+}
+
+.hidden-form {
+  display: none !important;
+}
 
 #project-details p {
   font-size: 1rem;
@@ -624,11 +639,20 @@ h2 {
 /* Headings */
 #project-details h2,
 #project-details h3,
-#project-details h4 {
+#project-details h4,
+#project-name-input {
   font-size: 1.25rem;
   margin-bottom: 1.5rem; /* Increased margin to give more space below headings */
   text-align: center;
   color: #2c3e50;
+}
+
+#project-name-input {
+  border: none;
+  font-weight: bold;
+  background-color: transparent;
+  padding: 0.75rem 1rem;
+  font-style: italic;
 }
 
 /* Forms */
@@ -867,7 +891,7 @@ h2 {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 1.25rem; /* Adjusted border spacing */
-  table-layout: fixed;
+  table-layout: auto; /* Allow columns to adjust their width */
 }
 
 #project-details thead {
@@ -879,10 +903,6 @@ h2 {
   padding: 1rem 1.25rem; /* Adjusted padding for header cells */
   color: #2c3e50;
   font-weight: 600;
-}
-
-#project-details thead th.task-col {
-  width: 45%;
 }
 
 #project-details tbody tr {
@@ -901,7 +921,16 @@ h2 {
 
 #project-details td {
   padding: 1rem; /* Consistent padding for table cells */
-  word-wrap: break-word;
+}
+
+#project-details th:last-child,
+#project-details td.last-column {
+  min-width: 100px; /* Set a minimal width for the last column */
+}
+
+#project-details td.last-column {
+  text-align: center;
+  padding: 0.5rem; /* Adjusted padding for the delete button column */
 }
 
 /* Progress Status */

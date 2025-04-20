@@ -15,11 +15,45 @@ not remove, and add tasks and upload files.
 <section class="main-content-section" id="project-details">
   <!----------- Main Page Content ----------->
   <div id="project-details-div">
-    <h2>{{ project.project_name }}</h2>
+    <h2 id="project-name">
+      <!-- Project Name -->
+      {{ project.project_name }}
+      <!-- Edit Project Name -->
+      <svg
+        onclick="toggleEdit()"
+        xmlns="http://www.w3.org/2000/svg"
+        height="24px"
+        viewBox="0 -960 960 960"
+        width="18px"
+        id="edit-project-name-btn"
+        class="edit-toggle-btn"
+      >
+        <path
+          d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"
+        />
+      </svg>
+      <!-- Form to Save Changes -->
+      <form
+        id="edit-project-name-form"
+        action="/edit-project-name?project_id={{ project.id }}"
+        method="POST"
+        class="hidden-form"
+      >
+        <input
+          type="text"
+          name="project_name"
+          id="project-name-input-field"
+          value="{{ project.project_name }}"
+          required
+        />
+        <button type="submit">Save</button>
+      </form>
+    </h2>
   </div>
+
   <!------ Tab Section ------>
   <div class="tab-buttons">
-    <button class="tab-btn" data-tab="information">Information</button>
+    <button class="tab-btn active" data-tab="information">Information</button>
     <button class="tab-btn" data-tab="subcontractors">Subcontractors</button>
     <button class="tab-btn" data-tab="files">Files</button>
     {% if user.role == 'subcontractor' %}
@@ -27,7 +61,7 @@ not remove, and add tasks and upload files.
     {% endif %}
   </div>
   <!------------ Information Div ------------>
-  <div id="information" class="tab-content">
+  <div id="information" class="tab-content active">
     <!--------- Information Section --------->
     <section id="information-section">
       <!------ Deadline sub-section ------>
@@ -152,6 +186,7 @@ not remove, and add tasks and upload files.
                 <th>Name</th>
                 <th>Email</th>
                 <th>Trade</th>
+                <th class="last-column"></th>
               </tr>
             </thead>
             <tbody>
@@ -160,6 +195,18 @@ not remove, and add tasks and upload files.
                 <td>{{ subcontractor.name }}</td>
                 <td>{{ subcontractor.email }}</td>
                 <td>{{ subcontractor.trade }}</td>
+                <td class="last-column">
+                  <!-- Delete Button -->
+                  <button
+                    type="button"
+                    id="delete-button"
+                    data-id="{{ subcontractor.id }}"
+                    data-name="{{ subcontractor.name }}"
+                    onClick="deleteSubcontractor(this)"
+                  >
+                    <span aria-hidden="true"> Delete </span>
+                  </button>
+                </td>
               </tr>
               {% endfor %}
             </tbody>
@@ -183,6 +230,7 @@ not remove, and add tasks and upload files.
             <button type="reset">Clear</button>
           </div>
         </form>
+        <!-- Delete Subcontractor Assignment -->
         {% endif %}
       </section>
       <!------ Tasks sub-section ------>
@@ -201,6 +249,7 @@ not remove, and add tasks and upload files.
                 <th>Deadline</th>
                 <th>Completion</th>
                 <th>Subcontractor</th>
+                <th class="last-column"></th>
               </tr>
             </thead>
             <tbody>
@@ -213,6 +262,18 @@ not remove, and add tasks and upload files.
                 <td>
                   {{ task.subcontractor.name if task.subcontractor else
                   "Unassigned" }}
+                </td>
+                <td class="last-column">
+                  <!-- Delete Button -->
+                  <button
+                    type="button"
+                    id="delete-button"
+                    data-id="{{ task.id }}"
+                    data-name="{{ task.name }}"
+                    onClick="deleteTask(this)"
+                  >
+                    <span aria-hidden="true"> Delete </span>
+                  </button>
                 </td>
               </tr>
               {% endfor %}
@@ -277,6 +338,8 @@ not remove, and add tasks and upload files.
           </div>
           <button type="submit">Add Task</button>
         </form>
+        <!-- Delete Task -->
+
         {% endif %}
       </section>
     </section>

@@ -86,6 +86,56 @@ def delete_project():
     
     return jsonify({}) # Return empty response
 
+# ----------- Edit Project Name -----------
+
+@views.route('/edit-project-name', methods=['POST'])
+@login_required
+def edit_project_name():
+    project_name = request.form.get('project_name')
+    project_id = request.args.get('project_id') # Will retrieve the project id from the URL
+
+    project = Project.query.get(project_id)
+
+    if project and project.user_id == current_user.id:
+        project.project_name = project_name
+        db.session.commit()
+        flash("Project name updated successfully!", category='success')
+    
+    return redirect(url_for('views.view_project', project_id=project_id))
+
+# ----------- Subcontractor Assignment Deletion -----------
+
+@views.route('/delete-assignment', methods=['POST'])
+@login_required
+def deleteAssignment():
+    data = json.loads(request.data)
+    subcontractor_id = data['subcontractorId']
+    assignment = Assignment.query.filter_by(subcontractor_id=subcontractor_id).first() 
+
+    if assignment and assignment.project.user_id == current_user.id: 
+        db.session.delete(assignment) 
+        db.session.commit()
+        flash('Subcontractor assignment was successfully removed!', category='success')
+    
+    return jsonify({}) 
+
+# ----------- Task Deletion -----------
+
+@views.route('/delete-task', methods=['POST'])
+@login_required
+def deleteTask():
+    data = json.loads(request.data) # Get JSON data from the client
+    task_id = data['taskId'] # Access the task ID
+
+    task = Task.query.get(task_id) # Find the task by ID
+
+    if task and task.project.user_id == current_user.id: 
+        db.session.delete(task) 
+        db.session.commit()
+        flash('Task was successfully deleted!', category='success')
+    
+    return jsonify({}) # Return empty = indicates success
+
 # ----------- Project Deadline Update -----------
 
 # Route /update_deadline is needed for the html code, form --> action, to direct changes to
