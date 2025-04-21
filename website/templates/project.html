@@ -54,9 +54,13 @@ not remove, and add tasks and upload files.
 
   <!------ Tab Section ------>
   <div class="tab-buttons">
-    <button class="tab-btn active" data-tab="information">Information</button>
-    <button class="tab-btn" data-tab="subcontractors">Subcontractors</button>
-    <button class="tab-btn" data-tab="files">Files</button>
+    <button class="tab-btn active" data-tab="information" id="first-tab">
+      Information
+    </button>
+    <button class="tab-btn" data-tab="subcontractors" id="middle-tab">
+      Subcontractors
+    </button>
+    <button class="tab-btn" data-tab="files" id="last-tab">Files</button>
     {% if user.role == 'subcontractor' %}
     <button class="tab-btn" data-tab="messages">Message</button>
     {% endif %}
@@ -306,7 +310,7 @@ not remove, and add tasks and upload files.
               placeholder="Enter Task Name"
               required
             />
-
+            <br />
             <label for="task-description">Description:</label>
             <textarea
               name="task-description"
@@ -314,7 +318,7 @@ not remove, and add tasks and upload files.
               rows="3"
               placeholder="Type Task Description here (optional)..."
             ></textarea>
-
+            <br />
             <label for="task-deadline">Deadline:</label>
             <input
               type="date"
@@ -322,7 +326,7 @@ not remove, and add tasks and upload files.
               id="task-deadline"
               required
             />
-
+            <br />
             <label for="task-completion">Completion:</label>
             <select name="task-completion" id="task-completion" required>
               <option value="" disabled selected hidden>
@@ -332,7 +336,7 @@ not remove, and add tasks and upload files.
               <option value="In Progress">In Progress</option>
               <option value="Completed">Completed</option>
             </select>
-
+            <br />
             <label for="task-subcontractor">Assign Subcontractor:</label>
             <select name="task-subcontractor" id="task-subcontractor" required>
               <option value="" disabled selected hidden>
@@ -355,64 +359,55 @@ not remove, and add tasks and upload files.
   </div>
   <!------------ Files & Invoice Div ------------>
   <div id="files" class="tab-content">
-    <!------------ Files & Invoice Section ------------>
-    <section id="file-invoice-section" class="sub-sections">
-      <!------ File Upload sub-section ------>
-      <section class="sub-sections" id="file-upload-sub-section">
-        <form
-          action="{{ url_for('file_upload.upload_file', project_id=project.id) }}"
-          method="post"
-          enctype="multipart/form-data"
-        >
-          <div class="file-invoice-div">
-            <h3>
-              Files
-              <label for="file">+</label>
-            </h3>
+    <!------ File Upload sub-section ------>
+    <section class="sub-sections" id="file-upload-sub-section">
+      <form
+        action="{{ url_for('file_upload.upload_file', project_id=project.id) }}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <h3>
+          Files
+          <label for="file">+</label>
+        </h3>
 
-            <!-- File input, styled as a hidden input with a custom label -->
-            <input
-              type="file"
-              class="hidden-input"
-              name="file"
-              id="file"
-              required
-            />
-            <span class="file-name" id="file-name">No File Selected</span>
+        <!-- File input, styled as a hidden input with a custom label -->
+        <input
+          type="file"
+          class="hidden-input"
+          name="file"
+          id="file"
+          required
+        />
+        <span class="file-name" id="file-name">No File Selected</span>
 
-            <button type="submit">Upload</button>
-          </div>
-        </form>
-      </section>
-      <!------ Invoice sub-section ------>
-      <section class="sub-sections" id="invoice-upload-sub-section">
-        <form
-          action="{{ url_for('views.upload_invoice', project_id=project.id) }}"
-          method="post"
-          enctype="multipart/form-data"
-        >
-          <div class="file-invoice-div">
-            <h3>
-              Invoices
-              <label for="invoice">+ </label>
-            </h3>
+        <button type="submit">Upload</button>
+      </form>
+    </section>
+    <!------ Invoice sub-section ------>
+    <section class="sub-sections" id="invoice-upload-sub-section">
+      <form
+        action="{{ url_for('views.upload_invoice', project_id=project.id) }}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <h3>
+          Invoices
+          <label for="invoice">+ </label>
+        </h3>
 
-            <!-- File input styled as hidden input with a custom label -->
-            <input
-              type="file"
-              class="hidden-input"
-              name="invoice"
-              id="invoice"
-              required
-            />
-            <span class="file-name" id="invoice-file-name"
-              >No File Selected</span
-            >
+        <!-- File input styled as hidden input with a custom label -->
+        <input
+          type="file"
+          class="hidden-input"
+          name="invoice"
+          id="invoice"
+          required
+        />
+        <span class="file-name" id="invoice-file-name">No File Selected</span>
 
-            <button type="submit">Upload</button>
-          </div>
-        </form>
-      </section>
+        <button type="submit">Upload</button>
+      </form>
     </section>
   </div>
   <!------------ Message Div ------------>
