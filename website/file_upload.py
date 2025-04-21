@@ -1,4 +1,7 @@
-# website/file_upload.py
+"""
+@File Name: file_upload.py
+@Description: This file contains the Python code for file uploading.
+"""
 
 from flask import Blueprint, request, flash, redirect, url_for
 from werkzeug.utils import secure_filename

@@ -1,4 +1,7 @@
-# notifications.py
+"""
+@File Name: notifications.py
+@Description: This file contains the notifications of the Flask application.
+"""
 
 from flask import flash
 from .models import Message, User, Project, Assignment

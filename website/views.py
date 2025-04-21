@@ -1,7 +1,7 @@
 """
 @File Name: views.py
 @Description: This file contains the routes for handling the main application views, 
-including rendering the home page, handling project creation, and deleting projects.
+including rendering the home page, handling project creation, deleting projects, etc.
 """
 
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, session

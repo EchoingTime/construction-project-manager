@@ -3,6 +3,7 @@
 @Description: This file contains configuration settings for the flask app. Namely, 
 the email server settings for sending emails using Flask-Mail. 
 """
+
 import os
 class Config:
     MAIL_SERVER = 'smtp.gmail.com'

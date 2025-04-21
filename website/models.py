@@ -1,6 +1,6 @@
 """
 @File Name: models.py
-@Description: This file contains the database models for our application.
+@Description: This file contains the database models for the website application.
 @Important: Read Important comment below before making changes here.
 """
 

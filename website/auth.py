@@ -1,6 +1,6 @@
 """
 @File Name: auth.py
-@Description: This file contains the authentication routes for user login, logout, and sign-up processes. 
+@Description: This file contains the authentication routes for user login, logout, and registry processes. 
 It includes functionality for logging in users, logging out, and creating new user accounts, 
 with password hashing for security.
 """
