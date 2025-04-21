@@ -21,6 +21,7 @@ This is a web application built using Flask and other modern technologies to man
 - **Flask-Login**: 0.6.3
 - **Flask-Migrate**: 4.1.0
 - **Flask-SQLAlchemy**: 3.1.1
+- **Flask-Mail**: 0.10.0
 - **Jinja2**: 3.1.5
 - **SQLAlchemy**: 2.0.38
 
@@ -68,28 +69,19 @@ After making a change to models.py (adding a new table or modifying an existing 
      ```
      python source venv/Scripts/activate
      ```
-2. Set FLASK_APP
-   - For Windows Command Prompt/VS Code Terminal
-     ```python
-     set FLASK_APP=main.py
-     ```
-   - For Git Bash or WSL (Mac/Linux):
-     ```python
-     export FLASK_APP=main.py
-     ```
-3. Generate migration file
+2. Generate migration file
    - **This is an example:**
      ```python
      flask --app main.py db migrate -m "Renamed data column to project_name"
      ```
-4. (Provided via ChatGPT - This is for the above example) Modify the generated migration file:
+3. (Provided via ChatGPT - This is for the above example) Modify the generated migration file:
    - Open the migration file located in the `migrations/versions` folder.
    - Add the following code to migrate data from `data` to `project_name`:
      ```python
      op.execute('UPDATE project SET project_name = data')
      ```
    - Make sure the data is copied before dropping the old `data` column.
-5. Apply the migration
+4. Apply the migration
    ```python
    flask --app main.py db upgrade
    ```
