@@ -1,4 +1,7 @@
-<!-- In Progress (views not added for this page) -->
+<!--
+@File Name: calendar.html
+@Description: This file is the calendar webpage, allows contractors and subcontractors to view deadline dates.
+-->
 
 <!--------------------- Base Template Extension --------------------->
 {% extends 'base.html' %}
@@ -7,42 +10,45 @@
 <!--------------------- Main Page Content (PAGE SPECIFICS) --------------------->
 {% block content %}
 <section class="main-content-section" id="calendar-section">
-  <div class="wrapper">
-    <header>
-      <p class="current-date"></p>
-      <div class="icons">
-        <svg
-          id="prev"
-          xmlns="http://www.w3.org/2000/svg"
-          height="24px"
-          viewBox="0 -960 960 960"
-          width="24px"
-        >
-          <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
-        </svg>
-        <svg
-          id="next"
-          xmlns="http://www.w3.org/2000/svg"
-          height="24px"
-          viewBox="0 -960 960 960"
-          width="24px"
-        >
-          <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
-        </svg>
-      </div>
-    </header>
-    <div class="calendar">
-      <ul class="weeks">
-        <li>Sun</li>
-        <li>Mon</li>
-        <li>Tue</li>
-        <li>Wed</li>
-        <li>Thu</li>
-        <li>Fri</li>
-        <li>Sat</li>
-      </ul>
-      <ul class="days"></ul>
+  <section class="calendar">
+    <div class="month">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        height="24px"
+        viewBox="0 -960 960 960"
+        width="24px"
+        class="prev"
+      >
+        <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
+      </svg>
+      <div class="date"><!-- Added via JS --></div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        height="24px"
+        viewBox="0 -960 960 960"
+        width="24px"
+        class="next"
+      >
+        <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
+      </svg>
     </div>
-  </div>
+    <div class="weekdays">
+      <div>Sun</div>
+      <div>Mon</div>
+      <div>Tue</div>
+      <div>Wed</div>
+      <div>Thu</div>
+      <div>Fri</div>
+      <div>Sat</div>
+    </div>
+    <div class="days"><!-- Added via JS --></div>
+    <div class="goto-today">
+      <div class="goto">
+        <input type="text" placeholder="mm/yyyy" class="date-input" />
+        <button class="goto-btn">Go</button>
+      </div>
+      <button class="today-btn">Today</button>
+    </div>
+  </section>
 </section>
 {% endblock %}

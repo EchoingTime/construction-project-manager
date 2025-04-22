@@ -3,15 +3,52 @@
 @Description: This file contains the JavaScript functionality for the front-end of the web application.
 */
 
-/* --------------------- Navbar --------------------- */
-function showNavSidebar() {
-  const sidebar = document.querySelector(".nav-sidebar");
-  sidebar.style.display = "flex";
+/* --------------------- Sidebar --------------------- */
+
+const toggleButton = document.getElementById("toggle-btn");
+const sidebar = document.getElementById("sidebar");
+
+// Will apply a saved sidebar state on page load (Assisted by ChatGPT)
+document.addEventListener("DOMContentLoaded", () => {
+  const isSidebarClosed = localStorage.getItem("sidebarClosed") === "true";
+  if (isSidebarClosed) {
+    sidebar.classList.add("close");
+    toggleButton.classList.add("rotate");
+  }
+});
+
+function toggleSidebar() {
+  sidebar.classList.toggle("close");
+  toggleButton.classList.toggle("rotate");
+
+  // Saving the sidebar state to localStorage
+  const isClosed = sidebar.classList.contains("close");
+  localStorage.setItem("sidebarClosed", isClosed);
+
+  closeSubMenus();
 }
 
-function hideNavSidebar() {
-  const sidebar = document.querySelector(".nav-sidebar");
-  sidebar.style.display = "none";
+function toggleSubMenu(button) {
+  if (!button.nextElementSibling.classList.contains("show")) {
+    closeSubMenus();
+  }
+  button.nextElementSibling.classList.toggle("show");
+  button.classList.toggle("rotate");
+
+  if (sidebar.classList.contains("close")) {
+    sidebar.classList.toggle("close");
+    toggleButton.classList.toggle("rotate");
+  }
+
+  // Saving the state again if sidebar is reopened via the submenu
+  localStorage.setItem("sidebarClosed", false);
+}
+
+function closeSubMenus() {
+  Array.from(sidebar.getElementsByClassName("show")).forEach((uL) => {
+    uL.classList.remove("show");
+    uL.previousElementSibling.classList.remove("rotate");
+  });
 }
 
 /*--------------------- Message Flashing ---------------------*/
@@ -227,47 +264,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-/* --------------------- Sidebar --------------------- */
-
-const toggleButton = document.getElementById("toggle-btn");
-const sidebar = document.getElementById("default-asidebar");
-
-function toggleSidebar() {
-  sidebar.classList.toggle("close");
-  toggleButton.classList.toggle("rotate");
-
-  closeSubMenus();
-}
-
-function toggleSubMenu(button) {
-  if (!button.nextElementSibling.classList.contains("show")) {
-    closeSubMenus();
-  }
-  button.nextElementSibling.classList.toggle("show");
-  button.classList.toggle("rotate");
-
-  if (sidebar.classList.contains("close")) {
-    sidebar.classList.toggle("close");
-    toggleButton.classList.toggle("rotate");
-  }
-}
-
-function closeSubMenus() {
-  Array.from(sidebar.getElementsByClassName("show")).forEach((uL) => {
-    uL.classList.remove("show");
-    uL.previousElementSibling.classList.remove("rotate");
-  });
-}
-
-/*--------------------- Toggle Projection Edit ---------------------*/
+/*--------------------- Toggle Edit ---------------------*/
 
 function toggleEdit() {
-  const deleteSvg = document.querySelectorAll("#delete-svg");
-  const borderToSmooth = document.querySelectorAll(".date, #project-link");
-  const mediaQuery = window.matchMedia("(max-width: 800px)");
-  const leftBorderRadius = document.querySelectorAll("#project-link");
-  const editIcon = document.querySelector("#edit-project");
+  const editIcon = document.querySelector("#edit-project-name-btn");
+  const hiddenForm = document.querySelector("#edit-project-name-form");
 
+  // Toggling between svg states
   if (editIcon.innerHTML.includes("M200-200h57l391")) {
     editIcon.innerHTML =
       '<path d="m622-453-56-56 82-82-57-57-82 82-56-56 195-195q12-12 26.5-17.5T705-840q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L622-453ZM200-200h57l195-195-28-29-29-28-195 195v57ZM792-56 509-338 290-120H120v-169l219-219L56-792l57-57 736 736-57 57Zm-32-648-56-56 56 56Zm-169 56 57 57-57-57ZM424-424l-29-28 57 57-28-29Z" />';
@@ -276,21 +279,7 @@ function toggleEdit() {
       '<path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />';
   }
 
-  // Only for Project Overview
-  const projectOverview = document.getElementById("project-section");
-  if (projectOverview) {
-    deleteSvg.forEach((svg) => {
-      svg.classList.toggle("hidden-svg");
-    });
-    borderToSmooth.forEach((el) => {
-      el.classList.toggle("smooth-borders");
-    });
-    if (mediaQuery.matches) {
-      leftBorderRadius.forEach((el) => {
-        el.classList.toggle("left-radius");
-      });
-    }
-  }
+  hiddenForm.classList.toggle("hidden-form");
 }
 
 /*--------------------- Delete Projects ---------------------*/
@@ -310,6 +299,109 @@ function deleteProject(button) {
     });
   }
 }
+
+/*--------------------- Delete Subcontractor Assignment ---------------------*/
+
+function deleteSubcontractor(button) {
+  const subcontractorId = button.getAttribute("data-id");
+  const subcontractorName = button.getAttribute("data-name");
+  const result = confirm(
+    "Click 'OK' to delete the subcontractor assignment:\n\n" + subcontractorName
+  );
+  if (result) {
+    fetch("/delete-assignment", {
+      method: "POST",
+      body: JSON.stringify({ subcontractorId: subcontractorId }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((_res) => {
+      location.reload();
+    });
+  }
+}
+
+/*--------------------- Delete Tasks ---------------------*/
+
+function deleteTask(button) {
+  const taskId = button.getAttribute("data-id");
+  const taskName = button.getAttribute("data-name");
+  const result = confirm(
+    "Click 'OK' to delete the following task:\n\n" + taskName
+  );
+  if (result) {
+    fetch("/delete-task", {
+      method: "POST",
+      body: JSON.stringify({ taskId: taskId }), // Send taskId in the request
+    }).then((_res) => {
+      location.reload();
+    });
+  }
+}
+
+/*--------------------- Filtering ---------------------*/
+
+function toggleFilter() {
+  const selectStatus = document.querySelector("#status-filter");
+  const filterIcon = document.querySelector("#filter-projects");
+
+  // Toggling visibility and saving the state
+  const isHidden = selectStatus.classList.toggle("hidden-button");
+  localStorage.setItem("filterDropdownHidden", isHidden);
+
+  // Toggling the icon
+  if (filterIcon.innerHTML.includes("M400")) {
+    filterIcon.innerHTML =
+      '<path d="M791-55 55-791l57-57 736 736-57 57ZM633-440l-80-80h167v80h-87ZM433-640l-80-80h487v80H433Zm-33 400v-80h160v80H400ZM240-440v-80h166v80H240ZM120-640v-80h86v80h-86Z" />';
+  } else {
+    filterIcon.innerHTML =
+      '<path d="M400-240v-80h160v80H400ZM240-440v-80h480v80H240ZM120-640v-80h720v80H120Z" />';
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const filter = document.getElementById("status-filter");
+  const projects = document.querySelectorAll(".project-row");
+
+  // If filter is hidden, restore that
+  const isFilterHidden =
+    localStorage.getItem("filterDropdownHidden") === "true";
+  if (isFilterHidden) {
+    document.querySelector("#status-filter").classList.add("hidden-button");
+  }
+
+  // If saved filter, load it
+  const savedFilter = localStorage.getItem("selectedStatusFilter");
+  if (savedFilter) {
+    filter.value = savedFilter;
+
+    // Display the filtered projects
+    projects.forEach((project) => {
+      const status = project.getAttribute("data-status");
+      if (savedFilter === "All" || status === savedFilter) {
+        project.style.display = "";
+      } else {
+        project.style.display = "none";
+      }
+    });
+  }
+
+  // Listen for user changes to the filter
+  filter.addEventListener("change", () => {
+    const selected = filter.value;
+    /* Will save the filter selection for user */
+    localStorage.setItem("selectedStatusFilter", selected);
+
+    projects.forEach((project) => {
+      const status = project.getAttribute("data-status");
+      if (selected === "All" || status === selected) {
+        project.style.display = "";
+      } else {
+        project.style.display = "none";
+      }
+    });
+  });
+});
 
 /*--------------------- Project Details - File Select Work Around [Chat Assisted] ---------------------*/
 
@@ -334,20 +426,75 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+/*--------------------- Project Details - Tab ---------------------*/
+
+document.addEventListener("DOMContentLoaded", function () {
+  const sectionExists = document.getElementById("project-details");
+  if (!sectionExists) return; // Exit if section does not exist
+
+  const buttons = document.querySelectorAll(".tab-btn");
+  const contents = document.querySelectorAll(".tab-content");
+
+  // Gets the saved tab from localStorage (only if one exists)
+  const savedTab = localStorage.getItem("activeTab");
+
+  // If a tab is saved, restore the state
+  if (savedTab) {
+    const savedBtn = document.querySelector(`.tab-btn[data-tab="${savedTab}"]`);
+    const savedContent = document.getElementById(savedTab);
+
+    if (savedBtn && savedContent) {
+      buttons.forEach((btn) => btn.classList.remove("active"));
+      contents.forEach((content) => content.classList.remove("active"));
+
+      savedBtn.classList.add("active");
+      savedContent.classList.add("active");
+    }
+  }
+
+  // Click handlers
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const targetTabId = button.dataset.tab;
+      localStorage.setItem("activeTab", targetTabId);
+
+      // Remove active classes
+      buttons.forEach((btn) => btn.classList.remove("active"));
+      contents.forEach((content) => content.classList.remove("active"));
+
+      // Add active class to clicked button and corresponding content
+      button.classList.add("active");
+      const targetTab = document.getElementById(button.dataset.tab);
+      if (targetTab) {
+        targetTab.classList.add("active");
+      } else {
+        console.error("No matching tab content found for:", button.dataset.tab);
+      }
+    });
+  });
+});
+
 /*--------------------- Dynamic Calendar ---------------------*/
 
 document.addEventListener("DOMContentLoaded", function () {
   const calendar = document.getElementById("calendar-section");
-  if (!calendar) return; // Exit if form does not exist
+  if (!calendar) return; // Exit if calendar page does not exist
 
-  const currentDate = document.querySelector(".current-date");
-  const daysTag = document.querySelector(".days");
-  const arrowButtons = document.querySelectorAll(".icons svg");
+  // DOM Elements
+  const calendarEl = document.querySelector(".calendar");
+  const dateEl = document.querySelector(".date");
+  const daysContainer = document.querySelector(".days");
+  const prevBtn = document.querySelector(".prev");
+  const nextBtn = document.querySelector(".next");
+  const todayBtn = document.querySelector(".today-btn");
+  const gotoBtn = document.querySelector(".goto-btn");
+  const dateInput = document.querySelector(".date-input");
 
-  // Gets the new date, year and month
-  let date = new Date(),
-    currYr = date.getFullYear(),
-    currMn = date.getMonth();
+  // Date State
+  let today = new Date();
+  let currentMonth = today.getMonth();
+  let currentYear = today.getFullYear();
+  let activeDay = null;
 
   const months = [
     "January",
@@ -364,57 +511,161 @@ document.addEventListener("DOMContentLoaded", function () {
     "December",
   ];
 
-  const renderCalendar = () => {
-    let firstDayofMonth = new Date(currYr, currMn, 1).getDay(); // Gets first day of the month (Mon-Sun)
-    let lastDateofMonth = new Date(currYr, currMn + 1, 0).getDate(); // Gets last date of the month
-    let lastDayofMonth = new Date(currYr, currMn, lastDateofMonth).getDay(); // Gets last day of the month
-    let lastDateofLastMonth = new Date(currYr, currMn, 0).getDate(); // Gets last date of the previous month
-    let liTag = "";
+  // Render Calendar
+  function renderCalendar() {
+    const firstDay = new Date(currentYear, currentMonth, 1);
+    const lastDay = new Date(currentYear, currentMonth + 1, 0);
+    const prevMonthLastDay = new Date(currentYear, currentMonth, 0);
 
-    // Creates li of previous month's last days
-    for (let i = firstDayofMonth; i > 0; i--) {
-      liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
+    const prevDaysCount = firstDay.getDay();
+    const nextDaysCount = 6 - lastDay.getDay();
+    const lastDate = lastDay.getDate();
+    const prevLastDate = prevMonthLastDay.getDate();
+
+    // Set Header
+    dateEl.textContent = `${months[currentMonth]} ${currentYear}`;
+
+    // Generate Days
+    let daysHTML = "";
+
+    // Previous month days
+    for (let i = prevDaysCount; i > 0; i--) {
+      daysHTML += `<div class="day prev-date">${prevLastDate - i + 1}</div>`;
     }
 
-    // Creates li of all days of the current month
-    for (let i = 1; i <= lastDateofMonth; i++) {
-      // Adds active class to li if the current day, month, and year match up
-      let isToday =
-        i === date.getDate() &&
-        currMn === new Date().getMonth() &&
-        currYr === new Date().getFullYear()
-          ? "active"
-          : "";
-      liTag += `<li class="${isToday}">${i}</li>`;
+    // Current month days
+    for (let i = 1; i <= lastDate; i++) {
+      const isToday =
+        i === today.getDate() &&
+        currentMonth === today.getMonth() &&
+        currentYear === today.getFullYear();
+
+      const activeClass = isToday ? "today active" : "";
+      if (isToday) activeDay = i;
+
+      daysHTML += `<div class="day ${activeClass}" data-day="${i}">${i}</div>`;
     }
 
-    // Creates li of the next month's first days
-    for (let i = lastDayofMonth; i < 6; i++) {
-      liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`;
+    // Next month days
+    for (let i = 1; i <= nextDaysCount; i++) {
+      daysHTML += `<div class="day next-date">${i}</div>`;
     }
 
-    currentDate.innerText = `${months[currMn]} ${currYr}`;
-    daysTag.innerHTML = liTag;
-  };
+    daysContainer.innerHTML = daysHTML;
+    attachDayClickListeners();
+  }
 
+  // Navigate Months
+  function changeMonth(direction) {
+    currentMonth += direction;
+
+    if (currentMonth < 0) {
+      currentMonth = 11;
+      currentYear--;
+    } else if (currentMonth > 11) {
+      currentMonth = 0;
+      currentYear++;
+    }
+
+    renderCalendar();
+  }
+
+  // Handle Day Selection
+  function attachDayClickListeners() {
+    document.querySelectorAll(".day").forEach((dayEl) => {
+      dayEl.addEventListener("click", () => {
+        const dayNumber = Number(dayEl.textContent);
+        const isPrev = dayEl.classList.contains("prev-date");
+        const isNext = dayEl.classList.contains("next-date");
+
+        if (isPrev) {
+          changeMonth(-1);
+          setTimeout(() => selectDay(dayNumber), 50);
+        } else if (isNext) {
+          changeMonth(1);
+          setTimeout(() => selectDay(dayNumber), 50);
+        } else {
+          selectDay(dayNumber);
+        }
+      });
+    });
+  }
+
+  function selectDay(dayNumber) {
+    activeDay = dayNumber;
+
+    document.querySelectorAll(".day").forEach((dayEl) => {
+      dayEl.classList.remove("active");
+      if (
+        !dayEl.classList.contains("prev-date") &&
+        !dayEl.classList.contains("next-date") &&
+        Number(dayEl.textContent) === dayNumber
+      ) {
+        dayEl.classList.add("active");
+      }
+    });
+  }
+
+  // Reset to Today
+  todayBtn.addEventListener("click", () => {
+    today = new Date();
+    currentMonth = today.getMonth();
+    currentYear = today.getFullYear();
+    renderCalendar();
+  });
+
+  // Format and Validate Input
+  dateInput.addEventListener("input", (e) => {
+    let value = e.target.value.replace(/[^0-9]/g, "");
+    if (value.length > 2) value = value.slice(0, 2) + "/" + value.slice(2);
+    e.target.value = value.slice(0, 7);
+  });
+
+  // Go To Entered Date
+  gotoBtn.addEventListener("click", () => {
+    const [mm, yyyy] = dateInput.value.split("/");
+
+    if (
+      mm &&
+      yyyy &&
+      !isNaN(mm) &&
+      !isNaN(yyyy) &&
+      mm >= 1 &&
+      mm <= 12 &&
+      yyyy.length === 4
+    ) {
+      currentMonth = parseInt(mm) - 1;
+      currentYear = parseInt(yyyy);
+      renderCalendar();
+    } else {
+      alert("Entered an invalid date!");
+    }
+  });
+
+  // Init
   renderCalendar();
 
-  arrowButtons.forEach((icon) => {
-    icon.addEventListener("click", () => {
-      // Adds a click event on both svgs
-      currMn = icon.id === "prev" ? currMn - 1 : currMn + 1;
+  // Hook up prev and next buttons
+  prevBtn.addEventListener("click", () => changeMonth(-1));
+  nextBtn.addEventListener("click", () => changeMonth(1));
 
-      // If current month is less than zero or greater than eleven
-      if (currMn < 0 || currMn > 11) {
-        // Creates a new date of current year and month and passes it as the date value
-        date = new Date(currYr, currMn);
-        currYr = date.getFullYear(); // Updates current year with new date year
-        currMn = date.getMonth(); // Updates current month with new date month
-      } else {
-        // Else pass the new Date as the date value
-        date = new Date();
-      }
-      renderCalendar();
-    });
+  // Keyboard Navigation
+  document.addEventListener("keydown", (e) => {
+    switch (e.key) {
+      case "ArrowLeft":
+        changeMonth(-1);
+        break;
+      case "ArrowRight":
+        changeMonth(1);
+        break;
+      case "t":
+      case "T":
+        todayBtn.click();
+        break;
+      case "g":
+      case "G":
+        dateInput.focus();
+        break;
+    }
   });
 });

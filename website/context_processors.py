@@ -1,4 +1,7 @@
-# context_processors.py
+"""
+@File Name: context_processors.py
+"""
+
 from .models import Message
 from flask_login import current_user
 

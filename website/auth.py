@@ -1,6 +1,6 @@
 """
 @File Name: auth.py
-@Description: This file contains the authentication routes for user login, logout, and sign-up processes. 
+@Description: This file contains the authentication routes for user login, logout, and registry processes. 
 It includes functionality for logging in users, logging out, and creating new user accounts, 
 with password hashing for security.
 """
@@ -35,7 +35,7 @@ def login():
                      projects = db.session.query(Project).filter(Project.id.in_(project_ids)).all()
                      return render_template("homeSub.html", user=current_user, subcontractor=subcontractor, assignments=assignments, projects=projects)
                 else:
-                    return redirect(url_for('views.project'))
+                    return redirect(url_for('views.home'))
             else:
                 flash('Incorrect password.', category='error')
         else:

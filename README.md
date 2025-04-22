@@ -21,6 +21,7 @@ This is a web application built using Flask and other modern technologies to man
 - **Flask-Login**: 0.6.3
 - **Flask-Migrate**: 4.1.0
 - **Flask-SQLAlchemy**: 3.1.1
+- **Flask-Mail**: 0.10.0
 - **Jinja2**: 3.1.5
 - **SQLAlchemy**: 2.0.38
 
@@ -52,9 +53,8 @@ pip install -r requirements.txt
 
 ## Testing Accounts:
 
-- test@test.com | test123
-- test2@test.com | test123
-- subcon@test.com | subpass
+- Contractor: test@con.com | test123
+- Subcontractor: test@sub.com | test123
 
 ## Database Modifications:
 
@@ -69,28 +69,19 @@ After making a change to models.py (adding a new table or modifying an existing 
      ```
      python source venv/Scripts/activate
      ```
-2. Set FLASK_APP
-   - For Windows Command Prompt/VS Code Terminal
-     ```python
-     set FLASK_APP=main.py
-     ```
-   - For Git Bash or WSL (Mac/Linux):
-     ```python
-     export FLASK_APP=main.py
-     ```
-3. Generate migration file
+2. Generate migration file
    - **This is an example:**
      ```python
      flask --app main.py db migrate -m "Renamed data column to project_name"
      ```
-4. (Provided via ChatGPT - This is for the above example) Modify the generated migration file:
+3. (Provided via ChatGPT - This is for the above example) Modify the generated migration file:
    - Open the migration file located in the `migrations/versions` folder.
    - Add the following code to migrate data from `data` to `project_name`:
      ```python
      op.execute('UPDATE project SET project_name = data')
      ```
    - Make sure the data is copied before dropping the old `data` column.
-5. Apply the migration
+4. Apply the migration
    ```python
    flask --app main.py db upgrade
    ```
@@ -99,7 +90,7 @@ After making a change to models.py (adding a new table or modifying an existing 
 
 - “An Idea for a Simple Responsive Spreadsheet | CSS-Tricks.” CSS-Tricks, 28 Nov. 2017, css-tricks.com/idea-simple-responsive-spreadsheet/.
 - 2025.Coding2GO. “Login & Signup with HTML, CSS, JavaScript (Form Validation).” YouTube, 13 July 2024, www.youtube.com/watch?v=bVl5_UdcAy0.
-- CodingNepal. “Create a Dynamic Calendar in HTML CSS & JavaScript | Calendar in JavaScript.” YouTube, 22 Sept. 2022, www.youtube.com/watch?v=Z1BGAivZRlE. Accessed 5 Apr. 2025.
 - “How to Create a Responsive Navigation Bar (for Beginners).” Www.youtube.com, www.youtube.com/watch?v=U8smiWQ8Seg.
+- Open Source Coding. “Modern Calendar with Todo in HTML, CSS and JS Part 2 | JavaScript Events Calendar.” YouTube, 16 Nov. 2022, www.youtube.com/watch?v=r1devGCrm2Y. Accessed 11 Apr. 2025.
 - OpenAI. “ChatGPT.” ChatGPT, OpenAI, chatgpt.com/.
 - “Python Website Full Tutorial - Flask, Authentication, Databases & More.” Www.youtube.com, www.youtube.com/watch?v=dam0GPOAvVI. Accessed 20 June 2021.

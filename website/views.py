@@ -321,6 +321,36 @@ def add_task(project_id):
     flash('Task successfully added!', category='success')
     return redirect(url_for('views.view_project', project_id=project_id))
 
+# --------------------- Update Task ---------------------
+
+@views.route('/update_task/<int:task_id>', methods=['POST'])
+@login_required
+def update_task(task_id):
+    # Get the task
+    task = Task.query.get(task_id)
+    if not task:
+        flash('Task not found!', category='error')
+        return redirect(url_for('views.home'))
+
+    # Ensure the current user is the assigned subcontractor
+    subcontractor = Subcontractor.query.filter_by(user_id=current_user.id).first()
+    if not subcontractor or task.subcontractor_id != subcontractor.id:
+        flash('You are not authorized to update this task!', category='error')
+        return redirect(url_for('views.home'))
+
+    # Get the new completion status from the form
+    new_completion = request.form.get('task-completion')
+    if not new_completion:
+        flash('Completion status is required!', category='error')
+        return redirect(url_for('views.home'))
+
+    # Update the task completion status
+    task.completion = new_completion
+    db.session.commit()
+
+    flash('Task progress updated successfully!', category='success')
+    return redirect(url_for('views.home'))
+
 # --------------------- Profile ---------------------
 
 @views.route('/profile')
