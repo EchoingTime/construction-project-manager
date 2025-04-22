@@ -98,41 +98,4 @@ endblock %}
     </div>
   </form>
 </section>
-
-<section class="main-content-section" id="task-section">
-  <h2>Your Assigned Tasks</h2>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Task Name</th>
-          <th>Project Name</th>
-          <th>Deadline</th>
-          <th>Completion Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for task in user.assigned_tasks %}
-        <tr>
-          <td>{{ task.name }}</td>
-          <td>{{ task.project.project_name }}</td>
-          <td>{{ task.deadline }}</td>
-          <td>{{ task.completion }}</td>
-          <td>
-            <form method="POST" action="{{ url_for('views.update_task', task_id=task.id) }}">
-              <select name="task-completion" required>
-                <option value="Not Started" {% if task.completion == "Not Started" %}selected{% endif %}>Not Started</option>
-                <option value="In Progress" {% if task.completion == "In Progress" %}selected{% endif %}>In Progress</option>
-                <option value="Completed" {% if task.completion == "Completed" %}selected{% endif %}>Completed</option>
-              </select>
-              <button type="submit">Update</button>
-            </form>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</section>
 {% endblock %}
