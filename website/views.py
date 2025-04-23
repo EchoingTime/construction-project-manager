@@ -253,37 +253,68 @@ def update_address(project_id):
         project.address=new_address
         db.session.commit()
     return redirect(url_for('views.view_project', project_id=project_id))
- 
-# ---------------- Subcontractor Projects --------------
-
-#@views.route('/subcontractor_projects')
-#def subcontractor_projects():
-#    subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
-    
-#    assignments=Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
-#    assigned_projects=[assignment.project for assignment in assignments]
-#    return render_template('homeSub.html', assigned_projects=assigned_projects)
-
-# ---------------- Subcontractor Home ------------------
-#@views.route("/home_Sub")
-#def home_sub():
- #   subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
-    
- #   if not subcontractor:
- #       flash('Subcontractor does not exist!', category='error')
- #       return redirect(url_for('views.home'))
- #   assignments = Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
- #   assigned_projects = [assignment.project for assignment in assignments]
-    
-
-  #  return render_template("homeSub.html", user=current_user, assigned_projects=assigned_projects, subcontractor=subcontractor)
 
 # --------------------- Calendar ---------------------
 
 @views.route('/calendar')
 @login_required
 def calendar():
-    return render_template("calendar.html", user=current_user)
+    # Find out if the user is a subcontractor or contractor
+    subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
+
+    # If a subcontractor...
+    if subcontractor:
+        # Retrieve assigned projects or tasks assigned in the project
+        assigned_project_ids = [a.project_id for a in subcontractor.assignments]
+        user_projects = Project.query.filter(Project.id.in_(assigned_project_ids)).all()
+
+        # Filter tasks assigned to this subcontractor
+        user_projects_json = [
+            {
+                "id": project.id,
+                "project_name": project.project_name,
+                "deadline": project.deadline.isoformat() if project.deadline else None,
+                "status": (project.progress or "in progress").lower(),
+                "tasks": [
+                    {
+                        "id": task.id,
+                        "name": task.name,
+                        "deadline": task.deadline.isoformat() if task.deadline else None,
+                        "status": (task.completion or "in progress").lower()
+                    }
+                    for task in project.tasks
+                    if task.subcontractor_id == subcontractor.id
+                ]
+            }
+            for project in user_projects
+        ]
+    else:
+        # For users whose role is a contractor
+        user_projects = Project.query.filter(
+            (Project.user_id == current_user.id) |
+            (Project.subcontractors.any(subcontractor_id=current_user.id))
+        ).all()
+
+        user_projects_json = [
+            {
+                "id": project.id,
+                "project_name": project.project_name,
+                "deadline": project.deadline.isoformat() if project.deadline else None,
+                "status": (project.progress or "in progress").lower(),
+                "tasks": [
+                    {
+                        "id": task.id,
+                        "name": task.name,
+                        "deadline": task.deadline.isoformat() if task.deadline else None,
+                        "status": (task.completion or "in progress").lower()
+                    }
+                    for task in project.tasks
+                ]
+            }
+            for project in user_projects
+        ]
+
+    return render_template("calendar.html", user=current_user, user_projects_json=user_projects_json)
 
 # --------------------- Invoice ---------------------
 
@@ -411,3 +442,49 @@ def send_ping(project_id):
     mail.send(msg)
     return redirect(url_for('views.view_project', project_id=project_id))
 
+# ----------------------- Subcontractor Search Bar -----------------------
+
+@views.route('/search_subcontractors')
+def search_subcontractors():
+    query = request.args.get('q','')
+    results = Subcontractor.query.filter(Subcontractor.email.ilike(f"%{query}%")).all()
+    users = [{'id': sub.id, 'email': sub.email} for sub in results]
+    return jsonify(users)
+
+# ----------------------- file view -----------------------
+
+@views.route('/project/files')
+@login_required
+def view_project_files():
+    user = current_user
+    assigned_projects = []
+
+    if user.role == 'contractor':
+        assigned_projects = Project.query.filter_by(user_id=user.id).all()
+
+    elif user.role == 'subcontractor':
+        subcontractor = Subcontractor.query.filter_by(user_id=user.id).first()
+        if subcontractor:
+            assignments = Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
+            assigned_project_ids = [a.project_id for a in assignments]
+            assigned_projects = Project.query.filter(Project.id.in_(assigned_project_ids)).all()
+
+    # Build dictionary of project -> files
+    project_files = {}
+    for project in assigned_projects:
+        files = File.query.filter_by(project_id=project.id).all()
+        project_files[project] = files
+
+    return render_template('project_files.html', project_files=project_files)
+
+# ----------------------- Serve Image -----------------------
+
+@views.route('/image/<int:file_id>')
+@login_required
+def serve_image(file_id):
+    file = File.query.get(file_id)
+    if not file:
+        return "File not found", 404
+
+    # Return the image data with the appropriate MIME type
+    return current_app.response_class(file.data, mimetype='image/jpeg')  # Adjust MIME type as needed

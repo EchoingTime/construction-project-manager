@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Files for Assigned Projects</h1>
+    <div>
+        {% for project, files in project_files.items() %}
+            <h3>{{ project.project_name }}</h3>
+            <ul>
+                {% for file in files %}
+                    <li>
+                        <a href="javascript:void(0);" onclick="showImageModal('{{ url_for('views.serve_image', file_id=file.id) }}')">
+                            <img src="{{ url_for('views.serve_image', file_id=file.id) }}" alt="{{ file.filename }}" class="file-preview" style="max-height: 100px; border-radius: 8px;" />
+                            <div style="text-align: center; margin-top: 0.5rem;">{{ file.filename }}</div>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeImageModal()">&times;</span>
+        <img class="modal-content" id="modalImage" />
+    </div>
+    <a href="{{ url_for('views.home') }}">Back to Home</a>
+{% endblock %}

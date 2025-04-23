@@ -97,7 +97,7 @@
           </button>
           <ul class="sub-menu">
             <div>
-              <li><a href="#">View</a></li>
+              <a href="{{ url_for('views.view_project_files') }}">View</a>
             </div>
           </ul>
         </li>
@@ -205,6 +205,9 @@
       {% endblock %}
     </main>
     <!--------------------- JavaScript --------------------->
-    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script
+      src="{{ url_for('static', filename='js/index.js') }}"
+      defer
+    ></script>
   </body>
 </html>
