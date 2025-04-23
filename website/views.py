@@ -367,12 +367,14 @@ def add_task(project_id):
     task_name = request.form.get('task-name')
     task_description = request.form.get('task-description')  # New description field
     task_deadline = request.form.get('task-deadline')
-    task_completion = request.form.get('task-completion')  # Replaces "status"
     subcontractor_id = request.form.get('task-subcontractor')  # Get subcontractor ID
 
+    # Default task completion to "Not Started" for all users
+    task_completion = "Not Started"
+
     # Validate form data
-    if not task_name or not task_deadline or not task_completion:
-        flash('All fields except description are required to create a task!', category='error')
+    if not task_name or not task_deadline:
+        flash('Task name and deadline are required to create a task!', category='error')
         return redirect(url_for('views.view_project', project_id=project_id))
 
     # Create a new task
@@ -381,7 +383,7 @@ def add_task(project_id):
         name=task_name,
         description=task_description,  # Add description
         deadline=datetime.strptime(task_deadline, "%Y-%m-%d").date(),
-        completion=task_completion,  # Replace "status" with "completion"
+        completion=task_completion,  # Default to "Not Started"
         date_created=datetime.now(),
         subcontractor_id=subcontractor_id  # Add subcontractor ID
     )
@@ -488,3 +490,37 @@ def serve_image(file_id):
 
     # Return the image data with the appropriate MIME type
     return current_app.response_class(file.data, mimetype='image/jpeg')  # Adjust MIME type as needed
+
+# --------------------- Update Task Completion ---------------------
+
+@views.route('/update_task_completion/<int:task_id>', methods=['POST'])
+@login_required
+def update_task_completion(task_id):
+    # Get the task
+    task = Task.query.get(task_id)
+    if not task:
+        flash('Task not found!', category='error')
+        return redirect(url_for('views.home'))
+
+    # Ensure the current user is a subcontractor
+    #subcontractor = Subcontractor.query.filter_by(user_id=current_user.id).first()
+    #if not subcontractor:
+    #    flash('You are not authorized to update this task!', category='error')
+    #    return redirect(url_for('views.home'))
+
+    # Check if the subcontractor is assigned to the task
+    #if task.subcontractor_id != subcontractor.id:
+    #    flash('You are not authorized to update this task!', category='error')
+    #    return redirect(url_for('views.home'))
+
+    # Get the new completion status from the form
+    new_completion_status = request.form.get('completion-status')
+    if not new_completion_status:
+        flash('Completion status is required!', category='error')
+        return redirect(url_for('views.view_project', project_id=task.project_id))
+
+    # Update the task's completion status
+    task.completion = new_completion_status
+    db.session.commit()
+    flash('Task completion status updated successfully!', category='success')
+    return redirect(url_for('views.view_project', project_id=task.project_id))

@@ -291,11 +291,60 @@ tab to ping a contractor's email.
                 </td>
                 {% endif %}
               </tr>
+              <tr>
+                <td colspan="6">
+                  <form action="{{ url_for('views.update_task_completion', task_id=task.id) }}" method="POST">
+                    <label for="completion-status">Update Completion Status:</label>
+                    <select name="completion-status" id="completion-status" required>
+                      <option value="Not Started">Not Started</option>
+                      <option value="In Progress">In Progress</option>
+                      <option value="Completed">Completed</option>
+                    </select>
+                    <button type="submit">Update</button>
+                  </form>
+                </td>
+              </tr>
               {% endfor %}
             </tbody>
           </table>
           {% endif %}
         </div>
+
+        {% for task in tasks %}
+        <div class="task">
+            <h3>{{ task.name }}</h3>
+            <p>Description: {{ task.description }}</p>
+            <p>Deadline: {{ task.deadline }}</p>
+            <p>Status: {{ task.completion }}</p>
+
+            <!-- Only show the update form if the current user is the assigned subcontractor -->
+            {% if current_user.role == 'subcontractor' and task.subcontractor_id == current_user.id %}
+                <form action="{{ url_for('views.update_task_completion', task_id=task.id) }}" method="POST">
+                    <label for="completion-status">Update Completion Status:</label>
+                    <select name="completion-status" id="completion-status" required>
+                        <option value="Not Started" {% if task.completion == 'Not Started' %}selected{% endif %}>Not Started</option>
+                        <option value="In Progress" {% if task.completion == 'In Progress' %}selected{% endif %}>In Progress</option>
+                        <option value="Completed" {% if task.completion == 'Completed' %}selected{% endif %}>Completed</option>
+                    </select>
+                    <button type="submit">Update</button>
+                </form>
+            {% endif %}
+            {% if current_user.role == 'subcontractor' %}
+                {% set subcontractor = subcontractors | selectattr("user_id", "equalto", current_user.id) | first %}
+                {% if subcontractor and task.subcontractor_id == subcontractor.id %}
+                    <form action="{{ url_for('views.update_task_completion', task_id=task.id) }}" method="POST">
+                        <label for="completion-status">Update Completion Status:</label>
+                        <select name="completion-status" id="completion-status" required>
+                            <option value="Not Started" {% if task.completion == 'Not Started' %}selected{% endif %}>Not Started</option>
+                            <option value="In Progress" {% if task.completion == 'In Progress' %}selected{% endif %}>In Progress</option>
+                            <option value="Completed" {% if task.completion == 'Completed' %}selected{% endif %}>Completed</option>
+                        </select>
+                        <button type="submit">Update</button>
+                    </form>
+                {% endif %}
+            {% endif %}
+        </div>
+        {% endfor %}
 
         {% if user.role != 'subcontractor' %}
         <form
