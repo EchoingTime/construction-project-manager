@@ -259,31 +259,60 @@ def update_address(project_id):
 @views.route('/calendar')
 @login_required
 def calendar():
-    # Gathering all projects the user created or is assigned to
-    user_projects = Project.query.filter(
-        (Project.user_id == current_user.id) |
-        (Project.subcontractors.any(id=current_user.id))
-    ).all()
+    # Find out if the user is a subcontractor or contractor
+    subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
 
-    # Covert to JSON format
-    user_projects_json = [
-    {
-        "id": project.id,
-        "project_name": project.project_name,
-        "deadline": project.deadline.isoformat() if project.deadline else None,
-        "status": (project.progress or "in progress").lower(),
-        "tasks": [
+    # If a subcontractor...
+    if subcontractor:
+        # Retrieve assigned projects or tasks assigned in the project
+        assigned_project_ids = [a.project_id for a in subcontractor.assignments]
+        user_projects = Project.query.filter(Project.id.in_(assigned_project_ids)).all()
+
+        # Filter tasks assigned to this subcontractor
+        user_projects_json = [
             {
-                "id": task.id,
-                "name": task.name,
-                "deadline": task.deadline.isoformat() if task.deadline else None,
-                "status": (task.completion or "in progress").lower()
+                "id": project.id,
+                "project_name": project.project_name,
+                "deadline": project.deadline.isoformat() if project.deadline else None,
+                "status": (project.progress or "in progress").lower(),
+                "tasks": [
+                    {
+                        "id": task.id,
+                        "name": task.name,
+                        "deadline": task.deadline.isoformat() if task.deadline else None,
+                        "status": (task.completion or "in progress").lower()
+                    }
+                    for task in project.tasks
+                    if task.subcontractor_id == subcontractor.id
+                ]
             }
-            for task in project.tasks
+            for project in user_projects
         ]
-    }
-    for project in user_projects
-]
+    else:
+        # For users whose role is a contractor
+        user_projects = Project.query.filter(
+            (Project.user_id == current_user.id) |
+            (Project.subcontractors.any(subcontractor_id=current_user.id))
+        ).all()
+
+        user_projects_json = [
+            {
+                "id": project.id,
+                "project_name": project.project_name,
+                "deadline": project.deadline.isoformat() if project.deadline else None,
+                "status": (project.progress or "in progress").lower(),
+                "tasks": [
+                    {
+                        "id": task.id,
+                        "name": task.name,
+                        "deadline": task.deadline.isoformat() if task.deadline else None,
+                        "status": (task.completion or "in progress").lower()
+                    }
+                    for task in project.tasks
+                ]
+            }
+            for project in user_projects
+        ]
 
     return render_template("calendar.html", user=current_user, user_projects_json=user_projects_json)
 
