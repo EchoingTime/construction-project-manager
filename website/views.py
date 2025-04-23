@@ -1,40 +1,51 @@
 """
 @File Name: views.py
 @Description: This file contains the routes for handling the main application views, 
-including rendering the home page, handling project creation, deleting projects, etc.
+including rendering the home page, handling project creation, and deleting projects.
 """
 
-from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, session
+from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_login import login_required, current_user
 from .models import File, Project, Message, User, Subcontractor, Assignment, Task
 from . import db
 from datetime import datetime
-from flask_mail import Mail, Message
-from website import mail
-from flask import current_app
 import json
 
 views = Blueprint('views', __name__)
 
-# --------------------- / will send user to views home (beneath this code segment) ---------------------
+# --------------------- Home Pages ---------------------
 
-@views.route('/')
-def redirect_to_home():
-    return redirect(url_for('views.home'))
-
-# --------------------- Home Pages & Project Creation ---------------------
-
-@views.route('/home', methods=['GET', 'POST'])
+@views.route('/home')
 @login_required
 def home():
-    # For Handling POST (Project Creation on the Project Overview Page (aka home.html))
-    if request.method == 'POST' and current_user.role == "contractor":
+    if current_user.role == "contractor": # Goes to contractor page
+        return render_template("home.html", user=current_user)
+    elif current_user.role == "subcontractor":
+        # Query the subcontractor
+        #subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
+       #assignments = Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
+        #project_ids = [assignment.project_id for assignment in assignments]
+        #assigned_projects = Project.query.filter(Project.id.in_(project_ids)).all()
+        #return render_template("homeSub.html", subcontractor=subcontractor,user=current_user, assigned_projects=assigned_projects)
+        return render_template("homeSub.html", user=current_user)
+    else:
+        return "Unauthorized", 403
+
+# --------------------- Project Page ---------------------
+
+# ----------- Project Creation -----------
+
+# ChatGPT Assistance with page refreshing project duplications
+@views.route('/', methods=['GET', 'POST']) # Main page of website
+@login_required # Make sure to include this if a user must be logged in to view a page!
+def project():
+    if request.method == 'POST':
         project = request.form.get('project')
 
-        if not project or len(project.strip()) < 1:
+        if len(project) < 1: # If project does not have a title, flash an error while preventing creation
             flash('Project needs a descriptive title!', category='error')
         else:
-            # Check if project already exists for this user
+            # Check if project already exists
             existing_project = Project.query.filter_by(project_name=project, user_id=current_user.id).first()
             if existing_project:
                 flash("This project already exists!", category='error')
@@ -43,22 +54,22 @@ def home():
                 new_project = Project(project_name=project, user_id=current_user.id)
                 db.session.add(new_project)
                 db.session.commit()
-                flash('Created New Project', category='success') 
-        # Redirect to the same page (prevents form re-submission via freshing page - ChatGPT Assist)
-        return redirect(url_for('views.home'))
-
-    # Handles GET (rendering the actual home.html and homeSub.html pages)
-    if current_user.role == "contractor": # Goes to contractor page
+                flash('Created New Project', category='success')
+            
+        # Redirect to the same page (prevents form re-submission via freshing page)
+    #if current_user.role != "subcontractor":
+        return redirect(url_for('views.project'))
+    
+   
+    if current_user.role != "subcontractor":
         return render_template("home.html", user=current_user)
-    elif current_user.role == "subcontractor":
+    else:
         subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
         assignments = Assignment.query.filter_by(subcontractor_id=subcontractor.id).all() 
         assigned_projects = db.session.query(Assignment.project_id).filter_by(subcontractor_id=subcontractor.id).all()
         project_ids = [project[0] for project in assigned_projects]
         projects = db.session.query(Project).filter(Project.id.in_(project_ids)).all()
-        return render_template("homeSub.html", user=current_user, assignments=assignments, projects=projects)
-    else:
-        return "Unauthorized", 403
+        return render_template("base.html", user=current_user, projects=projects)
 
 #------------ Project Viewing ------------
 
@@ -69,6 +80,11 @@ def view_project(project_id):
     subcontractors = [assignment.subcontractor for assignment in project.subcontractors]
     tasks = Task.query.filter_by(project_id=project_id).all()
     return render_template("project.html", project=project, subcontractors=subcontractors, user=current_user, tasks=tasks)
+
+#@views.route('/view_project/<int:project_id>')
+#def view_project(project_id):
+    # Logic for viewing a project
+#    pass
 
 # ----------- Project Deletion -----------
 
@@ -86,55 +102,7 @@ def delete_project():
     
     return jsonify({}) # Return empty response
 
-# ----------- Edit Project Name -----------
-
-@views.route('/edit-project-name', methods=['POST'])
-@login_required
-def edit_project_name():
-    project_name = request.form.get('project_name')
-    project_id = request.args.get('project_id') # Will retrieve the project id from the URL
-
-    project = Project.query.get(project_id)
-
-    if project and project.user_id == current_user.id:
-        project.project_name = project_name
-        db.session.commit()
-        flash("Project name updated successfully!", category='success')
-    
-    return redirect(url_for('views.view_project', project_id=project_id))
-
-# ----------- Subcontractor Assignment Deletion -----------
-
-@views.route('/delete-assignment', methods=['POST'])
-@login_required
-def deleteAssignment():
-    data = json.loads(request.data)
-    subcontractor_id = data['subcontractorId']
-    assignment = Assignment.query.filter_by(subcontractor_id=subcontractor_id).first() 
-
-    if assignment and assignment.project.user_id == current_user.id: 
-        db.session.delete(assignment) 
-        db.session.commit()
-        flash('Subcontractor assignment was successfully removed!', category='success')
-    
-    return jsonify({}) 
-
-# ----------- Task Deletion -----------
-
-@views.route('/delete-task', methods=['POST'])
-@login_required
-def deleteTask():
-    data = json.loads(request.data) # Get JSON data from the client
-    task_id = data['taskId'] # Access the task ID
-
-    task = Task.query.get(task_id) # Find the task by ID
-
-    if task and task.project.user_id == current_user.id: 
-        db.session.delete(task) 
-        db.session.commit()
-        flash('Task was successfully deleted!', category='success')
-    
-    return jsonify({}) # Return empty = indicates success
+# ----------- Project Filter -----------
 
 # ----------- Project Deadline Update -----------
 
@@ -253,68 +221,37 @@ def update_address(project_id):
         project.address=new_address
         db.session.commit()
     return redirect(url_for('views.view_project', project_id=project_id))
+ 
+# ---------------- Subcontractor Projects --------------
+
+#@views.route('/subcontractor_projects')
+#def subcontractor_projects():
+#    subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
+    
+#    assignments=Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
+#    assigned_projects=[assignment.project for assignment in assignments]
+#    return render_template('homeSub.html', assigned_projects=assigned_projects)
+
+# ---------------- Subcontractor Home ------------------
+#@views.route("/home_Sub")
+#def home_sub():
+ #   subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
+    
+ #   if not subcontractor:
+ #       flash('Subcontractor does not exist!', category='error')
+ #       return redirect(url_for('views.home'))
+ #   assignments = Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
+ #   assigned_projects = [assignment.project for assignment in assignments]
+    
+
+  #  return render_template("homeSub.html", user=current_user, assigned_projects=assigned_projects, subcontractor=subcontractor)
 
 # --------------------- Calendar ---------------------
 
 @views.route('/calendar')
 @login_required
 def calendar():
-    # Find out if the user is a subcontractor or contractor
-    subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
-
-    # If a subcontractor...
-    if subcontractor:
-        # Retrieve assigned projects or tasks assigned in the project
-        assigned_project_ids = [a.project_id for a in subcontractor.assignments]
-        user_projects = Project.query.filter(Project.id.in_(assigned_project_ids)).all()
-
-        # Filter tasks assigned to this subcontractor
-        user_projects_json = [
-            {
-                "id": project.id,
-                "project_name": project.project_name,
-                "deadline": project.deadline.isoformat() if project.deadline else None,
-                "status": (project.progress or "in progress").lower(),
-                "tasks": [
-                    {
-                        "id": task.id,
-                        "name": task.name,
-                        "deadline": task.deadline.isoformat() if task.deadline else None,
-                        "status": (task.completion or "in progress").lower()
-                    }
-                    for task in project.tasks
-                    if task.subcontractor_id == subcontractor.id
-                ]
-            }
-            for project in user_projects
-        ]
-    else:
-        # For users whose role is a contractor
-        user_projects = Project.query.filter(
-            (Project.user_id == current_user.id) |
-            (Project.subcontractors.any(subcontractor_id=current_user.id))
-        ).all()
-
-        user_projects_json = [
-            {
-                "id": project.id,
-                "project_name": project.project_name,
-                "deadline": project.deadline.isoformat() if project.deadline else None,
-                "status": (project.progress or "in progress").lower(),
-                "tasks": [
-                    {
-                        "id": task.id,
-                        "name": task.name,
-                        "deadline": task.deadline.isoformat() if task.deadline else None,
-                        "status": (task.completion or "in progress").lower()
-                    }
-                    for task in project.tasks
-                ]
-            }
-            for project in user_projects
-        ]
-
-    return render_template("calendar.html", user=current_user, user_projects_json=user_projects_json)
+    return render_template("calendar.html", user=current_user)
 
 # --------------------- Invoice ---------------------
 
@@ -368,7 +305,6 @@ def add_task(project_id):
     task_description = request.form.get('task-description')  # New description field
     task_deadline = request.form.get('task-deadline')
     task_completion = request.form.get('task-completion')  # Replaces "status"
-    subcontractor_id = request.form.get('task-subcontractor')  # Get subcontractor ID
 
     # Validate form data
     if not task_name or not task_deadline or not task_completion:
@@ -382,8 +318,7 @@ def add_task(project_id):
         description=task_description,  # Add description
         deadline=datetime.strptime(task_deadline, "%Y-%m-%d").date(),
         completion=task_completion,  # Replace "status" with "completion"
-        date_created=datetime.now(),
-        subcontractor_id=subcontractor_id  # Add subcontractor ID
+        date_created=datetime.now()
     )
     db.session.add(new_task)
     db.session.commit()
@@ -391,100 +326,39 @@ def add_task(project_id):
     flash('Task successfully added!', category='success')
     return redirect(url_for('views.view_project', project_id=project_id))
 
+# --------------------- Update Task ---------------------
+
+@views.route('/update_task/<int:task_id>', methods=['POST'])
+@login_required
+def update_task(task_id):
+    # Get the task
+    task = Task.query.get(task_id)
+    if not task:
+        flash('Task not found!', category='error')
+        return redirect(url_for('views.home'))
+
+    # Ensure the current user is the assigned subcontractor
+    subcontractor = Subcontractor.query.filter_by(user_id=current_user.id).first()
+    if not subcontractor or task.subcontractor_id != subcontractor.id:
+        flash('You are not authorized to update this task!', category='error')
+        return redirect(url_for('views.home'))
+
+    # Get the new completion status from the form
+    new_completion = request.form.get('task-completion')
+    if not new_completion:
+        flash('Completion status is required!', category='error')
+        return redirect(url_for('views.home'))
+
+    # Update the task completion status
+    task.completion = new_completion
+    db.session.commit()
+
+    flash('Task progress updated successfully!', category='success')
+    return redirect(url_for('views.home'))
+
 # --------------------- Profile ---------------------
 
 @views.route('/profile')
 @login_required
 def profile():
-    # Need to add a reference to get subcontractor info, if user is a subcontractor
-    subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
-    return render_template("profile.html", user=current_user, subcontractor=subcontractor)
-
-# --------------------- Assigned Tasks ---------------------
-
-@views.route('/assigned_tasks')
-@login_required
-def assigned_tasks():
-    # Ensure the current user is a subcontractor
-    subcontractor = Subcontractor.query.filter_by(user_id=current_user.id).first()
-    if not subcontractor:
-        return "You are not authorized to view this page.", 403
-
-    # Get tasks assigned to the subcontractor
-    tasks = subcontractor.get_assigned_tasks()
-    return render_template('assigned_tasks.html', tasks=tasks)
-
-# --------------------- Project Tasks ---------------------
-
-@views.route('/project/<int:project_id>/tasks')
-@login_required
-def view_project_tasks(project_id):
-    # Fetch the project and its associated tasks
-    project = Project.query.get_or_404(project_id)
-    tasks = Task.query.filter_by(project_id=project_id).all()
-    return render_template('project_tasks.html', project=project, tasks=tasks)
-
-# --------------------- Send Email Ping ---------------------
-
-@views.route('/send_ping/<int:project_id>', methods=['POST'])
-def send_ping(project_id):
-    project = Project.query.get(project_id)
-    contractor = User.query.get(project.user_id)
-
-    reason = request.form['reason']
-    msg = Message(subject=f"[Ping] {reason} {current_user.first_name} on {project.project_name}",
-                  sender=current_app.config['MAIL_USERNAME'],
-                  recipients=[contractor.email],
-                  body=(f"You've received a ping from {current_user.first_name}"
-                        f"(email: {current_user.email})\n\n"
-                        f"Project: {project.project_name}\n"
-                        f"Reason: {reason}\n\n"))
-    mail.send(msg)
-    return redirect(url_for('views.view_project', project_id=project_id))
-
-# ----------------------- Subcontractor Search Bar -----------------------
-
-@views.route('/search_subcontractors')
-def search_subcontractors():
-    query = request.args.get('q','')
-    results = Subcontractor.query.filter(Subcontractor.email.ilike(f"%{query}%")).all()
-    users = [{'id': sub.id, 'email': sub.email} for sub in results]
-    return jsonify(users)
-
-# ----------------------- file view -----------------------
-
-@views.route('/project/files')
-@login_required
-def view_project_files():
-    user = current_user
-    assigned_projects = []
-
-    if user.role == 'contractor':
-        assigned_projects = Project.query.filter_by(user_id=user.id).all()
-
-    elif user.role == 'subcontractor':
-        subcontractor = Subcontractor.query.filter_by(user_id=user.id).first()
-        if subcontractor:
-            assignments = Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
-            assigned_project_ids = [a.project_id for a in assignments]
-            assigned_projects = Project.query.filter(Project.id.in_(assigned_project_ids)).all()
-
-    # Build dictionary of project -> files
-    project_files = {}
-    for project in assigned_projects:
-        files = File.query.filter_by(project_id=project.id).all()
-        project_files[project] = files
-
-    return render_template('project_files.html', project_files=project_files)
-
-# ----------------------- Serve Image -----------------------
-
-@views.route('/image/<int:file_id>')
-@login_required
-def serve_image(file_id):
-    file = File.query.get(file_id)
-    if not file:
-        return "File not found", 404
-
-    # Return the image data with the appropriate MIME type
-    return current_app.response_class(file.data, mimetype='image/jpeg')  # Adjust MIME type as needed
+    return render_template("profile.html", user=current_user)
