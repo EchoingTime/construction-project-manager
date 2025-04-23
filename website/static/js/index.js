@@ -689,3 +689,26 @@ function selectUser(email, id) {
   document.getElementById('subcontractor-email').value = email;
   document.getElementById('suggestions').innerHTML = '';
 }
+
+/*--------------------- file view ---------------------*/
+function showImageModal(imageSrc) {
+  const modal = document.getElementById("imageModal");
+  const modalImage = document.getElementById("modalImage");
+
+  modalImage.src = imageSrc;
+  modal.style.display = "block";
+}
+
+function closeImageModal() {
+  const modal = document.getElementById("imageModal");
+  modal.style.display = "none";
+}
+
+window.addEventListener("click", function (e) {
+  const modal = document.getElementById("imageModal");
+  if (e.target === modal) {
+    closeImageModal();
+  }
+});
+
+

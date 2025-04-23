@@ -418,3 +418,38 @@ def search_subcontractors():
     results = Subcontractor.query.filter(Subcontractor.email.ilike(f"%{query}%")).all()
     users = [{'id': sub.id, 'email': sub.email} for sub in results]
     return jsonify(users)
+
+# ----------------------- file view -----------------------
+@views.route('/project/files')
+@login_required
+def view_project_files():
+    user = current_user
+    assigned_projects = []
+
+    if user.role == 'contractor':
+        assigned_projects = Project.query.filter_by(user_id=user.id).all()
+
+    elif user.role == 'subcontractor':
+        subcontractor = Subcontractor.query.filter_by(user_id=user.id).first()
+        if subcontractor:
+            assignments = Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
+            assigned_project_ids = [a.project_id for a in assignments]
+            assigned_projects = Project.query.filter(Project.id.in_(assigned_project_ids)).all()
+
+    # Build dictionary of project -> files
+    project_files = {}
+    for project in assigned_projects:
+        files = File.query.filter_by(project_id=project.id).all()
+        project_files[project] = files
+
+    return render_template('project_files.html', project_files=project_files)
+# ----------------------- Serve Image -----------------------
+@views.route('/image/<int:file_id>')
+@login_required
+def serve_image(file_id):
+    file = File.query.get(file_id)
+    if not file:
+        return "File not found", 404
+
+    # Return the image data with the appropriate MIME type
+    return current_app.response_class(file.data, mimetype='image/jpeg')  # Adjust MIME type as needed
