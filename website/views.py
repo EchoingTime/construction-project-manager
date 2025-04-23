@@ -411,3 +411,10 @@ def send_ping(project_id):
     mail.send(msg)
     return redirect(url_for('views.view_project', project_id=project_id))
 
+# ----------------------- Subcontractor Search Bar -----------------------
+@views.route('/search_subcontractors')
+def search_subcontractors():
+    query = request.args.get('q','')
+    results = Subcontractor.query.filter(Subcontractor.email.ilike(f"%{query}%")).all()
+    users = [{'id': sub.id, 'email': sub.email} for sub in results]
+    return jsonify(users)

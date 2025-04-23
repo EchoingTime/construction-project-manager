@@ -669,3 +669,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+/*--------------------- Subcontractor Search ---------------------*/
+document.getElementById('subcontractor-email').addEventListener('input', function () {
+  const query = this.value;
+  if (!query) return document.getElementById('suggestions').innerHTML = '';
+
+  fetch(`/search_subcontractors?q=${query}`)
+      .then(res => res.json())
+      .then(data => {
+          const suggestions = data.map(user =>
+              `<li onclick="selectUser('${user.email}', ${user.id})">${user.email}</li>`
+          ).join('');
+          document.getElementById('suggestions').innerHTML = suggestions;
+      });
+});
+
+function selectUser(email, id) {
+  document.getElementById('subcontractor-email').value = email;
+  document.getElementById('suggestions').innerHTML = '';
+}
