@@ -928,7 +928,7 @@ a:hover {
 
 /*-------------------------- Calendar (ChatGPT Themed Revamp) --------------------------*/
 
-#calendar-section .calendar {
+#calendar-section {
   background: var(--panel);
   padding: 20px 25px;
   border-radius: 12px;
@@ -974,31 +974,32 @@ a:hover {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 8px;
-  text-align: center;
 }
 
-#calendar-section .days div {
-  height: 70px;
-  padding: 8px;
+#calendar-section .day {
+  min-height: 70px;
+  padding: 8px 6px;
   border-radius: 10px;
   background: var(--card);
   color: var(--text);
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
-  font-size: 0.95rem;
+  align-items: flex-start;
+  font-size: 0.85rem;
+  transition: background 0.2s ease, color 0.2s ease;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
-#calendar-section .days div:hover {
+#calendar-section .day:hover {
   background: var(--hover-bg);
   color: var(--accent);
 }
 
-#calendar-section .days .today {
+#calendar-section .day.today {
   background: var(--accent);
   color: #fff;
   font-weight: bold;
@@ -1050,13 +1051,117 @@ a:hover {
   padding: 6px 12px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background-color 0.2s ease;
   font-size: 0.9rem;
 }
 
 #calendar-section .goto-btn:hover,
 #calendar-section .today-btn:hover {
   background: var(--accent-hover);
+}
+
+/* Day Number */
+#calendar-section .day-number {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+  width: 100%;
+  text-align: left;
+  color: inherit;
+}
+
+/* Deadline List */
+#calendar-section .deadlines {
+  margin-top: 4px;
+  width: 100%;
+  font-size: 0.7rem;
+  line-height: 1.3;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-height: 8.5em; /* fits ~4-5 lines */
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent; /* for Firefox */
+  position: relative;
+}
+
+#calendar-section .deadlines::-webkit-scrollbar {
+  width: 5px;
+}
+
+#calendar-section .deadlines::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 6px;
+}
+
+#calendar-section .deadlines::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Project and Task Style */
+#calendar-section .deadline.project,
+#calendar-section .deadline.task {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  display: inline-block;
+  width: 100%;
+}
+
+/* Normal view colors */
+#calendar-section .deadline.project {
+  font-weight: 600;
+}
+
+/* Special TODAY styling for contrast */
+#calendar-section .day.today .deadline.project,
+#calendar-section .day.today .deadline.task {
+  background: rgba(0, 0, 0, 0.25); /* Darker overlay for contrast */
+}
+
+#calendar-section .deadline a,
+#calendar-section .deadline.project,
+#calendar-section .deadline.task {
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+#calendar-section .deadline.project:hover,
+#calendar-section .deadline.task:hover {
+  color: var(--accent);
+}
+
+#calendar-section .active .deadline.project:hover,
+#calendar-section .active .deadline.task:hover {
+  color: var(--hover-bg) !important;
+}
+
+/* --------------------- Status Colors --------------------- */
+
+#calendar-section .deadline.status-not-yet-started {
+  color: #66ccff; /* Blue */
+}
+
+#calendar-section .deadline.status-on-hold {
+  color: #ffb347; /* Orange */
+}
+
+#calendar-section .deadline.status-in-progress {
+  color: #ffd966; /* Yellow */
+}
+
+#calendar-section .deadline.status-completed,
+#calendar-section .deadline.status-canceled {
+  text-decoration: line-through;
+  opacity: 0.6;
+  font-style: italic;
+  color: #85f7af; /* Green */
+}
+#calendar-section .deadline.status-canceled {
+  color: #ff6b6b; /* Red */
 }
 
 /*-------------------------- Responsiveness --------------------------*/
@@ -1158,6 +1263,20 @@ a:hover {
     align-items: stretch !important;
     gap: 0.75rem !important;
   }
+
+  #calendar-section .days {
+    grid-template-columns: repeat(7, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  #calendar-section .days .day {
+    min-height: 80px;
+    font-size: 0.8rem;
+  }
+
+  #calendar-section .day {
+    padding: 6px 4px !important;
+  }
 }
 
 .suggestion-list {
@@ -1180,27 +1299,28 @@ a:hover {
 }
 
 /*-------------------------- file view --------------------------*/
+
 .file-list {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 .file-list li {
-    display: inline-block;
-    margin: 10px;
-    text-align: center;
+  display: inline-block;
+  margin: 10px;
+  text-align: center;
 }
 
 .file-preview {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    cursor: pointer;
-    transition: transform 0.2s;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
 .file-preview:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .modal {
@@ -1227,8 +1347,14 @@ a:hover {
 }
 
 @keyframes zoomIn {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .modal .close {

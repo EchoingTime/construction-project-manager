@@ -253,37 +253,39 @@ def update_address(project_id):
         project.address=new_address
         db.session.commit()
     return redirect(url_for('views.view_project', project_id=project_id))
- 
-# ---------------- Subcontractor Projects --------------
-
-#@views.route('/subcontractor_projects')
-#def subcontractor_projects():
-#    subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
-    
-#    assignments=Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
-#    assigned_projects=[assignment.project for assignment in assignments]
-#    return render_template('homeSub.html', assigned_projects=assigned_projects)
-
-# ---------------- Subcontractor Home ------------------
-#@views.route("/home_Sub")
-#def home_sub():
- #   subcontractor = Subcontractor.query.filter_by(email=current_user.email).first()
-    
- #   if not subcontractor:
- #       flash('Subcontractor does not exist!', category='error')
- #       return redirect(url_for('views.home'))
- #   assignments = Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
- #   assigned_projects = [assignment.project for assignment in assignments]
-    
-
-  #  return render_template("homeSub.html", user=current_user, assigned_projects=assigned_projects, subcontractor=subcontractor)
 
 # --------------------- Calendar ---------------------
 
 @views.route('/calendar')
 @login_required
 def calendar():
-    return render_template("calendar.html", user=current_user)
+    # Gathering all projects the user created or is assigned to
+    user_projects = Project.query.filter(
+        (Project.user_id == current_user.id) |
+        (Project.subcontractors.any(id=current_user.id))
+    ).all()
+
+    # Covert to JSON format
+    user_projects_json = [
+    {
+        "id": project.id,
+        "project_name": project.project_name,
+        "deadline": project.deadline.isoformat() if project.deadline else None,
+        "status": (project.progress or "in progress").lower(),
+        "tasks": [
+            {
+                "id": task.id,
+                "name": task.name,
+                "deadline": task.deadline.isoformat() if task.deadline else None,
+                "status": (task.completion or "in progress").lower()
+            }
+            for task in project.tasks
+        ]
+    }
+    for project in user_projects
+]
+
+    return render_template("calendar.html", user=current_user, user_projects_json=user_projects_json)
 
 # --------------------- Invoice ---------------------
 
@@ -412,6 +414,7 @@ def send_ping(project_id):
     return redirect(url_for('views.view_project', project_id=project_id))
 
 # ----------------------- Subcontractor Search Bar -----------------------
+
 @views.route('/search_subcontractors')
 def search_subcontractors():
     query = request.args.get('q','')
@@ -420,6 +423,7 @@ def search_subcontractors():
     return jsonify(users)
 
 # ----------------------- file view -----------------------
+
 @views.route('/project/files')
 @login_required
 def view_project_files():
@@ -443,7 +447,9 @@ def view_project_files():
         project_files[project] = files
 
     return render_template('project_files.html', project_files=project_files)
+
 # ----------------------- Serve Image -----------------------
+
 @views.route('/image/<int:file_id>')
 @login_required
 def serve_image(file_id):

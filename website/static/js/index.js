@@ -496,6 +496,9 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentYear = today.getFullYear();
   let activeDay = null;
 
+  // User Projects
+  const userProjects = window.userProjects || [];
+
   const months = [
     "January",
     "February",
@@ -543,7 +546,81 @@ document.addEventListener("DOMContentLoaded", function () {
       const activeClass = isToday ? "today active" : "";
       if (isToday) activeDay = i;
 
-      daysHTML += `<div class="day ${activeClass}" data-day="${i}">${i}</div>`;
+      // Adding deadlines to calendar - Chat Assisted
+      const dayContent = `${currentYear}-${String(currentMonth + 1).padStart(
+        2,
+        "0"
+      )}-${String(i).padStart(2, "0")}`;
+
+      let deadLineHTML = "";
+
+      // Gather all deadlines for a day
+      let deadlines = [];
+
+      userProjects.forEach((project) => {
+        if (project.deadline === dayContent) {
+          deadlines.push({
+            type: "project",
+            name: project.project_name,
+            id: project.id,
+            status: (project.status || "in progress").toLowerCase(),
+          });
+        }
+
+        project.tasks.forEach((task) => {
+          if (task.deadline === dayContent) {
+            deadlines.push({
+              type: "task",
+              name: task.name,
+              id: project.id, // Links to parent project
+              status: (task.status || "in progress").toLowerCase(),
+            });
+          }
+        });
+      });
+
+      // Sorter!
+      const statusRank = {
+        "not yet started": 0,
+        "in progress": 0,
+        "on hold": 0,
+        // prettier-ignore
+        "canceled": 1,
+        // prettier-ignore
+        "completed": 2,
+      };
+
+      deadlines.sort((a, b) => {
+        return (statusRank[a.status] || 0) - (statusRank[b.status] || 0);
+      });
+
+      // Render deadlines
+      deadLineHTML = deadlines
+        .map((item) => {
+          const icon = item.type === "project" ? "📅" : "📝";
+
+          const statusClass = `status-${item.status
+            .toLowerCase()
+            .replace(/\s+/g, "-")}`;
+
+          title =
+            "${item.status.charAt(0).toUpperCase() + item.status.slice(1)}";
+
+          return `<a href="${window.projectBaseURL}${
+            item.id
+          }" class="deadline ${item.type} ${statusClass}" title="${
+            item.status.charAt(0).toUpperCase() + item.status.slice(1)
+          }">
+            ${icon} ${item.name}
+          </a>`;
+        })
+        .join("");
+
+      daysHTML += `
+      <div class="day ${activeClass}" data-day="${i}">
+        <div class="day-number">${i}</div>
+        <div class="deadlines">${deadLineHTML}</div>
+      </div>`;
     }
 
     // Next month days
@@ -671,23 +748,28 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /*--------------------- Subcontractor Search ---------------------*/
-document.getElementById('subcontractor-email').addEventListener('input', function () {
-  const query = this.value;
-  if (!query) return document.getElementById('suggestions').innerHTML = '';
+document
+  .getElementById("subcontractor-email")
+  .addEventListener("input", function () {
+    const query = this.value;
+    if (!query) return (document.getElementById("suggestions").innerHTML = "");
 
-  fetch(`/search_subcontractors?q=${query}`)
-      .then(res => res.json())
-      .then(data => {
-          const suggestions = data.map(user =>
+    fetch(`/search_subcontractors?q=${query}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const suggestions = data
+          .map(
+            (user) =>
               `<li onclick="selectUser('${user.email}', ${user.id})">${user.email}</li>`
-          ).join('');
-          document.getElementById('suggestions').innerHTML = suggestions;
+          )
+          .join("");
+        document.getElementById("suggestions").innerHTML = suggestions;
       });
-});
+  });
 
 function selectUser(email, id) {
-  document.getElementById('subcontractor-email').value = email;
-  document.getElementById('suggestions').innerHTML = '';
+  document.getElementById("subcontractor-email").value = email;
+  document.getElementById("suggestions").innerHTML = "";
 }
 
 /*--------------------- file view ---------------------*/
@@ -710,5 +792,3 @@ window.addEventListener("click", function (e) {
     closeImageModal();
   }
 });
-
-
