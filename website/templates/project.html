@@ -263,6 +263,9 @@ tab to ping a contractor's email.
                 {% if user.role != 'subcontractor' %}
                 <th class="last-column"></th>
                 {% endif %} 
+                {% if current_user.role == 'subcontractor' %}
+                <th></th>
+                {% endif %}
               </tr>
             </thead>
 
@@ -294,10 +297,10 @@ tab to ping a contractor's email.
                   </button>
                 </td>
                 {% endif %}
-              </tr>
+         
               {% if task.completion != 'Completed' %}
               {% if current_user.role == 'subcontractor' %}
-              <tr>
+      
                 <td colspan="6">
                   <form action="{{ url_for('views.update_task_completion', task_id=task.id) }}" method="POST">
                     <input type="hidden" name="completion-status" value="Completed" id="completion-status">
