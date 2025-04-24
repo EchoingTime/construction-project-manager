@@ -632,17 +632,6 @@ main {
   border-radius: 10px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }
-#project-details #first-tab {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-#project-details #middle-tab {
-  border-radius: 0;
-}
-#project-details #last-tab {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
 
 #project-details .tab-btn {
   background: var(--panel);
@@ -651,7 +640,6 @@ main {
   font-weight: bold;
   font-size: 1rem;
   color: var(--text);
-  border-radius: 5px;
   cursor: pointer;
   transition: background 0.3s;
 }
@@ -1385,4 +1373,3 @@ a:hover {
 #toggle-completed:hover {
   background-color: #2b89c2;
 }
-
