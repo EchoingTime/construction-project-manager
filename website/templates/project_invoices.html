@@ -1,19 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
     <h1>Files for Assigned Projects</h1>
-    <div>
+
+    <div class="main-content-section file-invoice-div">
         {% for project, invoices in project_invoices.items() %}
-            <h3>{{ project.project_name }}</h3>
-            <ul>
-                {% for invoice in invoices %}
-                    <li>
-                        <a href="javascript:void(0);" onclick="showImageModal('{{ url_for('views.serve_image', file_id=invoice.id) }}')">
-                            <img src="{{ url_for('views.serve_image', file_id=invoice.id) }}" alt="{{ invoice.filename }}" class="file-preview" style="max-height: 100px; border-radius: 8px;" />
-                            <div style="text-align: center; margin-top: 0.5rem;">{{ invoice.filename }}</div>
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
+            {% if invoices|length > 0 %}
+                <div class="project-block">
+                    <h3 class="project-title">{{ project.project_name }}</h3>
+                    <ul class="file-list">
+                        {% for invoice in invoices %}
+                            <li>
+                                <a href="javascript:void(0);" onclick="showImageModal('{{ url_for('views.serve_image', file_id=invoice.id) }}')">
+                                    <img src="{{ url_for('views.serve_image', file_id=invoice.id) }}"
+                                         alt="{{ invoice.filename }}"
+                                         class="file-preview" />
+                                    <div class="file-name">{{ invoice.filename }}</div>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
         {% endfor %}
     </div>
 
@@ -22,5 +29,4 @@
         <span class="close" onclick="closeImageModal()">&times;</span>
         <img class="modal-content" id="modalImage" />
     </div>
-    <a href="{{ url_for('views.home') }}">Back to Home</a>
 {% endblock %}
