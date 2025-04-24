@@ -449,6 +449,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       savedBtn.classList.add("active");
       savedContent.classList.add("active");
+
+      // Sets up the toggle if subcontractors tab is opened by default
+      if (savedTab === "subcontractors") setupToggleButton();
     }
   }
 
@@ -467,12 +470,51 @@ document.addEventListener("DOMContentLoaded", function () {
       const targetTab = document.getElementById(button.dataset.tab);
       if (targetTab) {
         targetTab.classList.add("active");
+
+        // Will run the toggle button logic (the View Completed tasks) when subcontractor tab is actived (work around)
+        if (targetTab === "subcontractors") {
+          setTimeout(setupToggleButton, 50); // Ensures DOM is ready
+        }
       } else {
         console.error("No matching tab content found for:", button.dataset.tab);
       }
     });
   });
 });
+
+/*--------------------- Completed Task Toggle [Chat Helped Figure Problem Out - Tabs Messed it Up] ---------------------*/
+
+function setupToggleButton() {
+  const toggleBtn = document.querySelector("#subcontractors #toggle-completed");
+  const completedTasks = document.querySelectorAll(
+    "#subcontractors .completed-task"
+  );
+
+  if (!toggleBtn) return;
+
+  if (toggleBtn.dataset.setup === "true") return; // PRevent re-adding the listener
+
+  // Hide completed tasks by default
+  completedTasks.forEach((row) => (row.style.display = "none"));
+
+  // Set initial toggle state
+  toggleBtn.setAttribute("data-showing", "false");
+  toggleBtn.textContent = "Show Completed Tasks";
+  toggleBtn.setAttribute("data-setup", "true");
+
+  toggleBtn.addEventListener("click", () => {
+    const currentlyShowing = toggleBtn.getAttribute("data-showing") === "true";
+
+    completedTasks.forEach((row) => {
+      row.style.display = currentlyShowing ? "none" : "";
+    });
+
+    toggleBtn.setAttribute("data-showing", (!currentlyShowing).toString());
+    toggleBtn.textContent = currentlyShowing
+      ? "Show Completed Tasks"
+      : "Hide Completed Tasks";
+  });
+}
 
 /*--------------------- Dynamic Calendar ---------------------*/
 
@@ -791,30 +833,4 @@ window.addEventListener("click", function (e) {
   if (e.target === modal) {
     closeImageModal();
   }
-});
-
-/*--------------------- Completed Task Toggle ---------------------*/
-document.addEventListener('DOMContentLoaded', () => {
-  const toggleBtn = document.getElementById('toggle-completed');
-  const completedTasks = document.querySelectorAll('.completed-task');
-
-  // Hide completed tasks by default
-  completedTasks.forEach(row => {
-    row.style.display = 'none';
-  });
-
-  // Set initial toggle state
-  toggleBtn.setAttribute('data-showing', 'false');
-  toggleBtn.textContent = 'Show Completed Tasks';
-
-  toggleBtn.addEventListener('click', () => {
-    const currentlyShowing = toggleBtn.getAttribute('data-showing') === 'true';
-
-    completedTasks.forEach(row => {
-      row.style.display = currentlyShowing ? 'none' : '';
-    });
-
-    toggleBtn.setAttribute('data-showing', (!currentlyShowing).toString());
-    toggleBtn.textContent = currentlyShowing ? 'Show Completed Tasks' : 'Hide Completed Tasks';
-  });
 });
