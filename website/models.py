@@ -8,6 +8,7 @@ from . import db # Importing from current package, the website folder, the db ob
 from flask_login import UserMixin # Custom class that gives the user object specific things
 from sqlalchemy.sql import func
 from sqlalchemy import Enum # Allows the restriction of a column's values to a set of options
+from sqlalchemy import Boolean
 
 # IMPORTANT BEFORE ADDING/CHANGING MODELS! Go to README.md and read instructions under Database Modifications
 
@@ -103,4 +104,5 @@ class File(db.Model):
         project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
         project = db.relationship('Project', back_populates='files')
         is_invoice = db.Column(db.Boolean, default=False)  # New column to distinguish invoices
+        is_new = db.Column(db.Boolean, default=True)
         pass

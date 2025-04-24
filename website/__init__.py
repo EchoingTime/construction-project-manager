@@ -54,6 +54,21 @@ def create_app(): # Initialize Flask
     from .context_processors import unread_message_count
     app.context_processor(lambda: {'unread_message_count': unread_message_count()})
 
+    from flask_login import current_user
+    from .models import File, Project
+
+    @app.context_processor
+    def inject_new_invoice_count():
+        if current_user.is_authenticated and current_user.role == 'contractor':
+            assigned_projects = Project.query.filter_by(user_id=current_user.id).all()
+            new_invoice_count = sum(
+                1 for project in assigned_projects
+                for invoice in File.query.filter_by(project_id=project.id, is_invoice=True).all()
+                if invoice.is_new
+            )
+            return {'new_invoice_count': new_invoice_count}
+        return {'new_invoice_count': 0}
+
     return app # Secret key is done
 
 def create_database(app):
