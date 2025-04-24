@@ -818,3 +818,4 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleBtn.textContent = currentlyShowing ? 'Show Completed Tasks' : 'Hide Completed Tasks';
   });
 });
+

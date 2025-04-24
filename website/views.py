@@ -335,14 +335,12 @@ def upload_invoice(project_id):
             filename=file.filename,
             data=file.read(),
             project_id=project_id,
-            is_invoice=True  # Mark the file as an invoice
+            is_invoice=True,
+            is_new=True  # Mark as new
         )
         db.session.add(new_file)
         db.session.commit()
         flash('Invoice successfully uploaded', category='success')
-        return redirect(url_for('views.view_project', project_id=project_id))
-
-        flash('Invoice successfully uploaded and sent to contractor')
         return redirect(url_for('views.view_project', project_id=project_id))
 
 # --------------------- Add Task ---------------------
@@ -464,11 +462,13 @@ def view_project_files():
             assigned_project_ids = [a.project_id for a in assignments]
             assigned_projects = Project.query.filter(Project.id.in_(assigned_project_ids)).all()
 
-    # Build dictionary of project -> files
+    # Build dictionary of project -> files, excluding invoices
     project_files = {}
     for project in assigned_projects:
-        files = File.query.filter_by(project_id=project.id).all()
+        files = File.query.filter_by(project_id=project.id, is_invoice=False).all()  # Exclude invoices
         project_files[project] = files
+
+    return render_template('project_files.html', project_files=project_files)
 
     return render_template('project_files.html', project_files=project_files)
 
@@ -481,14 +481,24 @@ def view_project_invoices():
     if user.role != 'contractor':
         return "Unauthorized", 403
 
-    # Fetch projects assigned to the contractor
     assigned_projects = Project.query.filter_by(user_id=user.id).all()
-
-    # Build dictionary of project -> invoice files
     project_invoices = {}
+    new_invoice_count = 0
+
     for project in assigned_projects:
         invoices = File.query.filter_by(project_id=project.id, is_invoice=True).all()
         project_invoices[project] = invoices
+        for invoice in invoices:
+            if invoice.is_new:
+                new_invoice_count += 1
+                invoice.is_new = False  # Mark as viewed
+        db.session.commit()
+
+    return render_template(
+        'project_invoices.html',
+        project_invoices=project_invoices,
+        new_invoice_count=new_invoice_count
+    )
 
     return render_template('project_invoices.html', project_invoices=project_invoices)
 
