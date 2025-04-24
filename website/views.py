@@ -68,7 +68,8 @@ def view_project(project_id):
     project = Project.query.get(project_id)
     subcontractors = [assignment.subcontractor for assignment in project.subcontractors]
     tasks = Task.query.filter_by(project_id=project_id).all()
-    return render_template("project.html", project=project, subcontractors=subcontractors, user=current_user, tasks=tasks)
+    project_files = File.query.filter_by(project_id=project_id, is_invoice=False).all()
+    return render_template("project.html", project=project, subcontractors=subcontractors, user=current_user, tasks=tasks, project_files=project_files)
 
 # ----------- Project Deletion -----------
 
@@ -444,34 +445,27 @@ def search_subcontractors():
     users = [{'id': sub.id, 'email': sub.email} for sub in results]
     return jsonify(users)
 
-# ----------------------- file view -----------------------
+# ----------------------- View Files for a Specific Project -----------------------
 
-@views.route('/project/files')
+@views.route('/project/<int:project_id>/files', methods=['GET'])
 @login_required
-def view_project_files():
-    user = current_user
-    assigned_projects = []
+def view_project_files(project_id):
+    # Fetch the project
+    project = Project.query.get_or_404(project_id)
 
-    if user.role == 'contractor':
-        assigned_projects = Project.query.filter_by(user_id=user.id).all()
+    # Ensure the current user has access to the project
+    if current_user.role == 'contractor' and project.user_id != current_user.id:
+        return "Unauthorized", 403
+    elif current_user.role == 'subcontractor':
+        subcontractor = Subcontractor.query.filter_by(user_id=current_user.id).first()
+        if not subcontractor or not Assignment.query.filter_by(project_id=project_id, subcontractor_id=subcontractor.id).first():
+            return "Unauthorized", 403
 
-    elif user.role == 'subcontractor':
-        subcontractor = Subcontractor.query.filter_by(user_id=user.id).first()
-        if subcontractor:
-            assignments = Assignment.query.filter_by(subcontractor_id=subcontractor.id).all()
-            assigned_project_ids = [a.project_id for a in assignments]
-            assigned_projects = Project.query.filter(Project.id.in_(assigned_project_ids)).all()
+    # Fetch files for the specific project (excluding invoices)
+    project_files = File.query.filter_by(project_id=project_id, is_invoice=False).all()
 
-    # Build dictionary of project -> files, excluding invoices
-    project_files = {}
-    for project in assigned_projects:
-        files = File.query.filter_by(project_id=project.id, is_invoice=False).all()  # Exclude invoices
-        project_files[project] = files
-
-    return render_template('project_files.html', project_files=project_files)
-
-    return render_template('project_files.html', project_files=project_files)
-
+    # Render the project.html template with the project files
+    return render_template('project.html', project=project, project_files=project_files, user=current_user)
 # ----------------------- invoice view -----------------------
 
 @views.route('/project/invoices')

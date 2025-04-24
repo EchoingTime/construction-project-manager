@@ -61,7 +61,8 @@ tab to ping a contractor's email.
     <button class="tab-btn" data-tab="subcontractors" id="middle-tab">
       Subcontractors
     </button>
-    <button class="tab-btn" data-tab="files" id="last-tab">Files</button>
+    <button class="tab-btn" data-tab="files" id="last-tab">Upload</button>
+      <button class="tab-btn" data-tab="view-files" id="view-files-tab">View Files</button>
     {% if user.role == 'subcontractor' %}
     <button class="tab-btn" data-tab="messages">Message</button>
     {% endif %}
@@ -419,30 +420,24 @@ tab to ping a contractor's email.
   <!------------ Files & Invoice Div ------------>
   <div id="files" class="tab-content">
     <!------ File Upload sub-section ------>
-    <section class="sub-sections" id="file-upload-sub-section">
-      <form
-        action="{{ url_for('file_upload.upload_file', project_id=project.id) }}"
-        method="post"
-        enctype="multipart/form-data"
-      >
-        <h3>
-          Files
-          <label for="file">+</label>
-        </h3>
-
-        <!-- File input, styled as a hidden input with a custom label -->
-        <input
-          type="file"
-          class="hidden-input"
-          name="file"
-          id="file"
-          required
-        />
-        <span class="file-name" id="file-name">No File Selected</span>
-
-        <button type="submit">Upload</button>
-      </form>
-    </section>
+      <section class="sub-sections" id="file-upload-sub-section">
+          <form
+                  action="{{ url_for('file_upload.upload_file', project_id=project.id) }}"
+                  method="post"
+                  enctype="multipart/form-data"
+          >
+              <h3>Upload Files</h3>
+              <input
+                      type="file"
+                      class="hidden-input"
+                      name="file"
+                      id="file"
+                      required
+              />
+              <span class="file-name" id="file-name">No File Selected</span>
+              <button type="submit">Upload</button>
+          </form>
+      </section>
     <!------ Invoice sub-section ------>
     <section class="sub-sections" id="invoice-upload-sub-section">
       <form
@@ -469,6 +464,28 @@ tab to ping a contractor's email.
       </form>
     </section>
   </div>
+    <!------------ View Files Tab ------------>
+    <div id="view-files" class="tab-content">
+        <section class="sub-sections" id="file-view-sub-section">
+            <h3>Project Files</h3>
+            <ul class="file-list">
+                {% for file in project_files %}
+                    <li>
+                        <img
+                                src="{{ url_for('views.serve_image', file_id=file.id) }}"
+                                alt="{{ file.filename }}"
+                                class="file-preview"
+                                onclick="showImageModal('{{ url_for('views.serve_image', file_id=file.id) }}')"/>
+                        <p>{{ file.filename }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeImageModal()">&times;</span>
+        <img class="modal-content" id="modalImage" />
+    </div>
   <!------------ Message Div ------------>
   {% if user.role == 'subcontractor' %}
   <div id="messages" class="tab-content">
