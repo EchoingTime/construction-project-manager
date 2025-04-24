@@ -262,13 +262,13 @@ tab to ping a contractor's email.
                 <th>Subcontractor</th>
                 {% if user.role != 'subcontractor' %}
                 <th class="last-column"></th>
-                {% endif %}
+                {% endif %} 
               </tr>
             </thead>
 
             <tbody>
-              {% for task in tasks %}
               
+              {% for task in tasks %}
               <tr class="{% if task.completion == 'Completed' %}completed-task{% endif %}">
                 <td>{{ task.name }}</td>
                 <td>{{ task.description or "No description provided" }}</td>
@@ -278,8 +278,10 @@ tab to ping a contractor's email.
                   {{ task.subcontractor.name if task.subcontractor else
                   "Unassigned" }}
                 </td>
+                
                 {% if user.role != 'subcontractor' %}
                 <td class="last-column">
+                
                   <!-- Delete Button -->
                   <button
                     type="button"
@@ -293,18 +295,19 @@ tab to ping a contractor's email.
                 </td>
                 {% endif %}
               </tr>
+              {% if task.completion != 'Completed' %}
               {% if current_user.role == 'subcontractor' %}
               <tr>
                 <td colspan="6">
-                  
                   <form action="{{ url_for('views.update_task_completion', task_id=task.id) }}" method="POST">
                     <input type="hidden" name="completion-status" value="Completed" id="completion-status">
                     <button type="submit">Mark As Complete</button>
                   </form>
+                
                 </td>
                  {% endif %}
               </tr>
-              
+                {% endif %}
               {% endfor %}
             </tbody>
           </table>
@@ -331,7 +334,7 @@ tab to ping a contractor's email.
                     </select>
                     <button type="submit">Update</button>
                 </form>
-            {% endif %} -->
+            {% endif %} ----------->
             {% if current_user.role == 'subcontractor' %}
                 {% set subcontractor = subcontractors | selectattr("user_id", "equalto", current_user.id) | first %}
                 {% if subcontractor and task.subcontractor_id == subcontractor.id %}
