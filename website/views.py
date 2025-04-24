@@ -370,8 +370,8 @@ def add_task(project_id):
     subcontractor_id = request.form.get('task-subcontractor')  # Get subcontractor ID
 
     # Default task completion to "Not Started" for all users
-    task_completion = "Not Started"
-
+    #task_completion = "Not Started"
+    task_completion = "Incomplete"
     # Validate form data
     if not task_name or not task_deadline:
         flash('Task name and deadline are required to create a task!', category='error')

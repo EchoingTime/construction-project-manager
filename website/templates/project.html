@@ -247,7 +247,7 @@ tab to ping a contractor's email.
       <!------ Tasks sub-section ------>
       <section class="sub-sections" id="task-sub-section">
         <h3>Tasks</h3>
-
+        <button id="toggle-completed">Show Completed Tasks</button>
         <div class="table-wrapper">
           {% if tasks|length == 0 %}
           <p>No Tasks Assigned</p>
@@ -265,9 +265,11 @@ tab to ping a contractor's email.
                 {% endif %}
               </tr>
             </thead>
+
             <tbody>
               {% for task in tasks %}
-              <tr>
+              
+              <tr class="{% if task.completion == 'Completed' %}completed-task{% endif %}">
                 <td>{{ task.name }}</td>
                 <td>{{ task.description or "No description provided" }}</td>
                 <td>{{ task.deadline }}</td>
@@ -291,34 +293,35 @@ tab to ping a contractor's email.
                 </td>
                 {% endif %}
               </tr>
+              {% if current_user.role == 'subcontractor' %}
               <tr>
                 <td colspan="6">
+                  
                   <form action="{{ url_for('views.update_task_completion', task_id=task.id) }}" method="POST">
-                    <label for="completion-status">Update Completion Status:</label>
-                    <select name="completion-status" id="completion-status" required>
-                      <option value="Not Started">Not Started</option>
-                      <option value="In Progress">In Progress</option>
-                      <option value="Completed">Completed</option>
-                    </select>
-                    <button type="submit">Update</button>
+                    <input type="hidden" name="completion-status" value="Completed" id="completion-status">
+                    <button type="submit">Mark As Complete</button>
                   </form>
                 </td>
+                 {% endif %}
               </tr>
+              
               {% endfor %}
             </tbody>
           </table>
           {% endif %}
         </div>
-
+        
         {% for task in tasks %}
         <div class="task">
+            <!--
             <h3>{{ task.name }}</h3>
             <p>Description: {{ task.description }}</p>
             <p>Deadline: {{ task.deadline }}</p>
-            <p>Status: {{ task.completion }}</p>
-
-            <!-- Only show the update form if the current user is the assigned subcontractor -->
-            {% if current_user.role == 'subcontractor' and task.subcontractor_id == current_user.id %}
+            <p>Status: {{ task.completion }}</p> -->
+        
+            <!-- Only show the update form if the current user is the assigned subcontractor 
+            
+            {% if current_user.role == 'subcontractor' %}
                 <form action="{{ url_for('views.update_task_completion', task_id=task.id) }}" method="POST">
                     <label for="completion-status">Update Completion Status:</label>
                     <select name="completion-status" id="completion-status" required>
@@ -328,7 +331,7 @@ tab to ping a contractor's email.
                     </select>
                     <button type="submit">Update</button>
                 </form>
-            {% endif %}
+            {% endif %} -->
             {% if current_user.role == 'subcontractor' %}
                 {% set subcontractor = subcontractors | selectattr("user_id", "equalto", current_user.id) | first %}
                 {% if subcontractor and task.subcontractor_id == subcontractor.id %}
@@ -344,7 +347,7 @@ tab to ping a contractor's email.
                 {% endif %}
             {% endif %}
         </div>
-        {% endfor %}
+      {% endfor %}
 
         {% if user.role != 'subcontractor' %}
         <form
@@ -378,16 +381,15 @@ tab to ping a contractor's email.
               required
             />
             <br />
+            <!--
             <label for="task-completion">Completion:</label>
             <select name="task-completion" id="task-completion" required>
               <option value="" disabled selected hidden>
                 Change Task Status
               </option>
               <option value="Not Started">Not Started</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Completed">Completed</option>
             </select>
-            <br />
+            <br /> -->
             <label for="task-subcontractor">Assign Subcontractor:</label>
             <select name="task-subcontractor" id="task-subcontractor" required>
               <option value="" disabled selected hidden>

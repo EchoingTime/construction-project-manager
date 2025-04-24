@@ -792,3 +792,29 @@ window.addEventListener("click", function (e) {
     closeImageModal();
   }
 });
+
+/*--------------------- Completed Task Toggle ---------------------*/
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleBtn = document.getElementById('toggle-completed');
+  const completedTasks = document.querySelectorAll('.completed-task');
+
+  // Hide completed tasks by default
+  completedTasks.forEach(row => {
+    row.style.display = 'none';
+  });
+
+  // Set initial toggle state
+  toggleBtn.setAttribute('data-showing', 'false');
+  toggleBtn.textContent = 'Show Completed Tasks';
+
+  toggleBtn.addEventListener('click', () => {
+    const currentlyShowing = toggleBtn.getAttribute('data-showing') === 'true';
+
+    completedTasks.forEach(row => {
+      row.style.display = currentlyShowing ? 'none' : '';
+    });
+
+    toggleBtn.setAttribute('data-showing', (!currentlyShowing).toString());
+    toggleBtn.textContent = currentlyShowing ? 'Show Completed Tasks' : 'Hide Completed Tasks';
+  });
+});

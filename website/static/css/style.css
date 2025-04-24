@@ -1289,6 +1289,7 @@ a:hover {
   position: relative;
   background: transparent;
   width: 275px;
+  border-radius: 8px;
 }
 .suggestion-list li {
   padding: 5px;
@@ -1366,3 +1367,22 @@ a:hover {
   font-weight: bold;
   cursor: pointer;
 }
+
+#toggle-completed {
+  background-color: #3399dd;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 10px;
+  transition: background-color 0.2s ease;
+}
+
+#toggle-completed:hover {
+  background-color: #2b89c2;
+}
+
