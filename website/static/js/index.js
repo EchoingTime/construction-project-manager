@@ -816,21 +816,21 @@ function selectUser(email, id) {
 
 /*--------------------- file view ---------------------*/
 function showImageModal(imageSrc) {
-    const modal = document.getElementById("imageModal");
-    const modalImage = document.getElementById("modalImage");
+  const modal = document.getElementById("imageModal");
+  const modalImage = document.getElementById("modalImage");
 
-    modalImage.src = imageSrc;
-    modal.style.display = "block";
+  modalImage.src = imageSrc;
+  modal.style.display = "block";
 }
 
 function closeImageModal() {
-    const modal = document.getElementById("imageModal");
-    modal.style.display = "none";
+  const modal = document.getElementById("imageModal");
+  modal.style.display = "none";
 }
 
 window.addEventListener("click", function (e) {
-    const modal = document.getElementById("imageModal");
-    if (e.target === modal) {
-        closeImageModal();
-    }
+  const modal = document.getElementById("imageModal");
+  if (e.target === modal) {
+    closeImageModal();
+  }
 });

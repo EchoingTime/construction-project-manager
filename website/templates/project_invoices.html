@@ -1,32 +1,35 @@
-{% extends "base.html" %}
-{% block content %}
-    <h1>Files for Assigned Projects</h1>
+{% extends "base.html" %} {% block content %}
+<h1>Projects' Invoices</h1>
 
-    <div class="main-content-section file-invoice-div">
-        {% for project, invoices in project_invoices.items() %}
-            {% if invoices|length > 0 %}
-                <div class="project-block">
-                    <h3 class="project-title">{{ project.project_name }}</h3>
-                    <ul class="file-list">
-                        {% for invoice in invoices %}
-                            <li>
-                                <a href="javascript:void(0);" onclick="showImageModal('{{ url_for('views.serve_image', file_id=invoice.id) }}')">
-                                    <img src="{{ url_for('views.serve_image', file_id=invoice.id) }}"
-                                         alt="{{ invoice.filename }}"
-                                         class="file-preview" />
-                                    <div class="file-name">{{ invoice.filename }}</div>
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
+<div class="main-content-section file-invoice-div">
+  {% for project, invoices in project_invoices.items() %} {% if invoices|length
+  > 0 %}
+  <div class="project-block">
+    <h3 class="project-title">{{ project.project_name }}</h3>
+    <ul class="file-list">
+      {% for invoice in invoices %}
+      <li>
+        <a
+          href="javascript:void(0);"
+          onclick="showImageModal('{{ url_for('views.serve_image', file_id=invoice.id) }}')"
+        >
+          <img
+            src="{{ url_for('views.serve_image', file_id=invoice.id) }}"
+            alt="{{ invoice.filename }}"
+            class="file-preview"
+          />
+          <div class="file-name">{{ invoice.filename }}</div>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %} {% endfor %}
+</div>
 
-    <!-- Modal Structure -->
-    <div id="imageModal" class="modal">
-        <span class="close" onclick="closeImageModal()">&times;</span>
-        <img class="modal-content" id="modalImage" />
-    </div>
+<!-- Modal Structure -->
+<div id="imageModal" class="modal">
+  <span class="close" onclick="closeImageModal()">&times;</span>
+  <img class="modal-content" id="modalImage" />
+</div>
 {% endblock %}

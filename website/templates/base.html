@@ -52,29 +52,12 @@
             <span>Home</span>
           </a>
         </li>
-        <!---
-        <li>
-          <a href="{{ url_for('views.inbox') }}"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-            >
-              <path
-                d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z"
-              />
-            </svg>
-            <span>Inbox</span>
-            {% if unread_message_count > 0 %}
-            <span class="badge">{{ unread_message_count }}</span>
-            {% endif %}
-          </a>
-        </li>  -->
         <li>
           <!----------- Dropdown Menu ----------->
-      {% if current_user.role == 'contractor' %}
-      <li>
+          {% if current_user.role == 'contractor' %}
+        </li>
+
+        <li></li>
         <li>
           <a href="/project/invoices">
             <svg
@@ -84,16 +67,16 @@
               width="24px"
             >
               <path
-                d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"
+                d="M120-80v-800l60 60 60-60 60 60 60-60 60 60 60-60 60 60 60-60 60 60 60-60 60 60 60-60v800l-60-60-60 60-60-60-60 60-60-60-60 60-60-60-60 60-60-60-60 60-60-60-60 60Zm120-200h480v-80H240v80Zm0-160h480v-80H240v80Zm0-160h480v-80H240v80Zm-40 404h560v-568H200v568Zm0-568v568-568Z"
               />
             </svg>
             <span>Invoices</span>
             {% if new_invoice_count > 0 %}
-              <span class="notification-badge">{{ new_invoice_count }}</span>
+            <span class="notification-badge">{{ new_invoice_count }}</span>
             {% endif %}
           </a>
         </li>
-      {% endif %}
+        {% endif %}
         <li>
           <a href="/calendar"
             ><svg

@@ -320,25 +320,6 @@ tab to ping a contractor's email.
         
         {% for task in tasks %}
         <div class="task">
-            <!--
-            <h3>{{ task.name }}</h3>
-            <p>Description: {{ task.description }}</p>
-            <p>Deadline: {{ task.deadline }}</p>
-            <p>Status: {{ task.completion }}</p> -->
-        
-            <!-- Only show the update form if the current user is the assigned subcontractor 
-            
-            {% if current_user.role == 'subcontractor' %}
-                <form action="{{ url_for('views.update_task_completion', task_id=task.id) }}" method="POST">
-                    <label for="completion-status">Update Completion Status:</label>
-                    <select name="completion-status" id="completion-status" required>
-                        <option value="Not Started" {% if task.completion == 'Not Started' %}selected{% endif %}>Not Started</option>
-                        <option value="In Progress" {% if task.completion == 'In Progress' %}selected{% endif %}>In Progress</option>
-                        <option value="Completed" {% if task.completion == 'Completed' %}selected{% endif %}>Completed</option>
-                    </select>
-                    <button type="submit">Update</button>
-                </form>
-            {% endif %} ----------->
             {% if current_user.role == 'subcontractor' %}
                 {% set subcontractor = subcontractors | selectattr("user_id", "equalto", current_user.id) | first %}
                 {% if subcontractor and task.subcontractor_id == subcontractor.id %}
@@ -388,15 +369,6 @@ tab to ping a contractor's email.
               required
             />
             <br />
-            <!--
-            <label for="task-completion">Completion:</label>
-            <select name="task-completion" id="task-completion" required>
-              <option value="" disabled selected hidden>
-                Change Task Status
-              </option>
-              <option value="Not Started">Not Started</option>
-            </select>
-            <br /> -->
             <label for="task-subcontractor">Assign Subcontractor:</label>
             <select name="task-subcontractor" id="task-subcontractor" required>
               <option value="" disabled selected hidden>
@@ -411,8 +383,6 @@ tab to ping a contractor's email.
           </div>
           <button type="submit">Add Task</button>
         </form>
-        <!-- Delete Task -->
-
         {% endif %}
       </section>
     </section>
