@@ -322,32 +322,25 @@ def calendar():
 @login_required
 def upload_invoice(project_id):
     if 'invoice' not in request.files:
-        flash('No file part')
+        flash('No file part', category='error')
         return redirect(request.url)
+
     file = request.files['invoice']
     if file.filename == '':
-        flash('No selected file')
+        flash('No selected file', category='error')
         return redirect(request.url)
+
     if file:
         new_file = File(
             filename=file.filename,
             data=file.read(),
             project_id=project_id,
-            is_invoice=True
+            is_invoice=True  # Mark the file as an invoice
         )
         db.session.add(new_file)
         db.session.commit()
-
-        # Send message to contractor
-        contractor = User.query.filter_by(role='contractor').first()
-        if contractor:
-            new_message = Message(
-                sender_id=current_user.id,
-                receiver_id=contractor.id,
-                message_text=f'Invoice uploaded for project {project_id}: {file.filename}'
-            )
-            db.session.add(new_message)
-            db.session.commit()
+        flash('Invoice successfully uploaded', category='success')
+        return redirect(url_for('views.view_project', project_id=project_id))
 
         flash('Invoice successfully uploaded and sent to contractor')
         return redirect(url_for('views.view_project', project_id=project_id))
@@ -478,6 +471,26 @@ def view_project_files():
         project_files[project] = files
 
     return render_template('project_files.html', project_files=project_files)
+
+# ----------------------- invoice view -----------------------
+
+@views.route('/project/invoices')
+@login_required
+def view_project_invoices():
+    user = current_user
+    if user.role != 'contractor':
+        return "Unauthorized", 403
+
+    # Fetch projects assigned to the contractor
+    assigned_projects = Project.query.filter_by(user_id=user.id).all()
+
+    # Build dictionary of project -> invoice files
+    project_invoices = {}
+    for project in assigned_projects:
+        invoices = File.query.filter_by(project_id=project.id, is_invoice=True).all()
+        project_invoices[project] = invoices
+
+    return render_template('project_invoices.html', project_invoices=project_invoices)
 
 # ----------------------- Serve Image -----------------------
 
