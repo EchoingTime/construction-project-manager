@@ -519,17 +519,6 @@ def update_task_completion(task_id):
         flash('Task not found!', category='error')
         return redirect(url_for('views.home'))
 
-    # Ensure the current user is a subcontractor
-    #subcontractor = Subcontractor.query.filter_by(user_id=current_user.id).first()
-    #if not subcontractor:
-    #    flash('You are not authorized to update this task!', category='error')
-    #    return redirect(url_for('views.home'))
-
-    # Check if the subcontractor is assigned to the task
-    #if task.subcontractor_id != subcontractor.id:
-    #    flash('You are not authorized to update this task!', category='error')
-    #    return redirect(url_for('views.home'))
-
     # Get the new completion status from the form
     new_completion_status = request.form.get('completion-status')
     if not new_completion_status:

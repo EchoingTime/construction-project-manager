@@ -62,7 +62,9 @@ tab to ping a contractor's email.
       Subcontractors
     </button>
     <button class="tab-btn" data-tab="files" id="last-tab">Upload</button>
-      <button class="tab-btn" data-tab="view-files" id="view-files-tab">View Files</button>
+    <button class="tab-btn" data-tab="view-files" id="view-files-tab">
+      View Files
+    </button>
     {% if user.role == 'subcontractor' %}
     <button class="tab-btn" data-tab="messages">Message</button>
     {% endif %}
@@ -175,271 +177,276 @@ tab to ping a contractor's email.
       </section>
     </section>
   </div>
- <!------------ Subcontractors Div ------------>
- <div id="subcontractors" class="tab-content">
-  <!--------- Subcontractors Section --------->
-  <section id="subcontractors-section">
-    <!------ Subcontractor sub-section ------>
-    <section class="sub-sections" id="subcontractors-sub-section">
-      <h3>Subcontractors</h3>
+  <!------------ Subcontractors Div ------------>
+  <div id="subcontractors" class="tab-content">
+    <!--------- Subcontractors Section --------->
+    <section id="subcontractors-section">
+      <!------ Subcontractor sub-section ------>
+      <section class="sub-sections" id="subcontractors-sub-section">
+        <h3>Subcontractors</h3>
 
-      <div class="table-wrapper">
-        {% if subcontractors|length == 0 %}
-        <p>No Subcontractors Assigned</p>
-        {% else %}
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Trade</th>
-              {% if user.role != 'subcontractor' %}
-              <th class="last-column"></th>
-              {% endif %}
-            </tr>
-          </thead>
-          <tbody>
-            {% for subcontractor in subcontractors %}
-            <tr>
-              <td>{{ subcontractor.name }}</td>
-              <td>{{ subcontractor.email }}</td>
-              <td>{{ subcontractor.trade }}</td>
-              {% if user.role != 'subcontractor' %}
-              <td class="last-column">
-                <!-- Delete Button -->
-                <button
-                  type="button"
-                  id="delete-button"
-                  data-id="{{ subcontractor.id }}"
-                  data-name="{{ subcontractor.name }}"
-                  onClick="deleteSubcontractor(this)"
-                >
-                  <span aria-hidden="true"> Delete </span>
-                </button>
-              </td>
-              {% endif %}
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        {% endif %}
-      </div>
-
-      {% if user.role != 'subcontractor' %}
-      <form
-        method="POST"
-        action="{{ url_for('views.add_subcontractor', project_id=project.id) }}"
-      >
-        <textarea
-          name="subcontractor-email"
-          id="subcontractor-email"
-          placeholder="Enter Email"
-          required
-        ></textarea> 
-        <ul id="suggestions" class="suggestion-list"></ul> 
-        <div id="subcon-buttons">
-          <button type="submit">Add Subcontractor</button>
-          <button type="reset">Clear</button>
-        </div> 
-      </form>
-      <!-- Delete Subcontractor Assignment -->
-      {% endif %}
-    </section>
-    <!------ Tasks sub-section ------>
-    <section class="sub-sections" id="task-sub-section">
-      <h3>Tasks</h3>
-      <button id="toggle-completed">Show Completed Tasks</button>
-      <div class="table-wrapper">
-        {% if tasks|length == 0 %}
-        <p>No Tasks Assigned</p>
-        {% else %}
-        <table>
-          <thead>
-            <tr>
-              <th>Task</th>
-              <th>Description</th>
-              <th>Deadline</th>
-              <th>Completion</th>
-              <th>Subcontractor</th>
-              {% if user.role != 'subcontractor' %}
-              <th class="last-column"></th>
-              {% endif %} 
-              {% if current_user.role == 'subcontractor' %}
-              <th></th>
-              {% endif %}
-            </tr>
-          </thead>
-
-          <tbody>
-            
-            {% for task in tasks %}
-            <tr class="{% if task.completion == 'Completed' %}completed-task{% endif %}">
-              <td>{{ task.name }}</td>
-              <td>{{ task.description or "No description provided" }}</td>
-              <td>{{ task.deadline }}</td>
-              <td>{{ task.completion }}</td>
-              <td>
-                {{ task.subcontractor.name if task.subcontractor else
-                "Unassigned" }}
-              </td>
-              
-              {% if user.role != 'subcontractor' %}
-              <td class="last-column">
-              
-                <!-- Delete Button -->
-                <button
-                  type="button"
-                  id="delete-button"
-                  data-id="{{ task.id }}"
-                  data-name="{{ task.name }}"
-                  onClick="deleteTask(this)"
-                >
-                  <span aria-hidden="true"> Delete </span>
-                </button>
-              </td>
-              {% endif %}
-       
-            {% if task.completion != 'Completed' %}
-            {% if current_user.role == 'subcontractor' %}
-    
-              <td colspan="6">
-                <form action="{{ url_for('views.update_task_completion', task_id=task.id) }}" method="POST">
-                  <input type="hidden" name="completion-status" value="Completed" id="completion-status">
-                  <button type="submit">Mark As Complete</button>
-                </form>
-              
-              </td>
-               {% endif %}
-            </tr>
-              {% endif %}
-            {% endfor %}
-          </tbody>
-        </table>
-        {% endif %}
-      </div>
-      
-      {% for task in tasks %}
-      <div class="task">
-          <!--
-          <h3>{{ task.name }}</h3>
-          <p>Description: {{ task.description }}</p>
-          <p>Deadline: {{ task.deadline }}</p>
-          <p>Status: {{ task.completion }}</p> -->
-      
-          <!-- Only show the update form if the current user is the assigned subcontractor 
-          
-          {% if current_user.role == 'subcontractor' %}
-              <form action="{{ url_for('views.update_task_completion', task_id=task.id) }}" method="POST">
-                  <label for="completion-status">Update Completion Status:</label>
-                  <select name="completion-status" id="completion-status" required>
-                      <option value="Not Started" {% if task.completion == 'Not Started' %}selected{% endif %}>Not Started</option>
-                      <option value="In Progress" {% if task.completion == 'In Progress' %}selected{% endif %}>In Progress</option>
-                      <option value="Completed" {% if task.completion == 'Completed' %}selected{% endif %}>Completed</option>
-                  </select>
-                  <button type="submit">Update</button>
-              </form>
-          {% endif %} ----------->
-          {% if current_user.role == 'subcontractor' %}
-              {% set subcontractor = subcontractors | selectattr("user_id", "equalto", current_user.id) | first %}
-              {% if subcontractor and task.subcontractor_id == subcontractor.id %}
-                  <form action="{{ url_for('views.update_task_completion', task_id=task.id) }}" method="POST">
-                      <label for="completion-status">Update Completion Status:</label>
-                      <select name="completion-status" id="completion-status" required>
-                          <option value="Not Started" {% if task.completion == 'Not Started' %}selected{% endif %}>Not Started</option>
-                          <option value="In Progress" {% if task.completion == 'In Progress' %}selected{% endif %}>In Progress</option>
-                          <option value="Completed" {% if task.completion == 'Completed' %}selected{% endif %}>Completed</option>
-                      </select>
-                      <button type="submit">Update</button>
-                  </form>
-              {% endif %}
+        <div class="table-wrapper">
+          {% if subcontractors|length == 0 %}
+          <p>No Subcontractors Assigned</p>
+          {% else %}
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Trade</th>
+                {% if user.role != 'subcontractor' %}
+                <th class="last-column"></th>
+                {% endif %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for subcontractor in subcontractors %}
+              <tr>
+                <td>{{ subcontractor.name }}</td>
+                <td>{{ subcontractor.email }}</td>
+                <td>{{ subcontractor.trade }}</td>
+                {% if user.role != 'subcontractor' %}
+                <td class="last-column">
+                  <!-- Delete Button -->
+                  <button
+                    type="button"
+                    id="delete-button"
+                    data-id="{{ subcontractor.id }}"
+                    data-name="{{ subcontractor.name }}"
+                    onClick="deleteSubcontractor(this)"
+                  >
+                    <span aria-hidden="true"> Delete </span>
+                  </button>
+                </td>
+                {% endif %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
           {% endif %}
-      </div>
-    {% endfor %}
-
-      {% if user.role != 'subcontractor' %}
-      <form
-        method="POST"
-        action="{{ url_for('views.add_task', project_id=project.id) }}"
-      >
-        <h4>Add Task Below</h4>
-        <div id="task-div">
-          <label for="task-name">Task Name:</label>
-          <input
-            type="text"
-            name="task-name"
-            id="task-name"
-            placeholder="Enter Task Name"
-            required
-          />
-          <br />
-          <label for="task-description">Description:</label>
-          <textarea
-            name="task-description"
-            id="task-description"
-            rows="3"
-            placeholder="Type Task Description here (optional)..."
-          ></textarea>
-          <br />
-          <label for="task-deadline">Deadline:</label>
-          <input
-            type="date"
-            name="task-deadline"
-            id="task-deadline"
-            required
-          />
-          <br />
-          <!--
-          <label for="task-completion">Completion:</label>
-          <select name="task-completion" id="task-completion" required>
-            <option value="" disabled selected hidden>
-              Change Task Status
-            </option>
-            <option value="Not Started">Not Started</option>
-          </select>
-          <br /> -->
-          <label for="task-subcontractor">Assign Subcontractor:</label>
-          <select name="task-subcontractor" id="task-subcontractor" required>
-            <option value="" disabled selected hidden>
-              Select Subcontractor
-            </option>
-            {% for subcontractor in subcontractors %}
-            <option value="{{ subcontractor.id }}">
-              {{ subcontractor.name }}
-            </option>
-            {% endfor %}
-          </select>
         </div>
-        <button type="submit">Add Task</button>
-      </form>
-      <!-- Delete Task -->
 
-      {% endif %}
+        {% if user.role != 'subcontractor' %}
+        <form
+          method="POST"
+          action="{{ url_for('views.add_subcontractor', project_id=project.id) }}"
+        >
+          <textarea
+            name="subcontractor-email"
+            id="subcontractor-email"
+            placeholder="Enter Email"
+            required
+          ></textarea>
+          <ul id="suggestions" class="suggestion-list"></ul>
+          <div id="subcon-buttons">
+            <button type="submit">Add Subcontractor</button>
+            <button type="reset">Clear</button>
+          </div>
+        </form>
+        <!-- Delete Subcontractor Assignment -->
+        {% endif %}
+      </section>
+      <!------ Tasks sub-section ------>
+      <section class="sub-sections" id="task-sub-section">
+        <h3>Tasks</h3>
+        <button id="toggle-completed">Show Completed Tasks</button>
+        <div class="table-wrapper">
+          {% if tasks|length == 0 %}
+          <p>No Tasks Assigned</p>
+          {% else %}
+          <table>
+            <thead>
+              <tr>
+                <th>Task</th>
+                <th>Description</th>
+                <th>Deadline</th>
+                <th>Completion</th>
+                <th>Subcontractor</th>
+                {% if user.role != 'subcontractor' %}
+                <th class="last-column"></th>
+                {% endif %} {% if current_user.role == 'subcontractor' %}
+                <th></th>
+                {% endif %}
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for task in tasks %}
+              <tr
+                class="{% if task.completion == 'Completed' %}completed-task{% endif %}"
+              >
+                <td>{{ task.name }}</td>
+                <td>{{ task.description or "No description provided" }}</td>
+                <td>{{ task.deadline }}</td>
+                <td>{{ task.completion }}</td>
+                <td>
+                  {{ task.subcontractor.name if task.subcontractor else
+                  "Unassigned" }}
+                </td>
+
+                {% if user.role != 'subcontractor' %}
+                <td class="last-column">
+                  <!-- Delete Button -->
+                  <button
+                    type="button"
+                    id="delete-button"
+                    data-id="{{ task.id }}"
+                    data-name="{{ task.name }}"
+                    onClick="deleteTask(this)"
+                  >
+                    <span aria-hidden="true"> Delete </span>
+                  </button>
+                </td>
+                {% endif %} {% if task.completion != 'Completed' %} {% if
+                current_user.role == 'subcontractor' %}
+
+                <td colspan="6">
+                  <form
+                    action="{{ url_for('views.update_task_completion', task_id=task.id) }}"
+                    method="POST"
+                  >
+                    <input
+                      type="hidden"
+                      name="completion-status"
+                      value="Completed"
+                      id="completion-status"
+                    />
+                    <button type="submit">Mark As Complete</button>
+                  </form>
+                </td>
+                {% endif %}
+              </tr>
+              {% endif %} {% endfor %}
+            </tbody>
+          </table>
+          {% endif %}
+        </div>
+
+        {% for task in tasks %}
+        <div class="task">
+          {% if current_user.role == 'subcontractor' %} {% set subcontractor =
+          subcontractors | selectattr("user_id", "equalto", current_user.id) |
+          first %} {% if subcontractor and task.subcontractor_id ==
+          subcontractor.id %}
+          <form
+            action="{{ url_for('views.update_task_completion', task_id=task.id) }}"
+            method="POST"
+          >
+            <label for="completion-status">Update Completion Status:</label>
+            <select name="completion-status" id="completion-status" required>
+              <option
+                value="Not Started"
+                {%
+                if
+                task.completion=="Not Started"
+                %}selected{%
+                endif
+                %}
+              >
+                Not Started
+              </option>
+              <option
+                value="In Progress"
+                {%
+                if
+                task.completion=="In Progress"
+                %}selected{%
+                endif
+                %}
+              >
+                In Progress
+              </option>
+              <option
+                value="Completed"
+                {%
+                if
+                task.completion=="Completed"
+                %}selected{%
+                endif
+                %}
+              >
+                Completed
+              </option>
+            </select>
+            <button type="submit">Update</button>
+          </form>
+          {% endif %} {% endif %}
+        </div>
+        {% endfor %} {% if user.role != 'subcontractor' %}
+        <form
+          method="POST"
+          action="{{ url_for('views.add_task', project_id=project.id) }}"
+        >
+          <h4>Add Task Below</h4>
+          <div id="task-div">
+            <label for="task-name">Task Name:</label>
+            <input
+              type="text"
+              name="task-name"
+              id="task-name"
+              placeholder="Enter Task Name"
+              required
+            />
+            <br />
+            <label for="task-description">Description:</label>
+            <textarea
+              name="task-description"
+              id="task-description"
+              rows="3"
+              placeholder="Type Task Description here (optional)..."
+            ></textarea>
+            <br />
+            <label for="task-deadline">Deadline:</label>
+            <input
+              type="date"
+              name="task-deadline"
+              id="task-deadline"
+              required
+            />
+            <br />
+            <label for="task-subcontractor">Assign Subcontractor:</label>
+            <select name="task-subcontractor" id="task-subcontractor" required>
+              <option value="" disabled selected hidden>
+                Select Subcontractor
+              </option>
+              {% for subcontractor in subcontractors %}
+              <option value="{{ subcontractor.id }}">
+                {{ subcontractor.name }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+          <button type="submit">Add Task</button>
+        </form>
+        {% endif %}
+      </section>
     </section>
-  </section>
-</div>
+  </div>
   <!------------ Files & Invoice Div ------------>
   <div id="files" class="tab-content">
     <!------ File Upload sub-section ------>
-      <section class="sub-sections" id="file-upload-sub-section">
-          <form
-                  action="{{ url_for('file_upload.upload_file', project_id=project.id) }}"
-                  method="post"
-                  enctype="multipart/form-data"
-          >
-              <h3>Upload Files
-                <label for="file">+</label>
-              </h3>
-              <input
-                      type="file"
-                      class="hidden-input"
-                      name="file"
-                      id="file"
-                      required
-              />
-              <span class="file-name" id="file-name">No File Selected</span>
-              <button type="submit">Upload</button>
-          </form>
-      </section>
+    <section class="sub-sections" id="file-upload-sub-section">
+      <form
+        action="{{ url_for('file_upload.upload_file', project_id=project.id) }}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <h3>
+          Upload Files
+          <label for="file">+</label>
+        </h3>
+        <input
+          type="file"
+          class="hidden-input"
+          name="file"
+          id="file"
+          required
+        />
+        <span class="file-name" id="file-name">No File Selected</span>
+        <button type="submit">Upload</button>
+      </form>
+    </section>
     <!------ Invoice sub-section ------>
     <section class="sub-sections" id="invoice-upload-sub-section">
       <form
@@ -451,7 +458,6 @@ tab to ping a contractor's email.
           Invoices
           <label for="invoice">+ </label>
         </h3>
-
         <!-- File input styled as hidden input with a custom label -->
         <input
           type="file"
@@ -461,33 +467,33 @@ tab to ping a contractor's email.
           required
         />
         <span class="file-name" id="invoice-file-name">No File Selected</span>
-
         <button type="submit">Upload</button>
       </form>
     </section>
   </div>
-    <!------------ View Files Tab ------------>
-    <div id="view-files" class="tab-content">
-        <section class="sub-sections" id="file-view-sub-section">
-            <h3>Project Files</h3>
-            <ul class="file-list">
-                {% for file in project_files %}
-                    <li>
-                        <img
-                                src="{{ url_for('views.serve_image', file_id=file.id) }}"
-                                alt="{{ file.filename }}"
-                                class="file-preview"
-                                onclick="showImageModal('{{ url_for('views.serve_image', file_id=file.id) }}')"/>
-                        <p>{{ file.filename }}</p>
-                    </li>
-                {% endfor %}
-            </ul>
-        </section>
-    </div>
-    <div id="imageModal" class="modal">
-        <span class="close" onclick="closeImageModal()">&times;</span>
-        <img class="modal-content" id="modalImage" />
-    </div>
+  <!------------ View Files Tab ------------>
+  <div id="view-files" class="tab-content">
+    <section class="sub-sections" id="file-view-sub-section">
+      <h3>Project Files</h3>
+      <ul class="file-list">
+        {% for file in project_files %}
+        <li>
+          <img
+            src="{{ url_for('views.serve_image', file_id=file.id) }}"
+            alt="{{ file.filename }}"
+            class="file-preview"
+            onclick="showImageModal('{{ url_for('views.serve_image', file_id=file.id) }}')"
+          />
+          <p>{{ file.filename }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
+  <div id="imageModal" class="modal">
+    <span class="close" onclick="closeImageModal()">&times;</span>
+    <img class="modal-content" id="modalImage" />
+  </div>
   <!------------ Message Div ------------>
   {% if user.role == 'subcontractor' %}
   <div id="messages" class="tab-content">

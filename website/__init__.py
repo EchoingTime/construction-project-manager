@@ -36,9 +36,6 @@ def create_app(): # Initialize Flask
 
     from .models import User # Must specify user here
 
-    # With app.app_context(): # SQLAlchemny will not overwrite existing files
-    # db.create_all()
-
     login_manger = LoginManager()
     login_manger.login_view = 'auth.login' # Not logged in? Where do we go...
     login_manger.init_app(app) # Tells manager what app we are using

@@ -790,6 +790,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /*--------------------- Subcontractor Search ---------------------*/
+
 document
   .getElementById("subcontractor-email")
   .addEventListener("input", function () {
@@ -814,7 +815,8 @@ function selectUser(email, id) {
   document.getElementById("suggestions").innerHTML = "";
 }
 
-/*--------------------- file view ---------------------*/
+/*--------------------- File View ---------------------*/
+
 function showImageModal(imageSrc) {
   const modal = document.getElementById("imageModal");
   const modalImage = document.getElementById("modalImage");

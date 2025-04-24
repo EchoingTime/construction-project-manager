@@ -169,6 +169,7 @@ aside #toggle-btn:hover svg {
 }
 
 /* ------------------------------ Alerts ------------------------------ */
+
 .alert-container {
   display: none;
   justify-content: center;
@@ -244,8 +245,13 @@ main {
   width: 100%;
   border: 1px solid var(--border);
 }
+h1 {
+  border-bottom: 2.5px solid var(--text);
+  margin-bottom: 5px;
+}
 
 /* ------------------------------ Profile Card ------------------------------ */
+
 #profile-section {
   max-width: 500px;
   margin: 0 auto;
@@ -308,7 +314,6 @@ main {
   border-radius: 10px;
 }
 
-/* Table & Row styling */
 #project-section table {
   width: 100%;
   border-collapse: separate;
@@ -335,7 +340,6 @@ main {
   background: var(--hover-bg);
 }
 
-/* Cell layout */
 #project-section td {
   display: grid;
   grid-template-columns: 1fr auto auto;
@@ -348,7 +352,6 @@ main {
   padding: clamp(0.75rem, 1.5vw, 1.5rem);
 }
 
-/* Project title */
 #project-section td a {
   font-weight: 700;
   font-size: 1.1rem;
@@ -367,7 +370,6 @@ main {
   outline-offset: 3px;
 }
 
-/* Right-aligned project info */
 .project-details {
   display: flex;
   flex-direction: column;
@@ -523,7 +525,7 @@ main {
   color: var(--text);
 }
 
-/*-------------------------- Project Details (Final Final Polish) --------------------------*/
+/*-------------------------- Project Details --------------------------*/
 
 #edit-project-name-form {
   display: flex;
@@ -764,7 +766,6 @@ input[type="file"] {
 }
 
 /* Specific Fixes */
-
 .div-dead,
 #completion-form,
 .div-address {
@@ -775,6 +776,48 @@ input[type="file"] {
 }
 #completion-form {
   margin-top: 1rem;
+}
+#information,
+#subcontractors,
+#files {
+  width: 95%;
+}
+#files label {
+  cursor: pointer;
+}
+#files label:hover {
+  color: var(--accent-hover);
+}
+.buttons,
+#address-buttons,
+#subcon-buttons {
+  display: flex;
+  gap: 8.5px !important;
+}
+.file-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+}
+.file-list li {
+  display: flex;
+  border: 1.5px solid transparent;
+  background-color: var(--bg);
+  padding: 1rem;
+  padding-top: 1.5rem;
+  border-radius: 1rem;
+}
+.file-list p {
+  color: var(--text-muted) !important;
+  font-style: italic;
+}
+.file-list img {
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+#no-projects {
+  margin-top: 1rem;
+  text-align: center;
 }
 
 /*-------------------------- Forms (Login & Registry) --------------------------*/
@@ -914,7 +957,149 @@ a:hover {
   color: var(--error);
 }
 
-/*-------------------------- Calendar (ChatGPT Themed Revamp) --------------------------*/
+.suggestion-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+  position: relative;
+  background: transparent;
+  width: 275px;
+  border-radius: 8px;
+}
+.suggestion-list li {
+  padding: 5px;
+  cursor: pointer;
+}
+.suggestion-list li:hover {
+  background: #727272;
+}
+
+/*-------------------------- File View --------------------------*/
+
+.file-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.file-list li {
+  display: inline-block;
+  margin: 10px;
+  text-align: center;
+}
+
+.file-preview {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.file-preview:hover {
+  transform: scale(1.1);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+.modal-content {
+  display: block;
+  margin: auto;
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+  animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal .close {
+  position: absolute;
+  top: 15px;
+  right: 30px;
+  color: white;
+  font-size: 36px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#toggle-completed {
+  background-color: #3399dd;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 10px;
+  transition: background-color 0.2s ease;
+}
+
+#toggle-completed:hover {
+  background-color: #2b89c2;
+}
+
+/*-------------------------- Invoice View --------------------------*/
+
+.file-invoice-div {
+  background: var(--card);
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-shadow: 0 4px 12px var(--shadow);
+  color: var(--text);
+}
+
+.project-block {
+  margin-bottom: 2.5rem;
+  width: 100%;
+}
+
+.project-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.file-name {
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  word-break: break-word;
+}
+
+/*-------------------------- Calendar --------------------------*/
 
 #calendar-section {
   background: var(--panel);
@@ -1099,15 +1284,13 @@ a:hover {
   width: 100%;
 }
 
-/* Normal view colors */
 #calendar-section .deadline.project {
   font-weight: 600;
 }
 
-/* Special TODAY styling for contrast */
 #calendar-section .day.today .deadline.project,
 #calendar-section .day.today .deadline.task {
-  background: rgba(0, 0, 0, 0.25); /* Darker overlay for contrast */
+  background: rgba(0, 0, 0, 0.25);
 }
 
 #calendar-section .deadline a,
@@ -1130,15 +1313,15 @@ a:hover {
 /* --------------------- Status Colors --------------------- */
 
 #calendar-section .deadline.status-not-yet-started {
-  color: #66ccff; /* Blue */
+  color: #66ccff;
 }
 
 #calendar-section .deadline.status-on-hold {
-  color: #ffb347; /* Orange */
+  color: #ffb347;
 }
 
 #calendar-section .deadline.status-in-progress {
-  color: #ffd966; /* Yellow */
+  color: #ffd966;
 }
 
 #calendar-section .deadline.status-completed,
@@ -1146,10 +1329,10 @@ a:hover {
   text-decoration: line-through;
   opacity: 0.6;
   font-style: italic;
-  color: #85f7af; /* Green */
+  color: #85f7af;
 }
 #calendar-section .deadline.status-canceled {
-  color: #ff6b6b; /* Red */
+  color: #ff6b6b;
 }
 
 /*-------------------------- Responsiveness --------------------------*/
@@ -1265,145 +1448,4 @@ a:hover {
   #calendar-section .day {
     padding: 6px 4px !important;
   }
-}
-
-.suggestion-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border: 1px solid #ccc;
-  max-height: 150px;
-  overflow-y: auto;
-  position: relative;
-  background: transparent;
-  width: 275px;
-  border-radius: 8px;
-}
-.suggestion-list li {
-  padding: 5px;
-  cursor: pointer;
-}
-.suggestion-list li:hover {
-  background: #727272;
-}
-
-/*-------------------------- file view --------------------------*/
-
-.file-list {
-  list-style-type: none;
-  padding: 0;
-}
-
-.file-list li {
-  display: inline-block;
-  margin: 10px;
-  text-align: center;
-}
-
-.file-preview {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.file-preview:hover {
-  transform: scale(1.1);
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  padding-top: 60px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.85);
-}
-
-.modal-content {
-  display: block;
-  margin: auto;
-  max-width: 90vw;
-  max-height: 85vh;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-  animation: zoomIn 0.3s ease;
-}
-
-@keyframes zoomIn {
-  from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-.modal .close {
-  position: absolute;
-  top: 15px;
-  right: 30px;
-  color: white;
-  font-size: 36px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-#toggle-completed {
-  background-color: #3399dd;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  display: block;
-  margin-bottom: 10px;
-  transition: background-color 0.2s ease;
-}
-
-#toggle-completed:hover {
-  background-color: #2b89c2;
-}
-
-/*-------------------------- invoice view --------------------------*/
-.file-invoice-div {
-  background: var(--card);
-  padding: 2rem;
-  border-radius: 1rem;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  box-shadow: 0 4px 12px var(--shadow);
-  color: var(--text);
-}
-
-.project-block {
-  margin-bottom: 2.5rem;
-  width: 100%;
-}
-
-.project-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--accent);
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.file-name {
-  text-align: center;
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  word-break: break-word;
 }

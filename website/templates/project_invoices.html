@@ -1,6 +1,10 @@
+<!--
+@File Name: profile_invoices.html
+@Description: Page to view invoices uploaded by contractors and subcontractors.
+-->
+
 {% extends "base.html" %} {% block content %}
 <h1>Projects' Invoices</h1>
-
 <div class="main-content-section file-invoice-div">
   {% for project, invoices in project_invoices.items() %} {% if invoices|length
   > 0 %}
@@ -26,7 +30,6 @@
   </div>
   {% endif %} {% endfor %}
 </div>
-
 <!-- Modal Structure -->
 <div id="imageModal" class="modal">
   <span class="close" onclick="closeImageModal()">&times;</span>
